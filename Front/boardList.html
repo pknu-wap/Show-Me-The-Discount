@@ -1,0 +1,103 @@
+﻿<!--<%@ page language="java" contentType="text/html; charset=UTF-8"pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN" 
+            "http://www.w3.org/TR/html5/datal.dtd">
+    <html lang ="ko">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <title>게시판 목록</title>
+    <!-- CSS 영역 -->
+    <style type="text/css">
+        * {font-size: 12pt;}
+        p {width: 1500px; text-align: center;}
+        table thead tr th {background-color: gray;}
+    </style>
+    <!-- //CSS 영역 -->
+    <!-- 자바스크립트 영역 -->
+    <script language="javascript" type="text/javascript" src="js/createXMLHttpRequest.js"></script>
+<script type="text/javascript">
+	function goUrl(url) {
+		location.href=url;
+	}
+</script>
+    <!-- //자바스크립트 영역 -->
+    </head>
+    <body>
+       <!-- 검색 폼 영역 -->
+       <form name="searchForm" action="boardList.html" method="post">
+       <p>
+           <select name="searchType">
+               <option value="ALL">전체검색</option>
+               <option value="SUBJECT">상호명</option>
+               <option value="WRITER">상품명</option>
+               <option value="CONTENTS">내용</option>
+           </select>
+           <input type="text" name="searchText" value="" />
+           <input type="submit" value="검색" />
+       </p>
+       </form>
+       <!-- //검색 폼 영역 -->
+       <!-- 게시판 목록 영역 -->
+       <table border="1" summary="게시판 목록">
+           <caption>게시판 목록</caption>
+           <colgroup>   
+	 <col width="150"/>
+	 <col width="150"/>
+               <col width="300" />
+               <col width="150" />
+               <col width="150" />
+	 <col width="150" />
+               <col width="120" />
+           </colgroup>  
+           <thead>
+               <tr>  
+                    <th>상호명</th>
+                    <th>상품명</th>
+	      <th>내용</th>
+	      <th>가격</th>
+                    <th>시작일시</th>
+                    <th>종료일시</th>
+	      <th>조회수</th>
+               </tr>
+           </thead>
+           <tbody>
+               <tr>
+     	  <c:choose>
+	       <c:when test="${empty list }">
+	       등록된 글이 없습니다.
+	       </c:when>
+	       <c:otherwise>
+	       <c:set var="doneLoop" value="false" />
+	       <c:forEach begin="${page.beginPerPage }" end="${page.beginPerPage + page.numPerPage -1}" var="i">
+	       <c:if test="${not doneLoop }">
+	       <c:if test="${list[i].depth != 0 }">
+	       <c:forEach begin="0" end="${list[i].depth}"> </c:forEach>
+	       </c:if>
+	        <td align=center>${list[i].store }</td>
+	        <td align=center>${list[i].product }</td>
+	        <td align=center>${list[i].content }</td>
+	        <td align=center>${list[i].price }</td>
+	        <td align=center>${list[i].startdate }</td>
+	        <td align=center>${list[i].enddate }</td>
+	        <td align=center>${list[i].count }</td>
+	        </tr>
+	        <c:if test="${i == page.beginPerPage + page.numPerPage} }">
+	            <c:set var="doneLoop" value="true" />
+	        </c:if></c:if>
+	        </c:forEach>
+       		 </c:else>
+	 </tr>
+	</tbody>
+           <tfoot>
+               
+           </tfoot>
+       </table>
+       <!-- //게시판 목록 영역 -->
+       <!-- 버튼 영역 -->
+       <p>
+           <input type="button" value="목록" onclick="goUrl('boardList.html');" />
+           <input type="button" value="글쓰기" onclick="goUrl('boardWriteForm.html');" />
+       </p>
+       <!-- //버튼 영역 -->
+    </body>
+    </html>
