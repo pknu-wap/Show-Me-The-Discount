@@ -66,23 +66,21 @@
 		alert("종료일시을 입력하세요.");
 		document.getElementById("enddate").focus();
 		return;}
-		else if (document.getElementById("password").value == "" ||document.getElementById("password").value == null) {
-		alert("비밀번호를 입력하세요.");
+		else if (document.getElementById("password").value != data[i].password) {
+		alert("비밀번호를 확인하세요.");
 		document.getElementById("password").focus();
 		return;}
 		else {json();}
 		}
 		function json(){
-		var data =  new Object();
-		data.store = document.getElementById("store").value;
-		data.product = document.getElementById("product").value;
-		data.content = document.getElementById("content").value;
-		data.price = document.getElementById("price").value;
-		data.startdate =document.getElementById("startdate").value;
-		data.enddate = document.getElementById("enddate").value;
-		data.password = document.getElementById("password").value;
-		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhr.send(JSON.stringify(data));
+		var jsondata =  new Object();
+		jsondata.store = document.getElementById("store").value;
+		jsondata.product = document.getElementById("product").value;
+		jsondata.content = document.getElementById("content").value;
+		jsondata.price = document.getElementById("price").value;
+		jsondata.startdate =document.getElementById("startdate").value;
+		jsondata.enddate = document.getElementById("enddate").value;
+		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function e()
 			{
 			if(xhr.readyState == 4)
@@ -91,6 +89,9 @@
 				else {console.log('Error!');}
 				}
 			}
+		xhr.open('POST', './json_data.txt');
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(JSON.stringify(jsondata));
 		};
 	req.open("GET","./json_data.txt")
 	req.send();
