@@ -45,7 +45,7 @@
 - id : 보는 글 번호(null=새 글)
 - store : 상호명
 - product : 제품명
-- contents : 할인내용
+- content : 할인내용
 - price : 가격
 - start : 시작일(없으면 현재시간)
 - end : 만료일
@@ -62,7 +62,7 @@
 	- id : 보는 글 번호
 	- store : 상호명
 	- product : 제품명
-	- contents : 할인내용
+	- content : 할인내용
 	- price : 가격
 	- end : 만료일
 	- password : 비밀번호
