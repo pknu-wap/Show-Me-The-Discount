@@ -32,6 +32,9 @@
 ### GET html/View.html
 - id : 보는 글 번호(필수)
 
+### GET json/View.json
+- id : 보는 글 번호(필수)
+
 한개의 글을 보는 페이지
 
 ### GET html/Write.html
@@ -49,6 +52,7 @@
 - price : 가격
 - start : 시작일(없으면 현재시간)
 - end : 만료일
+- password : 비밀번호
 
 글 생성/수정하고 나서 Write에서 View로 갈때
 
@@ -65,7 +69,6 @@
 	- content : 할인내용
 	- price : 가격
 	- end : 만료일
-	- password : 비밀번호
 
 ### [html/View.html 파일과 헤더](#GET-htmlViewhtml)
 - id : 보는 글 번호(필수)
@@ -79,7 +82,18 @@
 
 ### [html/View.html 파일과 헤더](#Post-htmlViewhtml)
 - id : 보는 글 번호(필수)
-- num : 댓글 번호
-- reply : 댓글 내용
 
-글 수정 후 해당 글 수정된 결과 보여주기
+### [json/View.json JSON 형식 데이터](#GET-jsonViewjson)
+- post : 글
+	- id : 보는 글 번호
+	- store : 상호명
+	- product : 제품명
+	- content : 할인내용
+	- price : 가격
+	- start : 시작일
+	- end : 만료일
+- replies : 댓글들의 배열
+	- num : 댓글 번호
+	- reply : 댓글 내용
+
+글 수정 및 해당 글 수정된 결과 보여주기
