@@ -24,36 +24,36 @@
 </script>
 </head>
 <body>
-	<form name="boardView" method="post">
-	<table border="1" summary="게시판 상세조회" >
+	<form name="BoardViewForm" method="post">
+	<table border="1" summary="게시판 상세조회" width=600 height=400 cellpadding=5 cellspacing=0>
 		<caption>게시판 상세조회</caption>
 		<colgroup>
-			<col width="200" />
+			<col width="100" />
 			<col width="500" />
 		</colgroup>
 		<thead>
 			<tr>
 				<th align="center">상호명</th>
-				<td>${store}</td>
+				<td>${list[i].store}</td>
 			</tr>
 			<tr>
 				<th align="center">상품명</th>
-				<td>${product}</td>
+				<td>${list[i].product}</td>
 			</tr>
 			<tr>
 				<th align="center">행사내용</th>
-				<td>${content}</td>
+				<td>${list[i].content}</td>
 			</tr>
 			<tr>
 				<th align="center">가격</th>
-				<td>${price}</td>
+				<td>$list[i].price}</td>
 			</tr>
 			<tr>
 				<th align="center">시작일시(생략가능)</th>
-				<td>${startdate}</td>
+				<td>${list[i].startdate}</td>
 			<tr>
 				<th align="center">종료일시</th>
-				<td>${enddate}</td>
+				<td>${list[i].enddate}</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -64,7 +64,7 @@
 	<p>
 		<input type="button" value="목록" onclick="goUrl('boardList.html');" />
 		<input type="button" value="수정" onclick="goUrl('boardModifyForm.html');" />
-		<input type="button" value="삭제" />
+		<input type="button" value="삭제" onclick="goUrl('');" />
 	</p>
 </body>
 </html>

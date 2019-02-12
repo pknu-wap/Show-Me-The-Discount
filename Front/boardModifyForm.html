@@ -1,8 +1,9 @@
 ﻿<!--
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	-->
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 5.0 Transitional//KO" "http://www.w3.org/TR/html5/data.dtd">
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 5.0 Transitional//KO" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -16,41 +17,73 @@
 	function goUrl(url) {
 		location.href=url;
 	}
+	function check() {
+        if (document.form.store.value == "" || document.form.store.value == null) {
+            alert("상호명을 입력하세요.");
+            document.form.store.focus();
+            return;
+        }
+        else if(document.form.product.value == "" || document.form.product.value == null) {
+            alert("상품명을 입력하세요.");
+            document.form.product.focus();
+            return;
+        } 
+        else if(document.form.content.value == "" || document.form.content.value == null) {
+            alert("행사내용을 입력하세요.");
+            document.form.title.focus();
+            return;
+        }
+        else if(document.form.content.value == "" || document.form.content.value == null) {
+            alert("내용을 입력하세요.");
+            document.form.content.focus();
+            return;
+        } else if(document.form.pass.value == "" || document.form.pass.value==null){
+            alert("비밀번호를 입력하세요");
+            document.form.pass.focus();
+            return;
+        } else if(document.form.pass.value != document.form.password.value){
+            alert("비밀번호가 틀리셨습니다. 재입력해주세요");
+            document.form.pass.focus();
+            return;
+        }else{
+            document.form.submit();
+            }
+        }
 </script>
 </head>
 <body>
-	<form name="boardModifyForm" action="boardProcessModify.html" method="post">
+	<form name="boardModifyForm" action="a.html" method="post" onsubmit="return boardModifyCheck();">
+	<input type="hidden" name="mode" value="M" />
 	<table border="1" summary="게시판 수정 폼">
 		<caption>게시판 수정 폼</caption>
 		<colgroup>
-			<col width="150" />
+			<col width="100" />
+			<col width="500" />
 		</colgroup>
 		<tbody>
 			<tr>
 				<th align="center">상호명</th>
-				<td><input type=text name=store size=30 required/></td>
+				<td><input type="text" /></td>
 			</tr>
 			<tr>
 				<th align="center">상품명</th>
-				<td><input type=text name=product size=30 required/></td>
+				<td><input type="text" /></td>
 			</tr>
 			<tr>
 				<th align="center">행사내용</th>
-				<td><input type=text name=content size=30 required/></td>
+				<td><input type="text" /></td>
 			</tr>
 			<tr>
 				<th align="center">가격</th>
-				<td><input type=text name=price size=30 required/></td>
+				<td><input type="text" /></td>
 			</tr>
 			<tr>
 				<th align="center">시작일시(생략가능)</th>
-				<td><input type=text name=startdate size=30
-				pattern = "\d{8}\" ></td>
+				<td><input type="text" /></td>
 			</tr>
 			<tr>
 				<th align="center">종료일시</th>
-				<td><input type=text name=enddate size=30 required
-				pattern = "\d{8}" title="20190101 형식으로 입력해 주세요"/></td>
+				<td><input type="text" /></td>
 			</tr>
 		</tbody>
 	</table>
