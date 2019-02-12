@@ -1,70 +1,51 @@
-﻿<!--
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
--->
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML5.0 Transitional//KO" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+﻿<!DOCTYPE html>
+<html lang ="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
 <title>게시판 상세보기</title>
 <style type="text/css">
 	* {font-size: 12pt;}
 	p {width: 930px; text-align: center;}
+	table{ width:40%;}
 	table tbody tr th {background-color: gray;}
 </style>
 <script type="text/javascript">
 	function goUrl(url) {
 		location.href=url;
 	}
-	function list() {
-		document.list.action="boardList.action";
-		document.list.submit();
-	}
+	var req = new XMLHttpRequest();
+	var data;
+	var txt = "";
+	req.onreadystatechange = function a(){
+	console.log(this.readyState, this.status);
+	if (this.readyState ==4 ){
+		console.log(this.response);
+		data = JSON.parse(req.response);
+		txt += "<table border='1'>"
+		txt += "<tr><td>"+ "상호명" +"</td>"		
+		txt+=("<td>"+ data[0].store +"</td></tr>");
+		txt += "<tr><td>"+ "상품명" +"</td>"
+		txt+=("<td>"+ data[0].product +"</td></tr>");
+		txt += "<tr><td>"+ "행사내용" +"</td>"
+		txt+=("<td>"+ data[0].content +"</td></tr>");
+		txt += "<tr><td>"+ "가격" +"</td>"
+		txt+=("<td>"+ data[0].price  +"</td></tr>");
+		txt += "<tr><td>"+ "시작일시" +"</td>"
+		txt+=("<td>"+ data[0].startdate +"</td></tr>");
+		txt += "<tr><td>"+ "종료일시" +"</td>"
+		txt+=("<td>"+ data[0].enddate +"</td></tr>");
+		document.getElementById("t").innerHTML = txt}
+		txt += "</table>" }
+	req.open("GET","./json_data.txt")
+	req.send();
 </script>
 </head>
 <body>
-	<form name="BoardViewForm" method="post">
-	<table border="1" summary="게시판 상세조회" width=600 height=400 cellpadding=5 cellspacing=0>
-		<caption>게시판 상세조회</caption>
-		<colgroup>
-			<col width="100" />
-			<col width="500" />
-		</colgroup>
-		<thead>
-			<tr>
-				<th align="center">상호명</th>
-				<td>${list[i].store}</td>
-			</tr>
-			<tr>
-				<th align="center">상품명</th>
-				<td>${list[i].product}</td>
-			</tr>
-			<tr>
-				<th align="center">행사내용</th>
-				<td>${list[i].content}</td>
-			</tr>
-			<tr>
-				<th align="center">가격</th>
-				<td>$list[i].price}</td>
-			</tr>
-			<tr>
-				<th align="center">시작일시(생략가능)</th>
-				<td>${list[i].startdate}</td>
-			<tr>
-				<th align="center">종료일시</th>
-				<td>${list[i].enddate}</td>
-			</tr>
-		</thead>
-		<tbody>
-		 <tr>
-            
-		</tbody>
-	</table>
+	<p id=t></p>
 	<p>
 		<input type="button" value="목록" onclick="goUrl('boardList.html');" />
 		<input type="button" value="수정" onclick="goUrl('boardModifyForm.html');" />
-		<input type="button" value="삭제" onclick="goUrl('');" />
+		<input type="button" value="삭제" />
 	</p>
 </body>
 </html>
