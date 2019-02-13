@@ -18,7 +18,13 @@ with db.cursor() as cursor:
                                             
                 );
                 
-                
+                CREATE TABLE comment(
+                        PRIMARY KEY(id) NOT NULL, #댓글 키값
+                        writing key INT NOT NULL,
+                        contents VARCHAR(20) NOT NULL.
+                        password INT NOT NULL
+                        
+            
             '''
 
     cursor.execute(sql) # 실행하기
