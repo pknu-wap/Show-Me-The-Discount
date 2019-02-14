@@ -15,12 +15,21 @@
             function goUrl(url) {
                 location.href = url;
             }
+            function enterSearch() {
+              if(event.keyCode == 13) {
+                check();
+              }
+            }
             function check() {
-                if (document.search.keyWord.value == "") {
-                    alert("검색어를 입력하세요.");
-                    document.search.keyWord.focus();
-                    return;
-                }
+              if(document.searchForm.searchText.value="") {
+                alert("검색어를 입력하세요.");
+                document.searchForm.searchText.focus();
+                return false;
+              }
+              else {
+                var x = document.getElementById("text").value;
+                location.href = "/C:/Users/glps2/Desktop/boardList.html?searchType=ALL&searchText=" + x;
+              }
             }
             function pagemove(i) {
                 var nowPage = document.pagemove.nowPage.value;
@@ -43,47 +52,51 @@
                 if (this.readyState == 4) {
                     console.log(this.response);
                     data = JSON.parse(this.response);
-                    txt += "<table border='1'>";
+                    txt += "<table border='1' size='100'>";
                     txt += "<tr><td>"+ "상호명" +"</td>";
-                    txt += "<td>"+ "상품명" +"</td>";
-                    txt += "<td>"+ "행사내용" +"</td>";
-                    txt += "<td>"+ "가격" +"</td>";
-                    txt += "<td>"+ "시작일시" +"</td>";
-                    txt += "<td>"+ "종료일시" +"</td>";
+                    txt += "<td>" + "상품명" +"</td>";
+                    txt += "<td>" + "행사내용" +"</td>";
+                    txt += "<td>" + "가격" +"</td>";
+                    txt += "<td>" + "시작일시" +"</td>";
+                    txt += "<td>" + "종료일시" +"</td>";
                     for( var i = 0 ; i<data.length;i++) {
-                      txt+=("<tr><td>"+ data[i].store +"</td>");
+                       txt+=("<tr><td>"+ data[i].store +"</td>");
                        txt+=("<td>"+ data[i].product +"</td>");
-                       txt+=("<td>"+ data[i].contents +"</td>");
+                       txt+=("<td>"+ data[i].content +"</td>");
                        txt+=("<td>"+ data[i].price +"</td>");
-                       txt+=("<td>"+ data[i].startdate +"</td>");
-                       txt+=("<td>"+ data[i].enddate +"</td></tr>");
-                   }
-                   document.getElementById("t").innerHTML = txt;
-                     txt += "</table>"
+                       txt+=("<td>"+ data[i].start +"</td>");
+                       txt+=("<td>"+ data[i].end +"</td></tr>");
+                    }
+                    document.getElementById("t").innerHTML = txt;
+                    txt += "</table>"
                 }
             }
-            req.open("GET", "./json_data.txt");
+            req.open("POST", "./json_data.txt");
             req.send();
-            if(count % 20 == 0){
-
-            }
         </script>
         <!-- //자바스크립트 영역 -->
     </head>
     <body>
         <!-- 검색 폼 영역 -->
-        <form name="searchForm" action="boardList.html" method="POST">
-
-                <p>
+        <form name="searchForm" action="" method="GET" onsubmit="return check()">
+            <table width="200" border="0" align="center">
+              <tr>
+                <td align="center" valign="bottom">
                     <select name="searchType">
                         <option value="ALL">전체검색</option>
                         <option value="STORE">상호명</option>
                         <option value="PRODUCT">상품명</option>
-                        <option value="CONTENTS">내용</option>
+                        <option value="CONTENT">내용</option>
                     </select>
-                    <input type="text" name="searchText" value="" />
-                    <input type="submit" value="검색" />
-                </p>
+                  </td>
+                  <td>
+                    <input id=text type="text" class='input_text' size="16" name="searchText" onkeydown="enterSearch()"/>
+                  </td>
+                  <td>
+                    <input type="button" class='sch_smit' value="검색" onclick="check()"/>
+                  </td>
+                  </tr>
+                </table>
         </form>
         <!-- //검색 폼 영역 -->
         <!-- 게시판 목록 영역 -->
