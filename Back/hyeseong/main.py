@@ -15,7 +15,7 @@ def main_get(f=None):
 def css_file():
     return redirect(url_for('static', filename='CSS.css'))'''
 
-@app.route('/action값', methods=['POST']) #boardWriteForm.html
+@app.route('/register', methods=['POST']) #boardWriteForm.html
 def register(f=None):
     if request.method == 'POST':
         temp1 = request.form['f'] #f가 json?
