@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def main_page():
+    #db
     return render_template('boardList.html')
 
 '''@app.route('/')
@@ -15,19 +16,19 @@ def main_get(f=None):
 def css_file():
     return redirect(url_for('static', filename='CSS.css'))'''
 
-@app.route('/boardWriteForm.html', methods=['POST']) #boardWriteForm.html
-def register(f=None):
-    if request.method == 'POST':
-        temp1 = request.form['f'] #f가 json?
-        temp2 = json.loads(x) #json->python dictionary
-        return render_template('boardWriteForm.html')
+@app.route('/boardWriteForm.html')
+def write():
+    return render_template('boardWriteForm.html')
 
 @app.route('/boardList.html')
 def list():
     return render_template('boardList.html')
 
-@app.route('/pass_data_to_db')
+@app.route('/modify')
 
+@app.route('/comment')
+
+@app.route('/pass_data_to_db')
 
 @app.route('/pass_data_to_front')
 def front():
