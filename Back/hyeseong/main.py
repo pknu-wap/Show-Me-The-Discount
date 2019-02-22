@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-import request
 
 app = Flask(__name__)
 
@@ -9,10 +8,6 @@ def main_page():
     return render_template('boardList.html')
 
 '''@app.route('/')
-def main_get(f=None):
-    return render_template('boardWriteForm.html', f=f)'''
-
-'''@app.route('/')
 def css_file():
     return redirect(url_for('static', filename='CSS.css'))'''
 
@@ -20,21 +15,25 @@ def css_file():
 def write():
     return render_template('boardWriteForm.html')
 
+@app.route('/boardProcess.html', methods = ['POST'])
+def process():
+    if request.method == "POST":
+        result = request.form
+        #db
+
+        return #등록 알림창, 페이지 이동
+
 @app.route('/boardList.html')
 def list():
     return render_template('boardList.html')
 
-@app.route('/modify')
+@app.route('/boardView.html')
+def view():
+    post_id = request.args.get("글번호")
+    #db
+    return render_template('boardView.html')
 
-@app.route('/comment')
-
-@app.route('/pass_data_to_db')
-
-@app.route('/pass_data_to_front')
-def front():
-    x = dictionary데이터 #db에서 가져온 데이터
-    y = json.dumps(x)
-    return y
+@app.route('/boardModifyForm.html')
 
 if __name__ == '__main__':
     app.run(debug = True)
