@@ -15,7 +15,9 @@
 	}
 	var req = new XMLHttpRequest();
 	var data;
-	var txt = "";
+	var re  = new Object();
+	var i=0;
+	var txt = "",reply="";
 	req.onreadystatechange = function a(){
 	console.log(this.readyState, this.status);
 	if (this.readyState ==4 ){
@@ -31,13 +33,40 @@
 		txt += "<tr><td>"+ "가격" +"</td>"
 		txt+=("<td>"+ data[0].price  +"</td></tr>");
 		txt += "<tr><td>"+ "시작일시" +"</td>"
-		txt+=("<td>"+ data[0].startdate +"</td></tr>");
+		txt+=("<td>"+ data[0].start +"</td></tr>");
 		txt += "<tr><td>"+ "종료일시" +"</td>"
-		txt+=("<td>"+ data[0].enddate +"</td></tr>");
-		document.getElementById("t").innerHTML = txt}
-		txt += "</table>" }
+		txt+=("<td>"+ data[0].end +"</td></tr>");
+		document.getElementById("t").innerHTML = txt;
+		txt += "</table>"
+		reply="<table border='0'>"
+		for(;i<data[0].reply.length;i++)
+		{ reply+="<tr><td>"+data[0].reply[i].string+"</td>";
+		reply+="<td><input type=button value=삭제 onclick=></td></tr>"}
+		 document.getElementById("r").innerHTML = reply;  }}
 	req.open("GET","./json_data.txt")
 	req.send();
+	function check(){
+		if (document.getElementById("reply").value == "" || document.getElementById("reply").value== null) {
+		alert("댓글을 입력하세요.");
+	               return;}
+		else if(document.getElementById("password").value == "" || document.getElementById("password").value== null) {
+		alert("비밀번호를 입력하세요.");
+	               return;}
+		else{var xhr = new XMLHttpRequest();
+		xhr.open("GET","./json_data.txt")
+		re.string = document.getElementById("reply").value;
+		re.password = document.getElementById("password").value;
+		data[0].reply.push(re);
+		xhr.send(JSON.stringify(data));
+		xhr.onreadystatechange = function e()
+		{
+		if(xhr.readyState == 4)
+			{
+			if(xhr.status==200){console.log(this.responseText);
+			goUrl('boardView.html');}
+			else {console.log('Error!');}
+			}
+		}} }
 </script>
 </head>
 <body>
@@ -46,6 +75,13 @@
 		<input type="button" value="목록" onclick="goUrl('boardList.html');" />
 		<input type="button" value="수정" onclick="goUrl('boardModifyForm.html');" />
 		<input type="button" value="삭제" />
+	</p>
+	<th>댓글</th>
+	<input type= text id = reply name = reply size= 30>
+	<th>비밀번호</th>
+	<input type= password id = password name = password size= 10>
+	<input type= button value=댓글등록 onclick="check();"/>
+	<p id = r>
 	</p>
 </body>
 </html>

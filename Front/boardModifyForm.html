@@ -15,6 +15,7 @@
 	}
 	var req = new XMLHttpRequest();
 	var data,i=0;
+	var jsondata =  new Object();
 	req.onreadystatechange = function a(){
 	console.log(this.readyState, this.status);
 	if (this.readyState ==4 ){
@@ -31,9 +32,9 @@
 		txt += "<tr><td>"+ "가격" +"</td>"
 		txt+=("<td>"+"<input type= number id=price value=>"+"원" +"</td></tr>");
 		txt += "<tr><td>"+ "시작일시" +"</td>"
-		txt+=("<td>"+"<input type= date id=startdate value = >" +"</td></tr>");
+		txt+=("<td>"+"<input type= date id=start value = >" +"</td></tr>");
 		txt += "<tr><td>"+ "종료일시" +"</td>"
-		txt+=("<td>"+"<input type= date id=enddate value = >" +"</td></tr>");
+		txt+=("<td>"+"<input type= date id=end value = >" +"</td></tr>");
 		txt += "<tr><td>"+ "비밀번호" +"</td>"
 		txt+=("<td>"+"<input type= password id=password>" +"</td></tr>");
 		document.getElementById("f").innerHTML = txt;
@@ -42,8 +43,8 @@
 		document.getElementById("product").value = data[i].product;
 		document.getElementById("content").value = data[i].content;
 		document.getElementById("price").value = data[i].price;
-		document.getElementById("startdate").value = data[i].startdate;
-		document.getElementById("enddate").value = data[i].enddate;}
+		document.getElementById("start").value = data[i].start;
+		document.getElementById("end").value = data[i].end;}
 	}
 	function check() {
 		if (document.getElementById("store").value == "" || document.getElementById("store").value == null) {
@@ -62,9 +63,9 @@
 		alert("할인내용을 입력하세요.");
 		document.getElementById("content").focus();
 		return;}
-		else if (document.getElementById("enddate").value == "" || document.getElementById("enddate") == null) {
+		else if (document.getElementById("end").value == "" || document.getElementById("end") == null) {
 		alert("종료일시을 입력하세요.");
-		document.getElementById("enddate").focus();
+		document.getElementById("end").focus();
 		return;}
 		else if (document.getElementById("password").value != data[i].password) {
 		alert("비밀번호를 확인하세요.");
@@ -73,25 +74,24 @@
 		else {json();}
 		}
 		function json(){
-		var jsondata =  new Object();
-		jsondata.store = document.getElementById("store").value;
-		jsondata.product = document.getElementById("product").value;
-		jsondata.content = document.getElementById("content").value;
-		jsondata.price = document.getElementById("price").value;
-		jsondata.startdate =document.getElementById("startdate").value;
-		jsondata.enddate = document.getElementById("enddate").value;
+		data.store = document.getElementById("store").value;
+		data.product = document.getElementById("product").value;
+		data.content = document.getElementById("content").value;
+		data.price = document.getElementById("price").value;
+		data.start =document.getElementById("start").value;
+		data.end = document.getElementById("end").value;
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function e()
 			{
 			if(xhr.readyState == 4)
 				{
-				if(xhr.status==200){console.log(this.responseText);}
+				if(xhr.status==200){console.log(this.responseText);goUrl='boardView';}
 				else {console.log('Error!');}
 				}
 			}
 		xhr.open('POST', './json_data.txt');
 		xhr.setRequestHeader('Content-Type', 'application/json');
-		xhr.send(JSON.stringify(jsondata));
+		xhr.send(JSON.stringify(data));
 		};
 	req.open("GET","./json_data.txt")
 	req.send();
