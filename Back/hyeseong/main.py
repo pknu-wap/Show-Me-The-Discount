@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
@@ -8,30 +8,32 @@ def main_page():
     return render_template('boardList.html')
 
 @app.route('/boardWriteForm.html')
-def write():
+def write_form():
     return render_template('boardWriteForm.html')
 
-@app.route('/register', methods=['POST'])
-def register():
+@app.route('/json_data.txt', methods=['POST', 'GET'])
+def json():
     if request.method == 'POST':
-        store = request.form['store']
-        product = request.form['product']
-        content = request.form['content']
-        price = request.form['price']
-        startdate = request.form['startdate']
-        enddate = request.form['enddate']
-        password = request.form['password']
-        return redirect(url_for('view', ))
+        print(request.headers.get('product'))
+    #db
+        return jsonify(request.headers.get('product'))
+    elif request.method == 'GET':
+        return jsonify(request.headers.get('product'))
 
-@app.route('/boardList.html')
+@app.route('/boardList.html', methods=['GET'])
 def list():
+
     return render_template('boardList.html')
 
 @app.route('/boardView.html')
-def view():
-    post_id = request.args.get('글번호')
-    #db
+def view1():
+    #post_id = request.args.get('글번호')
     return render_template('boardView.html')
+
+@app.route('/boardView.html/')
+def view2():
+    dict = {id : '1', product : '상품'}
+    return jsonify(dict)
 
 @app.route('/boardModifyForm.html')
 def modify():
