@@ -16,7 +16,7 @@
 	var id = document.location.href.split("/");
 	var req1 = new XMLHttpRequest();
 	req1.open("POST","./json_data.txt")
-	req1.send(id);
+	req1.send(id[id.length-1]);
 	req1.onreadystatechange = function b(){console.log(req1.readyState);
 		if(req1.readyState==4){
 	var req = new XMLHttpRequest();
