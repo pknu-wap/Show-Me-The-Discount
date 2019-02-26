@@ -64,7 +64,7 @@
 </script>
 </head>
 <body>
-<form name=f method = post>
+<form name=f method = post action="/register">
 <table summary="게시판 등록">
 		<caption>게시판 등록 폼</caption>
 		<colgroup>
@@ -103,7 +103,8 @@
 	</table>
 	<p>
 		<input type="button" value="목록" onclick="goUrl('boardList.html');" />
-		<input type="button" value="등록" onclick="check()"/>
+		<input type="submit" value="등록" onclick="check()"/>
 	</p>
+	</form>
 </body>
 </html>
