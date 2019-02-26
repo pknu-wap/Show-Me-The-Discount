@@ -13,11 +13,19 @@
 	function goUrl(url) {
 		location.href=url;
 	}
+	var id = document.location.href.split("/");
+	var req1 = new XMLHttpRequest();
+	req1.open("POST","./json_data.txt")
+	req1.send(id);
 	var req = new XMLHttpRequest();
 	var data;
 	var re  = new Object();
 	var i=0;
 	var txt = "",reply="";
+	req1.onreadystatechange = function b(){console.log(req1.readyState);
+		if(req1.readyState==4){
+	req.open("POST","./json_data.txt")
+	req.send();
 	req.onreadystatechange = function a(){
 	console.log(this.readyState, this.status);
 	if (this.readyState ==4 ){
@@ -42,9 +50,7 @@
 		for(;i<data[0].reply.length;i++)
 		{ reply+="<tr><td>"+data[0].reply[i].string+"</td>";
 		reply+="<td><input type=button value=삭제 id = i onclick=></td></tr>"}
-		 document.getElementById("r").innerHTML = reply;  }}
-	req.open("GET","./json_data.txt")
-	req.send();
+		 document.getElementById("r").innerHTML = reply;  }}}}
 	function check(){
 		if (document.getElementById("reply").value == "" || document.getElementById("reply").value== null) {
 		alert("댓글을 입력하세요.");
@@ -67,7 +73,7 @@
 			goUrl('boardView.html');}
 			else {console.log('Error!');}
 			}
-		}} }
+		}}}
 </script>
 </head>
 <body>

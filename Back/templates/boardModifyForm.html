@@ -13,39 +13,51 @@
 	function goUrl(url) {
 		location.href=url;
 	}
+	var id = document.location.href.split("/");
+	var req1 = new XMLHttpRequest();
+	req1.open("POST","./json_data.txt")
+	req1.send(id);
+	req1.onreadystatechange = function b(){console.log(req1.readyState);
+		if(req1.readyState==4){
 	var req = new XMLHttpRequest();
 	var data,i=0;
 	var jsondata =  new Object();
 	req.onreadystatechange = function a(){
 	console.log(this.readyState, this.status);
-	if (this.readyState ==4 ){
+	if (this.readyState ==4 ){{
 		console.log(this.response);
 		data = JSON.parse(req.response);
 		var txt = "";
-		txt += "<table border='1'>"
+		txt += "<table border='1' id = a>"
+		txt += "<tr><td>"+ "글번호" +"</td>"
+		txt+=("<td>"+"<input type=text id=id name=id disabled value=>" +"</td></tr>");
 		txt += "<tr><td>"+ "상호명" +"</td>"
-		txt+=("<td>"+"<input type= text id=store value=>" +"</td></tr>");
+		txt+=("<td>"+"<input type= text id=store name=store value=>" +"</td></tr>");
 		txt += "<tr><td>"+ "상품명" +"</td>"
-		txt+=("<td>"+"<input type= text id=product value= >" +"</td></tr>");
+		txt+=("<td>"+"<input type= text id=product name=product value= >" +"</td></tr>");
 		txt += "<tr><td>"+ "행사내용" +"</td>"
-		txt+=("<td>"+"<input type= text id=content value= >" +"</td></tr>");
+		txt+=("<td>"+"<input type= text id=content name=content value= >" +"</td></tr>");
 		txt += "<tr><td>"+ "가격" +"</td>"
-		txt+=("<td>"+"<input type= number id=price value=>"+"원" +"</td></tr>");
+		txt+=("<td>"+"<input type= number id=price name=price value=>"+"원" +"</td></tr>");
 		txt += "<tr><td>"+ "시작일시" +"</td>"
-		txt+=("<td>"+"<input type= date id=start value = >" +"</td></tr>");
+		txt+=("<td>"+"<input type= date id=start name=start value = >" +"</td></tr>");
 		txt += "<tr><td>"+ "종료일시" +"</td>"
-		txt+=("<td>"+"<input type= date id=end value = >" +"</td></tr>");
+		txt+=("<td>"+"<input type= date id=end name=end value = >" +"</td></tr>");
 		txt += "<tr><td>"+ "비밀번호" +"</td>"
-		txt+=("<td>"+"<input type= password id=password>" +"</td></tr>");
+		txt+=("<td>"+"<input type= password id=password name=password>" +"</td></tr>");
 		document.getElementById("f").innerHTML = txt;
-		txt += "</table>";
+		txt += "</table>";}
+		document.getElementById("id").value = data[i].id;
 		document.getElementById("store").value = data[i].store;
 		document.getElementById("product").value = data[i].product;
 		document.getElementById("content").value = data[i].content;
 		document.getElementById("price").value = data[i].price;
 		document.getElementById("start").value = data[i].start;
-		document.getElementById("end").value = data[i].end;}
+		document.getElementById("end").value = data[i].end;
+	  }
 	}
+	req.open("POST","./json_data.txt")
+	req.send();}}
 	function check() {
 		if (document.getElementById("store").value == "" || document.getElementById("store").value == null) {
 		alert("상호을 입력하세요.");
@@ -71,30 +83,8 @@
 		alert("비밀번호를 확인하세요.");
 		document.getElementById("password").focus();
 		return;}
-		else {json();}
+		else {document.a.submit()}
 		}
-		function json(){
-		data.store = document.getElementById("store").value;
-		data.product = document.getElementById("product").value;
-		data.content = document.getElementById("content").value;
-		data.price = document.getElementById("price").value;
-		data.start =document.getElementById("start").value;
-		data.end = document.getElementById("end").value;
-		var xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = function e()
-			{
-			if(xhr.readyState == 4)
-				{
-				if(xhr.status==200){console.log(this.responseText);goUrl='boardView';}
-				else {console.log('Error!');}
-				}
-			}
-		xhr.open('POST', './json_data.txt');
-		xhr.setRequestHeader('Content-Type', 'application/json');
-		xhr.send(JSON.stringify(data));
-		};
-	req.open("POST","./json_data.txt")
-	req.send();
 </script>
 </head>
 <body>
