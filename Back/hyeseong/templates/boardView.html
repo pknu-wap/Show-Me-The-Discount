@@ -24,7 +24,7 @@
 		console.log(this.response);
 		data = JSON.parse(req.response);
 		txt += "<table border='1'>"
-		txt += "<tr><td>"+ "상호명" +"</td>"		
+		txt += "<tr><td>"+ "상호명" +"</td>"
 		txt+=("<td>"+ data[0].store +"</td></tr>");
 		txt += "<tr><td>"+ "상품명" +"</td>"
 		txt+=("<td>"+ data[0].product +"</td></tr>");
@@ -41,7 +41,7 @@
 		reply="<table border='0'>"
 		for(;i<data[0].reply.length;i++)
 		{ reply+="<tr><td>"+data[0].reply[i].string+"</td>";
-		reply+="<td><input type=button value=삭제 onclick=></td></tr>"}
+		reply+="<td><input type=button value=삭제 id = i onclick=></td></tr>"}
 		 document.getElementById("r").innerHTML = reply;  }}
 	req.open("GET","./json_data.txt")
 	req.send();
@@ -53,11 +53,12 @@
 		alert("비밀번호를 입력하세요.");
 	               return;}
 		else{var xhr = new XMLHttpRequest();
-		xhr.open("GET","./json_data.txt")
-		re.string = document.getElementById("reply").value;
-		re.password = document.getElementById("password").value;
-		data[0].reply.push(re);
-		xhr.send(JSON.stringify(data));
+		xhr.open("POST","./json_data.txt");
+		xhr.setRequestHeader('Content-Type','text/html;charset=UTF-8');
+		xhr.setRequestHeader('id',data[0].id);
+		xhr.setRequestHeader('reply',document.getElementById("reply").value);
+		xhr.setRequestHeader('password',document.getElementById("password").value);
+		xhr.send();
 		xhr.onreadystatechange = function e()
 		{
 		if(xhr.readyState == 4)
@@ -74,7 +75,6 @@
 	<p>
 		<input type="button" value="목록" onclick="goUrl('boardList.html');" />
 		<input type="button" value="수정" onclick="goUrl('boardModifyForm.html');" />
-		<input type="button" value="삭제" />
 	</p>
 	<th>댓글</th>
 	<input type= text id = reply name = reply size= 30>
