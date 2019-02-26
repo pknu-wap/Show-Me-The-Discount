@@ -41,17 +41,15 @@
 	return;}
 	else {json();}
 	}
-	var data =  new Object();
 	function json(){
-	data.store = document.f.store.value;
-	data.product = document.f.product.value;
-	data.content = document.f.content.value;
-	data.price = document.f.price.value;
-	data.startdate = document.f.start.value;
-	data.enddate = document.f.end.value;
-	data.password = document.f.password.value;
-	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhr.send(JSON.stringify(data));
+	xhr.setRequestHeader('store', document.f.store.value);
+	xhr.setRequestHeader('product', document.f.product.value);
+	xhr.setRequestHeader('content', document.f.content.value);
+	xhr.setRequestHeader('price', document.f.price.value);
+	xhr.setRequestHeader('start', document.f.start.value);
+	xhr.setRequestHeader('end', document.f.end.value);
+	xhr.setRequestHeader('password', document.f.password.value);
+	xhr.send();
 	xhr.onreadystatechange = function e()
 		{
 		if(xhr.readyState == 4)
@@ -64,7 +62,7 @@
 </script>
 </head>
 <body>
-<form name=f method = post action="/register">
+<form name=f method = post>
 <table summary="게시판 등록">
 		<caption>게시판 등록 폼</caption>
 		<colgroup>
@@ -103,8 +101,7 @@
 	</table>
 	<p>
 		<input type="button" value="목록" onclick="goUrl('boardList.html');" />
-		<input type="submit" value="등록" onclick="check()"/>
+		<input type="button" value="등록" onclick="check()"/>
 	</p>
-	</form>
 </body>
 </html>
