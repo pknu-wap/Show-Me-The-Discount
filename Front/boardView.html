@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang ="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<title>게시판 상세보기</title>
+<style type="text/css">
+	* {font-size: 12pt;}
+	p {width: 930px; text-align: center;}
+	table{ width:40%;}
+	table tbody tr th {background-color: gray;}
+</style>
+<script type="text/javascript">
+	function goUrl(url) {
+		location.href=url;
+	}
+	var req = new XMLHttpRequest();
+	var data;
+	var re  = new Object();
+	var i=0;
+	var txt = "",reply="";
+	req.onreadystatechange = function a(){
+	console.log(this.readyState, this.status);
+	if (this.readyState ==4 ){
+		console.log(this.response);
+		data = JSON.parse(req.response);
+		txt += "<table border='1'>"
+		txt += "<tr><td>"+ "상호명" +"</td>"
+		txt+=("<td>"+ data[0].store +"</td></tr>");
+		txt += "<tr><td>"+ "상품명" +"</td>"
+		txt+=("<td>"+ data[0].product +"</td></tr>");
+		txt += "<tr><td>"+ "행사내용" +"</td>"
+		txt+=("<td>"+ data[0].content +"</td></tr>");
+		txt += "<tr><td>"+ "가격" +"</td>"
+		txt+=("<td>"+ data[0].price  +"</td></tr>");
+		txt += "<tr><td>"+ "시작일시" +"</td>"
+		txt+=("<td>"+ data[0].start +"</td></tr>");
+		txt += "<tr><td>"+ "종료일시" +"</td>"
+		txt+=("<td>"+ data[0].end +"</td></tr>");
+		document.getElementById("t").innerHTML = txt;
+		txt += "</table>"
+		reply="<table border='0'>"
+		for(;i<data[0].reply.length;i++)
+		{ reply+="<tr><td>"+data[0].reply[i].string+"</td>";
+		reply+="<td><input type=button value=삭제 id = i onclick=></td></tr>"}
+		 document.getElementById("r").innerHTML = reply;  }}
+	req.open("GET","./json_data.txt")
+	req.send();
+	function check(){
+		if (document.getElementById("reply").value == "" || document.getElementById("reply").value== null) {
+		alert("댓글을 입력하세요.");
+	               return;}
+		else if(document.getElementById("password").value == "" || document.getElementById("password").value== null) {
+		alert("비밀번호를 입력하세요.");
+	               return;}
+		else{var xhr = new XMLHttpRequest();
+		xhr.open("POST","./json_data.txt");
+		xhr.setRequestHeader('Content-Type','text/html;charset=UTF-8');
+		xhr.setRequestHeader('id',data[0].id);
+		xhr.setRequestHeader('reply',document.getElementById("reply").value);
+		xhr.setRequestHeader('password',document.getElementById("password").value);
+		xhr.send();
+		xhr.onreadystatechange = function e()
+		{
+		if(xhr.readyState == 4)
+			{
+			if(xhr.status==200){console.log(this.responseText);
+			goUrl('boardView.html');}
+			else {console.log('Error!');}
+			}
+		}} }
+</script>
+</head>
+<body>
+	<p id=t></p>
+	<p>
+		<input type="button" value="목록" onclick="goUrl('boardList.html');" />
+		<input type="button" value="수정" onclick="goUrl('boardModifyForm.html');" />
+	</p>
+	<th>댓글</th>
+	<input type= text id = reply name = reply size= 30>
+	<th>비밀번호</th>
+	<input type= password id = password name = password size= 10>
+	<input type= button value=댓글등록 onclick="check();"/>
+	<p id = r>
+	</p>
+</body>
+</html>

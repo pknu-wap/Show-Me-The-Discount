@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>게시판 목록</title>
+        <!-- CSS 영역 -->
+        <style type="text/css">
+            * {font-size: 12pt;}
+            p {width: 1500px;text-align: center;}
+            table thead tr th {background-color: gray;}
+        </style>
+        <!-- //CSS 영역 -->
+        <!-- 자바스크립트 영역 -->
+        <script language="javascript" type="text/javascript">
+            function goUrl(url) {
+                location.href = url;
+            }
+            function search() {
+              if(text.indexOf(document.searchForm.searchText.value) != -1) {
+
+              }
+              else {
+                alert("Not Found!!");
+              }
+            }
+            function enterSearch() {
+                if (event.keyCode == 13) {
+                    check();
+                }
+            }
+            function check() {
+                if (document.searchForm.searchText.value == "" || document.searchForm.searchText.value == null) {
+                    alert("검색어를 입력하세요.");
+                    document.searchForm.searchText.focus();
+                    return false;
+                }
+                else {
+                  search();
+                }
+            }
+            function json() {
+                req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                req.send(JSON.stringify(data));
+            }
+            function fn_paging(total, per, current) {
+                var total_rows = Number(total)
+                  , // 목록 총 갯수
+                per_page = Number(per)
+                  , // 한 페이지에 보여줄 목록 갯수
+                current = Number(current)
+                  , // 페이지 번호
+                idx = 1
+                  , paging_per = 3
+                  , // 한 파트에 보여줄 최대 페이지 번호 갯수
+                last_no = Math.ceil(total_rows / per_page);
+                // 마지막 페이지 번호
+
+                // 페이지네이션 사용할 필요성을 확인
+                if (total_rows > per_page) {
+                    var page_part = Math.ceil(current / paging_per)
+                      , // 현재 파트
+                    last_part = Math.ceil(last_no / paging_per);
+                    // 마지막 파트
+
+                    var start_page = (paging_per * page_part) - (paging_per - 1);
+                    // 시작 페이지 번호
+                    // 이전 페이지 번호
+                    var prev_no = current - 1;
+                    // set prev
+                    // 이전 페이지 오류 방지
+                    if (1 > prev_no)
+                        // error prev
+                        prev_no = 1;
+                    var html = '<div class="list_paging"><ul>';
+                    html += '<li class="btn_in_cls pg_first"><a data="1"><<</a></li>';
+                    html += '<li class="btn_in_cls pg_prev"><a data="' + prev_no + '"><</a></li>';
+                    // 이전 파트
+                    if (1 < page_part) {
+                        var prev_part = (page_part - 1) * paging_per;
+                        html += '<li class="btn_in_cls"><a data="' + prev_part + '">...</a></li>';
+                    }
+                    // 페이지 번호
+                    for (var p = start_page; p <= last_no; p++) {
+                        var cls = '';
+                        if (current == p)
+                            cls = 'p_active';
+                        html += '<li class="btn_in_cls page_num ' + cls + '"><a data="' + p + '">' + p + '</a></li>';
+                        // 한 파트에 보여줄 페이지 갯수
+                        if (++idx > paging_per)
+                            break;
+                    }
+                    // 다음 페이지 번호
+                    var next_no = current + 1;
+                    // set next
+                    // 다음 페이지 오류 방지
+                    if (last_no < next_no) // error next
+                        next_no = last_no; // 다음 파트
+                    if (page_part < last_part) {
+                        var next_part = page_part * paging_per + 1;
+                        html += '<li class="btn_in_cls"><a data="' + next_part + '">...</a></li>';
+                    }
+                    html += '<li class="btn_in_cls pg_next"><a data="' + next_no + '">></a></li>';
+                    html += '<li class="btn_in_cls pg_last"><a data="' + last_no + '">>></a></li>';
+                    html += '</ul></div>';
+                    return html;
+                } else
+                    return '';
+            }
+            var count;
+            var req = new XMLHttpRequest();
+            var txt = "";
+            var data;
+            req.onreadystatechange = function() {
+                console.log(this.readyState, this.status);
+                if (this.readyState == 4) {
+                    console.log(this.response);
+                    data = JSON.parse(this.response);
+                    txt += "<table border='1' size='100'>";
+                    txt += "<tr><td>" + "상호명" + "</td>";
+                    txt += "<td>" + "상품명" + "</td>";
+                    txt += "<td>" + "행사내용" + "</td>";
+                    txt += "<td>" + "가격" + "</td>";
+                    txt += "<td>" + "시작일시" + "</td>";
+                    txt += "<td>" + "종료일시" + "</td>";
+                    for (var i = 0; i < data.length; i++) {
+                        txt += ("<tr><td>" + data[i].store + "</td>");
+                        txt += ("<td>" + data[i].product + "</td>");
+                        txt += ("<td>" + data[i].content + "</td>");
+                        txt += ("<td>" + data[i].price + "</td>");
+                        txt += ("<td>" + data[i].start + "</td>");
+                        txt += ("<td>" + data[i].end + "</td></tr>");
+                    }
+                    document.getElementById("t").innerHTML = txt;
+                    txt += "</table>"
+                }
+            }
+            req.open("POST", "./json_data.txt", true);
+            json();
+        </script>
+        <!-- //자바스크립트 영역 -->
+    </head>
+    <body>
+        <!-- 검색 폼 영역 -->
+        <form name="searchForm" action="boardList.html" method="GET" onsubmit="return check()">
+            <table width="200" border="0" align="center">
+                <tr>
+                    <td align="center" valign="bottom">
+                        <select name="searchType">
+                            <option value="ALL">전체검색</option>
+                            <option value="STORE">상호명</option>
+                            <option value="PRODUCT">상품명</option>
+                            <option value="CONTENT">내용</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input id=text type="text" class='input_text' size="16" name="searchText" onkeydown="enterSearch()"/>
+                    </td>
+                    <td>
+                        <input type="submit" class='sch_smit' value="검색" onclick="check()"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <!-- //검색 폼 영역 -->
+        <!-- 게시판 목록 영역 -->
+        <p id=t></p>
+        <!-- //게시판 목록 영역 -->
+        <script>
+            var total_rows = 75, // 목록 총 갯수
+            page_per = 10, // 한 페이지에 보여줄 목록 갯수
+            current_no = 1;// 페이지 번호
+            document.write(fn_paging(total_rows, page_per, current_no));
+        </script>
+        <!-- 버튼 영역 -->
+        <p>
+            <input type="button" value="목록" onclick="goUrl('boardList.html');"/>
+            <input type="button" value="글쓰기" onclick="goUrl('boardWriteForm.html');"/>
+        </p>
+        <!-- //버튼 영역 -->
+    </body>
+</html>
