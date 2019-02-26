@@ -16,7 +16,7 @@
 	var id = document.location.href.split("/");
 	var req1 = new XMLHttpRequest();
 	req1.open("POST","./json_data.txt")
-	req1.send(id);
+	req1.send(id[id.length-1]);
 	var req = new XMLHttpRequest();
 	var data;
 	var re  = new Object();
