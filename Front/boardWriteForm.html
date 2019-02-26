@@ -42,6 +42,7 @@
 	else {json();}
 	}
 	function json(){
+	xhr.setRequestHeader('Content-Type','text/html;charset=UTF-8');
 	xhr.setRequestHeader('store', document.f.store.value);
 	xhr.setRequestHeader('product', document.f.product.value);
 	xhr.setRequestHeader('content', document.f.content.value);
