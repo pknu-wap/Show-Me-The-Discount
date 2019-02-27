@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, json, jsonify
 
 app = Flask(__name__)
 
@@ -10,8 +10,8 @@ def main_page():
 def write_form():
     return render_template('boardWriteForm.html')
 
-@app.route('/boardView.html/<id>', methods=['POST'])
-def register(id):
+@app.route('/register', methods=['POST'])
+def register():
     if request.method == 'POST':
         id = request.form["id"]
         store = request.form["store"]
@@ -21,35 +21,29 @@ def register(id):
         startdate = request.form["start"]
         enddate = request.form["end"]
         password = request.form["password"]
-        #db
-        return redirect('/boardView.html/'+id)
 
-'''@app.route('/json_data.txt', methods=['POST', 'GET'])
-def json():
-    if request.method == 'POST':
-        print(request.headers.get('product'))
+        x = {"id": id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
+        y = json.dumps(x)
         #db
-        return jsonify(request.headers.get('product'))
-    elif request.method == 'GET':
-        return jsonify(request.headers.get('product'))'''
+        return redirect('/boardView.html'+id)
+
+@app.route('/boardView.html/<int:id>')
+def view(id):
+    #post_id = request.args.get('id')
+    #db
+    return render_template('boardView.html')
 
 @app.route('/boardList.html', methods=['GET'])
 def list():
     #db
     return render_template('boardList.html')
 
-@app.route('/boardView.html/<id>')
-def view1(id):
-    post_id = request.args.get('id')
-    #db
-    return redirect(url_for('view2', id=id))
-
-@app.route('/boardView.html/')
+'''@app.route('/boardView.html/')
 def view2(id):
-    '''dict = {id : '1', product : '상품'}
-    return jsonify(dict)'''
+    dict = {id : '1', product : '상품'}
+    return jsonify(dict)
     #db
-    return render_template('boardView', )
+    return render_template('boardView', )'''
 
 @app.route('/boardModifyForm.html')
 def modify():
