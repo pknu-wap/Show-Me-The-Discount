@@ -1,98 +1,119 @@
-﻿<!DOCTYPE html>
-<html lang ="ko">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-<title>게시판 상세보기</title>
+<meta charset="UTF-8">
+<title>게시판 등록 폼</title>
 <style type="text/css">
 	* {font-size: 12pt;}
-	p {width: 930px; text-align: center;}
-	table{ width:40%;}
+	p {width: 930px; text-align: right;}
 	table tbody tr th {background-color: gray;}
 </style>
-<script >
+<script type="text/javascript">
 	function goUrl(url) {
 		location.href=url;
 	}
 	var id = document.location.href.split("/");
+	var data1;
 	var req1 = new XMLHttpRequest();
 	req1.open("POST","./json_data.txt")
 	req1.send(id[id.length-1]);
 	req1.onreadystatechange = function b(){console.log(req1.readyState);
 		if(req1.readyState==4){
 	var req = new XMLHttpRequest();
-	var data,i=0;
+	var data;
 	var jsondata =  new Object();
 	req.onreadystatechange = function a(){
 	console.log(this.readyState, this.status);
 	if (this.readyState ==4 ){{
 		console.log(this.response);
 		data = JSON.parse(req.response);
-		var txt = "";
-		txt += "<table border='1' id = a>"
-		txt += "<tr><td>"+ "글번호" +"</td>"
-		txt+=("<td>"+"<input type=text id=id name=id disabled value=>" +"</td></tr>");
-		txt += "<tr><td>"+ "상호명" +"</td>"
-		txt+=("<td>"+"<input type= text id=store name=store value=>" +"</td></tr>");
-		txt += "<tr><td>"+ "상품명" +"</td>"
-		txt+=("<td>"+"<input type= text id=product name=product value= >" +"</td></tr>");
-		txt += "<tr><td>"+ "행사내용" +"</td>"
-		txt+=("<td>"+"<input type= text id=content name=content value= >" +"</td></tr>");
-		txt += "<tr><td>"+ "가격" +"</td>"
-		txt+=("<td>"+"<input type= number id=price name=price value=>"+"원" +"</td></tr>");
-		txt += "<tr><td>"+ "시작일시" +"</td>"
-		txt+=("<td>"+"<input type= date id=start name=start value = >" +"</td></tr>");
-		txt += "<tr><td>"+ "종료일시" +"</td>"
-		txt+=("<td>"+"<input type= date id=end name=end value = >" +"</td></tr>");
-		txt += "<tr><td>"+ "비밀번호" +"</td>"
-		txt+=("<td>"+"<input type= password id=password name=password>" +"</td></tr>");
-		document.getElementById("f").innerHTML = txt;
-		txt += "</table>";}
-		document.getElementById("id").value = data[i].id;
-		document.getElementById("store").value = data[i].store;
-		document.getElementById("product").value = data[i].product;
-		document.getElementById("content").value = data[i].content;
-		document.getElementById("price").value = data[i].price;
-		document.getElementById("start").value = data[i].start;
-		document.getElementById("end").value = data[i].end;
+		document.getElementById("id").value = data[0].id;
+		document.getElementById("store").value = data[0].store;
+		document.getElementById("product").value = data[0].product;
+		document.getElementById("content").value = data[0].content;
+		document.getElementById("price").value = data[0].price;
+		document.getElementById("start").value = data[0].start;
+		document.getElementById("end").value = data[0].end;
+		data1=data;
 	  }
-	}
+	}}
 	req.open("POST","./json_data.txt")
 	req.send();}}
 	function check() {
-		if (document.getElementById("store").value == "" || document.getElementById("store").value == null) {
-		alert("상호을 입력하세요.");
-		document.getElementById("store").focus();
-	               return;}
-		else if (document.getElementById("product").value == "" || document.getElementById("product").value == null) {
-		alert("상품을 입력하세요.");
-		document.getElementById("product").focus();
-		return;}
-		else if (document.getElementById("price").value == "" || document.getElementById("price").value == null) {
-		alert("가격을 입력하세요.");
-		document.getElementById("price").focus();
-		return;}
-		else if (document.getElementById("content").value == "" || document.getElementById("content").value == null) {
-		alert("할인내용을 입력하세요.");
-		document.getElementById("content").focus();
-		return;}
-		else if (document.getElementById("end").value == "" || document.getElementById("end") == null) {
-		alert("종료일시을 입력하세요.");
-		document.getElementById("end").focus();
-		return;}
-		else if (document.getElementById("password").value != data[i].password) {
-		alert("비밀번호를 확인하세요.");
-		document.getElementById("password").focus();
-		return;}
-		else {document.a.submit()}
-		}
+	if (document.f.store.value == "" || document.f.store.value == null) {
+	alert("상호을 입력하세요.");
+	document.f.store.focus();
+               return;}
+	else if (document.f.product.value == "" || document.f.product.value == null) {
+	alert("상품을 입력하세요.");
+	document.f.product.focus();
+	return;}
+	else if (document.f.price.value == "" || document.f.price.value == null) {
+	alert("가격을 입력하세요.");
+	document.f.price.focus();
+	return;}
+	else if (document.f.content.value == "" || document.f.content.value == null) {
+	alert("할인내용을 입력하세요.");
+	document.f.content.focus();
+	return;}
+	else if (document.f.end.value == "" || document.f.end.value == null) {
+	alert("종료일시을 입력하세요.");
+	document.f.enddate.focus();
+	return;}
+	else if (document.f.password.value != data1[0].password) {
+	alert("비밀번호를 확인하세요.");
+	document.f.password.focus();
+	return;}
+	else {document.f.submit();}
+	}
 </script>
 </head>
 <body>
-	<p id=f></p>
+<form name=f method = post action='boardView.html'>
+<table summary="게시판 등록">
+		<caption>게시판 등록 폼</caption>
+		<colgroup>
+			<col width="150" />
+		</colgroup>
+		<tbody>
+		<tr>
+			<th align="center">상호명</th>
+			<td><input type=text name=id id=id size=30 disabled value= ></td>
+		</tr>
+			<tr>
+				<th align="center">상호명</th>
+				<td><input type=text name=store id=store size=30/></td>
+			</tr>
+			<tr>
+				<th align="center">상품명</th>
+				<td><input type=text name=product id=product size=30/></td>
+			</tr>
+			<tr>
+				<th align="center">행사내용</th>
+				<td><input type=text name=content id=content size=30/></td>
+			</tr>
+			<tr>
+				<th align="center">가격</th>
+				<td><input type=number name=price id=price size=30/>원</td>
+			</tr>
+			<tr>
+				<th align="center">시작일시(생략가능)</th>
+				<td><input type=date name=start id=start size=60/></td>
+			</tr>
+			<tr>
+				<th align="center">종료일시</th>
+				<td><input type=date name=end id=end size=30/></td>
+			</tr>
+			<tr>
+				<th align="center">비밀번호(글 수정시)</th>
+				<td><input type=password name=password id=password size=30/></td>
+			</tr>
+		</tbody>
+	</table>
 	<p>
-		<input type="button" value="목록" onclick="goUrl('boardList.html');" />
-		<input type="button" value="수정" onclick="check();" />
-		<input type="button" value="삭제" />
+		<input type="button" value="목록" onclick="goUrl('boardList.html');"/>
+		<input type="button" value="수정" onclick="check();"/>
+		<input type="button" value="삭제" onclick="check1();"/>
 	</p>
 </body>
 </html>
