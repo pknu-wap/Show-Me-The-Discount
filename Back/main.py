@@ -12,7 +12,8 @@ def write_form():
 
 @app.route('/boardView.html', methods=['POST'])
 def register():
-    if request.method == 'POST':
+    if 'id' in locals():
+        id +=1
         store = request.form["store"]
         product = request.form["product"]
         content = request.form["content"]
@@ -20,24 +21,34 @@ def register():
         startdate = request.form["start"]
         enddate = request.form["end"]
         password = request.form["password"]
+    else :
+        id = 1
+        store = request.form["store"]
+        product = request.form["product"]
+        content = request.form["content"]
+        price = request.form["price"]
+        startdate = request.form["start"]
+        enddate = request.form["end"]
+        password = request.form["password"]
+        #글번호(id) 지정
 
-
-
-        x = {"store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
-        y = json.dumps(x)
-        #db 데이터 삽입
-        return redirect('/boardView.html/'+id)
+    x = {"id": id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
+    y = json.dumps(x)
+    #db 데이터 삽입
+    return redirect('/boardView.html/'+str(id))
 
 @app.route('/boardView.html/<int:id>')
 def view(id):
     #db 데이터 읽기
-    return render_template('boardView.html')
+    return render_template('boardView.html') #json
 
 #@app.route('/')
 @app.route('/boardList.html')
 def list():
     #db
-    return render_template('boardList.html')
+    x = '{"id": 1, "store": STORE, "product": PRODUCT, "content": CONTENT, "price": PRICE, "startdate": STARTDATE, "enddate": ENDDATE}' #TEST
+    return x
+    #return render_template('boardList.html')
 
 @app.route('/boardModifyForm.html')
 def modify():
