@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, json, jsonify
+from flask import Flask, render_template, request, redirect, json
 
 app = Flask(__name__)
 
@@ -10,8 +10,37 @@ def main_page():
 def write_form():
     return render_template('boardWriteForm.html')
 
-@app.route('/register', methods=['POST'])
+@app.route('/boardView.html', methods=['POST'])
 def register():
+    if request.method == 'POST':
+        store = request.form["store"]
+        product = request.form["product"]
+        content = request.form["content"]
+        price = request.form["price"]
+        startdate = request.form["start"]
+        enddate = request.form["end"]
+        password = request.form["password"]
+
+
+
+        x = {"store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
+        y = json.dumps(x)
+        #db 데이터 삽입
+        return redirect('/boardView.html/'+id)
+
+@app.route('/boardView.html/<int:id>')
+def view(id):
+    #db 데이터 읽기
+    return render_template('boardView.html')
+
+#@app.route('/')
+@app.route('/boardList.html')
+def list():
+    #db
+    return render_template('boardList.html')
+
+@app.route('/boardModifyForm.html')
+def modify():
     if request.method == 'POST':
         id = request.form["id"]
         store = request.form["store"]
@@ -24,29 +53,7 @@ def register():
 
         x = {"id": id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
         y = json.dumps(x)
-        #db
-        return redirect('/boardView.html'+id)
-
-@app.route('/boardView.html/<int:id>')
-def view(id):
-    #post_id = request.args.get('id')
-    #db
-    return render_template('boardView.html')
-
-@app.route('/boardList.html', methods=['GET'])
-def list():
-    #db
-    return render_template('boardList.html')
-
-'''@app.route('/boardView.html/')
-def view2(id):
-    dict = {id : '1', product : '상품'}
-    return jsonify(dict)
-    #db
-    return render_template('boardView', )'''
-
-@app.route('/boardModifyForm.html')
-def modify():
+        #db 데이터 수정
     return render_template('boardModifyForm.html')
 
 if __name__ == '__main__':
