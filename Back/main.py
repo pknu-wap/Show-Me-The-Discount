@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, json
 
 app = Flask(__name__)
 
+id = 0
+
 @app.route('/')
 def main_page():
     return render_template('boardList.html')
@@ -12,8 +14,9 @@ def write_form():
 
 @app.route('/boardView.html', methods=['POST'])
 def register():
-    if 'id' in locals():
-        id +=1
+    if request.method == 'POST':
+        global id
+        id += 1
         store = request.form["store"]
         product = request.form["product"]
         content = request.form["content"]
@@ -21,16 +24,6 @@ def register():
         startdate = request.form["start"]
         enddate = request.form["end"]
         password = request.form["password"]
-    else :
-        id = 1
-        store = request.form["store"]
-        product = request.form["product"]
-        content = request.form["content"]
-        price = request.form["price"]
-        startdate = request.form["start"]
-        enddate = request.form["end"]
-        password = request.form["password"]
-        #글번호(id) 지정
 
     x = {"id": id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
     y = json.dumps(x)
