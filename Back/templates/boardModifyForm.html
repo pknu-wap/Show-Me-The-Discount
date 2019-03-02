@@ -64,12 +64,21 @@
 	alert("비밀번호를 확인하세요.");
 	document.f.password.focus();
 	return;}
-	else {document.f.submit();}
+	else {f.action=modify; //수정시 action 경로 재설정 해야됨
+		document.f.submit();}}
+	function check1()
+	{
+		if (document.f.password.value =="" || document.f.password.value == null) {
+		alert("비밀번호를 입력하세요.");
+		document.f.password.focus();
+		return;}
+		else {f.action=delete; // 삭제시 action 경로 재설정 해야됨
+		document.f.submit();}
 	}
 </script>
 </head>
 <body>
-<form name=f method = post action='boardView.html'>
+<form name=f method = post action='modify'>
 <table summary="게시판 등록">
 		<caption>게시판 등록 폼</caption>
 		<colgroup>
