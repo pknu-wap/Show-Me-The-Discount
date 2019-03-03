@@ -59,21 +59,36 @@
 		alert("비밀번호를 입력하세요.");
 	               return;}
 		else{var xhr = new XMLHttpRequest();
-		xhr.open("POST","./json_data.txt");
+		var encoder = new TextEncoder();
+		var reply_string = encode(document.getElementById("reply").value);
+		xhr.open("POST","./");
 		xhr.setRequestHeader('Content-Type','text/html;charset=UTF-8');
-		xhr.setRequestHeader('id',data[0].id);
-		xhr.setRequestHeader('reply',document.getElementById("reply").value);
-		xhr.setRequestHeader('password',document.getElementById("password").value);
+		xhr.setRequestHeader('data_id',data[0].id); // 글 id
+		xhr.setRequestHeader('reply',reply_string); // 댓글 string
+		xhr.setRequestHeader('password',document.getElementById("password").value); // 댓글 password
 		xhr.send();
 		xhr.onreadystatechange = function e()
 		{
 		if(xhr.readyState == 4)
 			{
-			if(xhr.status==200){console.log(this.responseText);
-			goUrl('boardView.html');}
+			if(xhr.status==200){goUrl('http://127.0.0.1:5000/boardView.html');}
 			else {console.log('Error!');}
 			}
 		}}}
+		function reply_delete(x)
+		{	var a=x.rowIndex;
+			var pass=prompt('비밀번호를 입력하세요.');
+			var del = new XMLHttpRequest();
+			del.open('POST','');
+			del.setRequestHeader('data_id',data[0].id); //글 id 번호
+			del.setRequestHeader('reply_id',data[0].reply[a].id); // 댓글 id 번호
+			del.setRequestHeader('reply_password',pass); // 댓글 password
+			del.send();
+			if(del.readyState==4)
+			{if(del.response==y){alert("삭제되었습니다.");//비밀번호가 맞으면 서버가 y를 리턴해줘서 삭제되고 새로고침
+			goUrl('http://127.0.0.1:5000/boardView.html');}
+			else{alert("비밀번호가 틀립니다");goUrl('http://127.0.0.1:5000/boardView.html');}}
+		}
 </script>
 </head>
 <body>
