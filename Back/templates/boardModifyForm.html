@@ -13,9 +13,8 @@
 		location.href=url;
 	}
 	var id = document.location.href.split("/");
-	var data1;
 	var req1 = new XMLHttpRequest();
-	req1.open("POST","./json_data.txt")
+	req1.open("POST","./json_data.txt");
 	req1.send(id[id.length-1]);
 	req1.onreadystatechange = function b(){console.log(req1.readyState);
 		if(req1.readyState==4){
@@ -34,10 +33,9 @@
 		document.getElementById("price").value = data[0].price;
 		document.getElementById("start").value = data[0].start;
 		document.getElementById("end").value = data[0].end;
-		data1=data;
 	  }
 	}}
-	req.open("POST","./json_data.txt")
+	req.open("POST","./json_data.txt");
 	req.send();}}
 	function check() {
 	if (document.f.store.value == "" || document.f.store.value == null) {
@@ -60,8 +58,8 @@
 	alert("종료일시을 입력하세요.");
 	document.f.enddate.focus();
 	return;}
-	else if (document.f.password.value != data1[0].password) {
-	alert("비밀번호를 확인하세요.");
+	else if (document.f.password.value =="" || document.f.password.value == null) {
+	alert("비밀번호를 입력하세요.");
 	document.f.password.focus();
 	return;}
 	else {f.action=modify; //수정시 action 경로 재설정 해야됨
