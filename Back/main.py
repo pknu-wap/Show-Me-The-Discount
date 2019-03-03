@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, json
 
 app = Flask(__name__)
 
-id = 0
+data_id = 0
 reply_id = 0
 
 @app.route('/')
@@ -20,8 +20,8 @@ def write_form():
 @app.route('/write', methods=['POST'])
 def register():
     if request.method == 'POST':
-        global id
-        id += 1
+        global data_id
+        data_id += 1
         store = request.form["store"]
         product = request.form["product"]
         content = request.form["content"]
@@ -30,15 +30,15 @@ def register():
         enddate = request.form["end"]
         password = request.form["password"]
 
-        x = {"id": id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
+        x = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
         y = json.dumps(x)
 
     #db 데이터 삽입
 
-    return redirect('/boardView.html/'+str(id))
+    return redirect('/boardView.html/'+str(data_id))
 
-@app.route('/boardView.html/<int:id>')
-def view(id):
+@app.route('/boardView.html/<intd:data_id>')
+def view(data_id):
 
     #db 데이터 읽기
 
@@ -51,7 +51,7 @@ def modify_form():
 @app.route('/modify')
 def modify():
     if request.method == 'POST':
-        id = request.form["id"]
+        data_id = request.form["id"]
         store = request.form["store"]
         product = request.form["product"]
         content = request.form["content"]
@@ -60,18 +60,20 @@ def modify():
         enddate = request.form["end"]
         password = request.form["password"]
 
-        x = {"id": id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
+        x = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
         y = json.dumps(x)
 
-    #db 데이터 수정
+    #db 데이터 읽기(id)
+    #json password 일치 여부 확인
+        #db 데이터 수정(id, password 그대로)
 
-    return redirect('/boardView.html/'+str(id))
+    return redirect('/boardView.html/'+str(data_id))
 
-@app.route('/delete1') # 글 삭제
+@app.route('/delete1', methods=['POST']) # 글 삭제
 def delete1():
 
     #db 데이터 읽기
-    #json 일치 여부 확인
+    #json password 일치 여부 확인
 
         #db 데이터 삭제
 
@@ -90,7 +92,7 @@ def reply():
 
     #db 데이터 삽입
 
-    return
+    return redirect('/boardView.html/'+str(data_id))
 
 @app.route('/delete2') # 댓글 삭제
 def delete2():
