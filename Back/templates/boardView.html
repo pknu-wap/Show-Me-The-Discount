@@ -61,7 +61,7 @@
 		else{var xhr = new XMLHttpRequest();
 		var encoder = new TextEncoder();
 		var reply_string = encode(document.getElementById("reply").value);
-		xhr.open("POST","./");
+		xhr.open("POST","./reply");
 		xhr.setRequestHeader('Content-Type','text/html;charset=UTF-8');
 		xhr.setRequestHeader('data_id',data[0].id); // 글 id
 		xhr.setRequestHeader('reply',reply_string); // 댓글 string
@@ -79,7 +79,7 @@
 		{	var a=x.rowIndex;
 			var pass=prompt('비밀번호를 입력하세요.');
 			var del = new XMLHttpRequest();
-			del.open('POST','');
+			del.open('POST','./delete2');
 			del.setRequestHeader('data_id',data[0].id); //글 id 번호
 			del.setRequestHeader('reply_id',data[0].reply[a].id); // 댓글 id 번호
 			del.setRequestHeader('reply_password',pass); // 댓글 password
