@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, json
 app = Flask(__name__)
 
 id = 0
+reply_id = 0
 
 @app.route('/')
 @app.route('/boardList.html')
@@ -66,14 +67,45 @@ def modify():
 
     return redirect('/boardView.html/'+str(id))
 
-@app.route('/delete1')
-def delete():
+@app.route('/delete1') # 글 삭제
+def delete1():
+
     #db 데이터 읽기
-    #비밀번호 일치 여부 확인
+    #json 일치 여부 확인
 
         #db 데이터 삭제
 
     return render_template('boardList.html')
+
+@app.route('/reply', methods=['POST'])
+def reply():
+    global reply_id
+    reply_id += 1
+    data_id = request.form["data_id"]
+    reply = request.form["reply"]
+    reply_password = request.form["password"]
+
+    x = {"reply_id": reply_id, "data_id": data_id, "reply": reply, "reply_password": reply_password}
+    y = json.dumps(x)
+
+    #db 데이터 삽입
+
+    return
+
+@app.route('/delete2') # 댓글 삭제
+def delete2():
+    data_id = request.form["data_id"]
+    reply_id = request.form["reply_id"]
+    reply_password = request.form["reply_password"]
+
+    x = {"data_id": data_id, "reply_id": reply_id, "reply_password": reply_password}
+    y = json.dumps(x)
+
+    #db 데이터 읽기
+    #json 데이터 일치 여부 확인
+        #db 데이터 삭제
+
+    return
 
 if __name__ == '__main__':
     app.run(debug = True)
