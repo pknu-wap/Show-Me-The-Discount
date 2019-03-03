@@ -16,15 +16,13 @@
 	var req1 = new XMLHttpRequest();
 	req1.open("POST","./json_data.txt");
 	req1.send(id[id.length-1]);
-	req1.onreadystatechange = function b(){console.log(req1.readyState);
+	req1.onreadystatechange = function b(){
 		if(req1.readyState==4){
 	var req = new XMLHttpRequest();
 	var data;
 	var jsondata =  new Object();
 	req.onreadystatechange = function a(){
-	console.log(this.readyState, this.status);
-	if (this.readyState ==4 ){{
-		console.log(this.response);
+	if (this.readyState ==4 ){
 		data = JSON.parse(req.response);
 		document.getElementById("id").value = data[0].id;
 		document.getElementById("store").value = data[0].store;
@@ -33,7 +31,6 @@
 		document.getElementById("price").value = data[0].price;
 		document.getElementById("start").value = data[0].start;
 		document.getElementById("end").value = data[0].end;
-	  }
 	}}
 	req.open("POST","./json_data.txt");
 	req.send();}}
