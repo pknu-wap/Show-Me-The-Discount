@@ -2,12 +2,12 @@
 <html lang="ko">
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css" type="text/css">
         <title>게시판 목록</title>
         <!-- CSS 영역 -->
         <style type="text/css">
             * {font-size: 12pt;}
             p {width: 1500px; text-align: center;}
-            table thead tr th {background-color: gray;}
         </style>
         <!-- //CSS 영역 -->
         <!-- 자바스크립트 영역 -->
@@ -18,71 +18,109 @@
             var maxPage = 0;
             var j = 1;
             var i;
-            Page();
-            function Page() {
-                req.onreadystatechange = function() {
-                    console.log(this.readyState, this.status);
-                    if (this.readyState == 4) {
-                        console.log(this.response);
-                        data = JSON.parse(this.response);
-                        var txt = "";
-                        txt += "<table border='1' size='100'>";
-                        txt += "<tr><td>" + "상호명" + "</td>";
-                        txt += "<td>" + "상품명" + "</td>";
-                        txt += "<td>" + "행사내용" + "</td>";
-                        txt += "<td>" + "가격" + "</td>";
-                        txt += "<td>" + "시작일시" + "</td>";
-                        txt += "<td>" + "종료일시" + "</td></tr>";
-                        for (i = 10 * (j - 1); i < 10 * j; i++) {
-                            txt += "<tr onclick=goView(this)><td>" + data[i].store + "</td>";
-                            txt += "<td>" + data[i].product + "</td>";
-                            txt += "<td>" + data[i].content + "</td>";
-                            txt += "<td>" + data[i].price + "</td>";
-                            txt += "<td>" + data[i].start + "</td>";
-                            txt += "<td>" + data[i].end + "</td></tr>";
+            var index=1;
+            req.onreadystatechange = function() {
+                console.log(this.readyState, this.status);
+                if (this.readyState == 4) {
+                    console.log(this.response);
+                    data = JSON.parse(this.response);
+                    var txt = "";
+                    txt += "<br><br><table id='Table1' border='1'>";
+                    txt += "<tr id='Table2'><td>" + "상호명" + "</td>";
+                    txt += "<td>" + "상품명" + "</td>";
+                    txt += "<td>" + "행사내용" + "</td>";
+                    txt += "<td>" + "가격" + "</td>";
+                    txt += "<td>" + "시작일시" + "</td>";
+                    txt += "<td>" + "종료일시" + "</td></tr>";
+                    if(data.length == 0) {
+                      txt += "<tr><td colspan=6><strong>" + "등록된 글이 없습니다."+"</strong></td></tr>";
+                    }
+                    else if(data.length < 10){
+                      for(i=0; i<data.length; i++){
+                        txt += "<tr onclick=goView(this) id='Table3'><td>" + data[i].store + "</td>";
+                        txt += "<td>" + data[i].product + "</td>";
+                        txt += "<td>" + data[i].content + "</td>";
+                        txt += "<td>" + data[i].price + "</td>";
+                        txt += "<td>" + data[i].start + "</td>";
+                        txt += "<td>" + data[i].end + "</td></tr>";
                         }
-                        document.getElementById("t").innerHTML = txt;
-                        txt += "</table>";
-                        maxPage = parseInt(data.length / 10 + 1);
-                        for (j = 1; j <= maxPage; j++) {
-                            p += "<b onclick=Page(j)>" + j + "</b>" + " ";
-                            document.getElementById("pg").innerHTML = p;
+                    }
+                    else {
+                      for (i = 10 * (j - 1); i < 10 * j; i++) {
+                          txt += "<tr onclick=goView(this) id='Table3'><td>" + data[i].store + "</td>";
+                          txt += "<td>" + data[i].product + "</td>";
+                          txt += "<td>" + data[i].content + "</td>";
+                          txt += "<td>" + data[i].price + "</td>";
+                          txt += "<td>" + data[i].start + "</td>";
+                          txt += "<td>" + data[i].end + "</td></tr>";
+                        }
+                      }
+                      document.getElementById("t").innerHTML = txt;
+                      txt += "</table>";
+                      maxPage = parseInt(data.length / 10 + 1);
+                      for (j = 1; j <= maxPage; j++) {
+                          p += "<strong class='pages' onclick=Page(this)>" + j + "</strong>" + " ";
+                          document.getElementById("pg").innerHTML = p;
                         }
                     }
                 }
                 req.open("POST", "./json_data.txt", true);
                 json();
+                  function Page(a){console.log(a.textContent);
+                    var h=a.textContent;
+                    index =h;
+                    var txt="";
+                    txt += "<table id='Table1' border='1' size='100'>";
+                    txt += "<tr><td>" + "상호명" + "</td>";
+                    txt += "<td>" + "상품명" + "</td>";
+                    txt += "<td>" + "행사내용" + "</td>";
+                    txt += "<td>" + "가격" + "</td>";
+                    txt += "<td>" + "시작일시" + "</td>";
+                    txt += "<td>" + "종료일시" + "</td></tr>";
+                    if(data.length<h*10){k=data.length;}
+                    else{k=10*h;}
+                    for (i = 10 * (h - 1); i < k; i++) {
+                txt += "<tr onclick=goView(this)><td>" + data[i].store + "</td>";
+                txt += "<td>" + data[i].product + "</td>";
+                txt += "<td>" + data[i].content + "</td>";
+                txt += "<td>" + data[i].price + "</td>";
+                txt += "<td>" + data[i].start + "</td>";
+                txt += "<td>" + data[i].end + "</td></tr>";
             }
-            function goView(id) {
-                console.log(id.rowIndex);
-                //클릭 시 상세보기로 가는 함수
-                var a = id.rowIndex - 1;
-                var req1 = new XMLHttpRequest();
-                req1.open('POST', './json_data.txt');
-                req1.send(data[a].id)
-            }
-            function goUrl(url) {
-                location.href = url;
-            }
-            function enterSearch() {
-                if (event.keyCode == 13) {
-                    check();
+            document.getElementById("t").innerHTML = txt;
+            txt += "</table>";
+          }
+
+                function goView(id) {
+                  var a = (index-1)*10+id.rowIndex - 1;
+                  console.log(a);
+                  var req1 = new XMLHttpRequest();
+                  req1.open('POST', './json_data.txt');
+                  req1.send(data[a].id)
                 }
-            }
-            function check(txt) {
-                var req2 = new XMLHttpRequest();
-                ;if (txt == "" || txt == null) {
+                function goUrl(url) {
+                  location.href = url;
+                }
+                function enterSearch() {
+                  if (event.keyCode == 13) {
+                    check();
+                  }
+                }
+                function check(txt) {
+                  var req2 = new XMLHttpRequest();
+                  if (txt == "" || txt == null) {
                     alert("검색어를 입력하세요.");
                     document.searchForm.searchText.focus();
                     return false;
-                } else {
+                  }
+                  else {
                     req2.open('POST', './json_data.txt');
                     req2.send(txt)
+                  }
                 }
-            }
-            function json() {
-                req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                req.send(JSON.stringify(data));
+                function json() {
+                  req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                  req.send(JSON.stringify(data));
             }
         </script>
         <!-- //자바스크립트 영역 -->
@@ -116,8 +154,8 @@
         <p id=pg></p>
         <!-- 버튼 영역 -->
         <p>
-            <input type="button" value="목록" onclick="goUrl('boardList.html');"/>
-            <input type="button" value="글쓰기" onclick="goUrl('boardWriteForm.html');"/>
+            <input type="button" class='buttons' value="목록" onclick="goUrl('http://127.0.0.1:5000/boardList.html');"/>
+            <input type="button" class='buttons' value="글쓰기" onclick="goUrl('http://127.0.0.1:5000/boardWriteForm.html');"/>
         </p>
         <!-- //버튼 영역 -->
     </body>
