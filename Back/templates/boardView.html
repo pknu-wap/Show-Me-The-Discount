@@ -60,7 +60,7 @@
 	               return;}
 		else{var xhr = new XMLHttpRequest();
 		var encoder = new TextEncoder();
-		var reply_string = encode(document.getElementById("reply").value);
+		var reply_string = encoder.encode(document.getElementById("reply").value);
 		xhr.open("POST","./reply");
 		xhr.setRequestHeader('Content-Type','text/html;charset=UTF-8');
 		xhr.setRequestHeader('data_id',data[0].id); // 글 id
