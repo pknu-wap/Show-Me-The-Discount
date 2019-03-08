@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*
+
 from flask import Flask, render_template, request, redirect, json
 
 app = Flask(__name__)
@@ -12,7 +14,7 @@ def list():
     data = {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "행사 시작", "end": "행사 종료"}
 
     data1 = json.dumps(data, ensure_ascii=False).encode('utf8')
-
+    print(data1)
     return render_template('boardList.html', data1 = data1) #json
 
 @app.route('/boardWriteForm.html')
