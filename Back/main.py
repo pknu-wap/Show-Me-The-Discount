@@ -11,9 +11,10 @@ reply_id = 0
 @app.route('/boardList.html')
 def list():
     #db 데이터 읽기
-    data = {"store": "store1", "product": "product1", "content": "content1", "price": "price1", "start": "start1", "end": "end1"}
+    #data = {"store": "store1", "product": "product1", "content": "content1", "price": "price1", "start": "start1", "end": "end1"}
+    data = {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}
 
-    data1 = json.dumps(data, ensure_ascii=False).encode('utf8') #한글 깨짐
+    data1 = json.dumps(data, ensure_ascii=False) #한글 깨짐
     print(data1)
     return render_template('boardList.html', data1 = data1) #json
 
