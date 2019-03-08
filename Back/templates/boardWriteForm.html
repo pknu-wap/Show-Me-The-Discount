@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="style.css" type="text/css">
 <title>게시판 등록</title>
 <style type="text/css">
 	* {font-size: 12pt;}
@@ -42,47 +43,48 @@
 </script>
 </head>
 <body>
+	<div align="center" class="img1"><img src="http://cms.pknu.ac.kr/data/pknupa/UXIS_SITEBANNER/UXIS_SITEBANNER_201704190207028970"></div><br><br><br><br><br>
 <form name=f method = post action='write'>
 <table summary="게시판 등록">
-		<caption>게시판 등록</caption>
 		<colgroup>
 			<col width="150" />
 		</colgroup>
 		<tbody>
 			<tr>
-				<th align="center">상호명</th>
+				<th align="center" class='store'>상호명</th>
 				<td><input type=text name=store id=store size=30/></td>
 			</tr>
 			<tr>
-				<th align="center">상품명</th>
+				<th align="center" class='product'>상품명</th>
 				<td><input type=text name=product id=product size=30/></td>
 			</tr>
 			<tr>
-				<th align="center">행사내용</th>
+				<th align="center" class='content'>행사내용</th>
 				<td><input type=text name=content id=content size=30/></td>
 			</tr>
 			<tr>
-				<th align="center">가격</th>
+				<th align="center" class='price'>가격</th>
 				<td><input type=number name=price id=price size=30/>원</td>
 			</tr>
 			<tr>
-				<th align="center">시작일시(생략가능)</th>
+				<th align="center" class='start'>시작일시(생략가능)</th>
 				<td><input type=date name=start id=start size=60/></td>
 			</tr>
 			<tr>
-				<th align="center">종료일시</th>
+				<th align="center" class='end'>종료일시</th>
 				<td><input type=date name=end id=end size=30/></td>
 			</tr>
 			<tr>
-				<th align="center">비밀번호(글 수정시)</th>
+				<th align="center" class='password'>비밀번호(글 수정시)</th>
 				<td><input type=password name=password id=password size=30/></td>
 			</tr>
 		</tbody>
 	</table>
 	<p>
-		<input type="button" value="목록" onclick="goUrl('http://127.0.0.1:5000/boardList.html');" />
-		<input type="button" value="등록" onclick="check()"/>
+		<input type="button" class='buttons1' value="목록" onclick="goUrl('http://127.0.0.1:5000/boardList.html');" />
+		<input type="button" class='buttons1' value="등록" onclick="check()"/>
 	</p>
 </form>
+<div align="center" class="img"><img src="http://cms.pknu.ac.kr/data/pknupa/UXIS_SITEBANNER/UXIS_SITEBANNER_201704190207028970"></div>
 </body>
 </html>

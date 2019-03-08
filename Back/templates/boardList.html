@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
-        <meta charset="utf-8">
+      <meta charset="utf-8">
         <link rel="stylesheet" href="style.css" type="text/css">
         <title>게시판 목록</title>
         <!-- CSS 영역 -->
@@ -25,7 +25,7 @@
                     console.log(this.response);
                     data = JSON.parse(this.response);
                     var txt = "";
-                    txt += "<br><table id='Table1'>";
+                    txt += "<table id='Table1'>";
                     txt += "<tr id='Table2'><td>" + "상호명" + "</td>";
                     txt += "<td>" + "상품명" + "</td>";
                     txt += "<td>" + "행사내용" + "</td>";
@@ -64,7 +64,7 @@
                     if(a==1){h=1;}else{h=a.textContent;}
                     index =h;
                     var txt="";
-                    txt += "<br><table id='Table1'>";
+                    txt += "<table id='Table1'>";
                     txt += "<tr id= 'Table2'><td>" + "상호명" + "</td>";
                     txt += "<td>" + "상품명" + "</td>";
                     txt += "<td>" + "행사내용" + "</td>";
@@ -92,7 +92,6 @@
                         document.getElementById("pg").innerHTML = p;
                       }
                   }
-
                 function goView(id) {
                   var a = (index-1)*10+id.rowIndex - 1;
                   console.log(a);
@@ -129,7 +128,8 @@
         <!-- //자바스크립트 영역 -->
     </head>
     <body>
-        <div align="center" class="img1"><img src="http://cms.pknu.ac.kr/data/pknupa/UXIS_SITEBANNER/UXIS_SITEBANNER_201704190207028970"></div><br>
+      <div align="center" class="img1"><img src="http://cms.pknu.ac.kr/data/pknupa/UXIS_SITEBANNER/UXIS_SITEBANNER_201704190207028970"></div><br><br><br><br><br>
+
         <!-- 검색 폼 영역 -->
         <form name="searchForm" action="boardList.html" method="GET" onsubmit="return check()">
             <table width="200" class=search>
@@ -160,7 +160,7 @@
         <p>
             <input type="button" class='buttons' value="목록" onclick="goUrl('http://127.0.0.1:5000/boardList.html');"/>
             <input type="button" class='buttons' value="글쓰기" onclick="goUrl('http://127.0.0.1:5000/boardWriteForm.html');"/>
-        </p>
+        </p><br><br>
         <!-- //버튼 영역 -->
         <div align="center" class="img"><img src="http://cms.pknu.ac.kr/data/pknupa/UXIS_SITEBANNER/UXIS_SITEBANNER_201704190207028970"></div>
     </body>

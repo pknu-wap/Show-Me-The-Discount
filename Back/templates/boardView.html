@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang ="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<link rel="stylesheet" href="style.css" type="text/css">
 <title>게시판 상세보기</title>
 <style type="text/css">
 	* {font-size: 12pt;}
@@ -31,25 +32,26 @@
 	if (this.readyState ==4 ){
 		console.log(this.response);
 		data = JSON.parse(req.response);
-		txt += "<table border='1'>"
-		txt += "<tr><td>"+ "상호명" +"</td>"
-		txt+=("<td>"+ data[0].store +"</td></tr>");
-		txt += "<tr><td>"+ "상품명" +"</td>"
-		txt+=("<td>"+ data[0].product +"</td></tr>");
-		txt += "<tr><td>"+ "행사내용" +"</td>"
-		txt+=("<td>"+ data[0].content +"</td></tr>");
-		txt += "<tr><td>"+ "가격" +"</td>"
-		txt+=("<td>"+ data[0].price  +"</td></tr>");
-		txt += "<tr><td>"+ "시작일시" +"</td>"
-		txt+=("<td>"+ data[0].start +"</td></tr>");
-		txt += "<tr><td>"+ "종료일시" +"</td>"
-		txt+=("<td>"+ data[0].end +"</td></tr>");
+		txt += "<table class='Table_wr1'>"
+		txt += "<tr'><td class='Table_wr2'>"+ "상호명" +"</td>"
+		txt+=("<td class='Table_wr3'>"+ data[0].store +"</td></tr>");
+		txt += "<tr><td class='Table_wr2'>"+ "상품명" +"</td>"
+		txt+=("<td class='Table_wr3'>"+ data[0].product +"</td></tr>");
+		txt += "<tr><td class='Table_wr2'>"+ "행사내용" +"</td>"
+		txt+=("<td class='Table_wr3'>"+ data[0].content +"</td></tr>");
+		txt += "<tr><td class='Table_wr2'>"+ "가격" +"</td>"
+		txt+=("<td class='Table_wr3'>"+ data[0].price  +"</td></tr>");
+		txt += "<tr><td class='Table_wr2'>"+ "시작일시" +"</td>"
+		txt+=("<td class='Table_wr3'>"+ data[0].start +"</td></tr>");
+		txt += "<tr><td class='Table_wr2'>"+ "종료일시" +"</td>"
+		txt+=("<td class='Table_wr3'>"+ data[0].end +"</td></tr>");
 		document.getElementById("t").innerHTML = txt;
 		txt += "</table>"
-		reply="<table border='0'>"
+		reply="<table id='replys1' border='0'>"
 		for(;i<data[0].reply.length;i++)
-		{ reply+="<tr><td>"+data[0].reply[i].string+"</td>";
+		{ reply+="<tr onclick='reply_delete(this)'><td id='replys2'>"+data[0].reply[i].string+"</td>";
 		reply+="<td><input type=button value=삭제 id = i onclick=></td></tr>"}
+		reply+="</table>"
 		 document.getElementById("r").innerHTML = reply;  }}}}
 	function check(){
 		if (document.getElementById("reply").value == "" || document.getElementById("reply").value== null) {
@@ -92,17 +94,21 @@
 </script>
 </head>
 <body>
+	<div align="center" class="img1"><img src="http://cms.pknu.ac.kr/data/pknupa/UXIS_SITEBANNER/UXIS_SITEBANNER_201704190207028970"></div><br><br><br><br><br>
 	<p id=t></p>
 	<p>
-		<input type="button" value="목록" onclick="goUrl('http://127.0.0.1:5000/boardList.html');" />
-		<input type="button" value="수정" onclick="goUrl('http://127.0.0.1:5000/boardModifyForm.html');" />
-	</p>
-	<th>댓글</th>
-	<input type= text id = reply name = reply size= 30>
-	<th>비밀번호</th>
-	<input type= password id = password name = password size= 10>
-	<input type= button value=댓글등록 onclick="check();"/>
+		<input type="button" class="buttons_v" value="목록" onclick="goUrl('http://127.0.0.1:5000/boardList.html');" />
+		<input type="button" class="buttons_v" value="수정" onclick="goUrl('http://127.0.0.1:5000/boardModifyForm.html');" />
+	</p><br>
+	<p class='p'>
+	<th>
+	<textarea rows="5" cols="40" id = reply name = reply placeholder=" 댓글을 입력하세요."></textarea><br></th>
+	<th></th>
+	<input type= password id = password name = password placeholder="비밀번호를 입력하세요.">
+	<input type= button class="button_rp" value=댓글등록 onclick="check();"/></p>
+
 	<p id = r>
 	</p>
+	<div align="center" class="img"><img src="http://cms.pknu.ac.kr/data/pknupa/UXIS_SITEBANNER/UXIS_SITEBANNER_201704190207028970"></div>
 </body>
 </html>
