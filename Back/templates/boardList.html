@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
-      <meta charset="utf-8">
-        <link rel="stylesheet" href="style.css" type="text/css">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
         <title>게시판 목록</title>
         <!-- CSS 영역 -->
         <style type="text/css">
-            * {font-size: 12pt;}
-            p {width: 1500px; text-align: center;}
+            * {
+                font-size: 12pt;
+            }
+
+            p {
+                width: 1500px;
+                text-align: center;
+            }
         </style>
         <!-- //CSS 영역 -->
         <!-- 자바스크립트 영역 -->
         <script language="javascript" type="text/javascript">
             var req = new XMLHttpRequest();
             var p = "";
-            var data,data1;
+            var data;
             var maxPage = 0;
             var h = 1;
             var i;
-            var index=1;
+            var index = 1;
             req.onreadystatechange = function() {
                 console.log(this.readyState, this.status);
                 if (this.readyState == 4) {
                     console.log(this.response);
-                    data = JSON.parse(data1);
+                    data = JSON.parse(this.response);
                     var txt = "";
                     txt += "<table id='Table1'>";
                     txt += "<tr id='Table2'><td>" + "상호명" + "</td>";
@@ -32,110 +38,145 @@
                     txt += "<td>" + "가격" + "</td>";
                     txt += "<td>" + "시작일시" + "</td>";
                     txt += "<td>" + "종료일시" + "</td></tr>";
-                    if(data.length == 0) {
-                      txt += "<tr><td colspan=6><strong>" + "등록된 글이 없습니다."+"</strong></td></tr>";
-                    }
-                    else {
-                      if(data.length<h*10){k=data.length;}
-                      else{k=10*h;}
-                      for (i = 10 * (h - 1); i < k; i++) {
-                        if(i%2==0){txt += "<tr onclick=goView(this) id='Table3'><td>" + data[i].store + "</td>";}
-                        else{txt += "<tr onclick=goView(this) id='Table4'><td>" + data[i].store + "</td>";}
-                          txt += "<td>" + data[i].product + "</td>";
-                          txt += "<td>" + data[i].content + "</td>";
-                          txt += "<td>" + data[i].price+"원" + "</td>";
-                          txt += "<td>" + data[i].start + "</td>";
-                          txt += "<td>" + data[i].end + "</td></tr>";
+                    if (data.length == 0) {
+                        txt += "<tr><td colspan=6><strong>" + "등록된 글이 없습니다." + "</strong></td></tr>";
+                    } else {
+                        if (data.length < h * 10) {
+                            k = data.length;
+                        } else {
+                            k = 10 * h;
                         }
-                      }
-                      document.getElementById("t").innerHTML = txt;
-                      txt += "</table>";
-                      maxPage = parseInt(data.length / 10 + 1);
-                      for (var j = 1; j <= maxPage; j++) {
-                          if(j==1){p += "<strong class='pages1' onclick=Page(this)>" + j + "</strong>" + " ";}
-                          else{p += "<strong class='pages' onclick=Page(this)>" + j + "</strong>" + " ";}
-                          document.getElementById("pg").innerHTML = p;
+                        for (i = 10 * (h - 1); i < k; i++) {
+                            if (i % 2 == 0) {
+                                txt += "<tr onclick=goView(this) id='Table3'><td>" + data[i].store + "</td>";
+                            } else {
+                                txt += "<tr onclick=goView(this) id='Table4'><td>" + data[i].store + "</td>";
+                            }
+                            txt += "<td>" + data[i].product + "</td>";
+                            txt += "<td>" + data[i].content + "</td>";
+                            txt += "<td>" + data[i].price + "원" + "</td>";
+                            txt += "<td>" + data[i].start + "</td>";
+                            txt += "<td>" + data[i].end + "</td></tr>";
                         }
-                    }
-                }
-                req.open("POST", "./json_data.txt", true);
-                req.send();
-                  function Page(a){console.log(a.textContent);
-                    if(a==1){h=1;}else{h=a.textContent;}
-                    index =h;
-                    var txt="";
-                    txt += "<table id='Table1'>";
-                    txt += "<tr id= 'Table2'><td>" + "상호명" + "</td>";
-                    txt += "<td>" + "상품명" + "</td>";
-                    txt += "<td>" + "행사내용" + "</td>";
-                    txt += "<td>" + "가격" + "</td>";
-                    txt += "<td>" + "시작일시" + "</td>";
-                    txt += "<td>" + "종료일시" + "</td></tr>";
-                    if(data.length<h*10){k=data.length;}
-                    else{k=10*h;}
-                    for (i = 10 * (h - 1); i < k; i++) {
-                      if(i%2==0){txt += "<tr onclick=goView(this) id='Table3'><td>" + data[i].store + "</t>";}
-                      else{txt += "<tr onclick=goView(this) id='Table4'><td>" + data[i].store + "</td>";}
-                      txt += "<td>" + data[i].product + "</td>";
-                      txt += "<td>" + data[i].content + "</td>";
-                      txt += "<td>" + data[i].price +"원"+ "</td>";
-                      txt += "<td>" + data[i].start + "</td>";
-                      txt += "<td>" + data[i].end + "</td></tr>";
                     }
                     document.getElementById("t").innerHTML = txt;
                     txt += "</table>";
                     maxPage = parseInt(data.length / 10 + 1);
-                    p="";
                     for (var j = 1; j <= maxPage; j++) {
-                        if(j==h){p += "<strong class='pages1' onclick=Page(this)>" + j + "</strong>" + " ";}
-                        else{p += "<strong class='pages' onclick=Page(this)>" + j + "</strong>" + " ";}
+                        if (j == 1) {
+                            p += "<strong class='pages1' onclick=Page(this)>" + j + "</strong>" + " ";
+                        } else {
+                            p += "<strong class='pages' onclick=Page(this)>" + j + "</strong>" + " ";
+                        }
                         document.getElementById("pg").innerHTML = p;
-                      }
-                  }
-                function goView(id) {
-                  var a = (index-1)*10+id.rowIndex - 1;
-                  console.log(a);
-                  var req1 = new XMLHttpRequest();
-                  req1.open('POST', './json_data.txt');
-                  req1.send(data[a].id)
-                req1.onreadystatechange = function() {  if(req1.readyState==4){console.log("성공");}}
+                    }
                 }
-                function goUrl(url) {
-                  location.href = url;
+            }
+            req.open("POST", "./json_data.txt", true);
+            req.send();
+            function Page(a) {
+                console.log(a.textContent);
+                if (a == 1) {
+                    h = 1;
+                } else {
+                    h = a.textContent;
                 }
-                function check() {
-                  var req2 = new XMLHttpRequest();
-                  if (document.getElementById("text").value == "" || document.getElementById("text").value == null) {
+                index = h;
+                var txt = "";
+                txt += "<table id='Table1'>";
+                txt += "<tr id= 'Table2'><td>" + "상호명" + "</td>";
+                txt += "<td>" + "상품명" + "</td>";
+                txt += "<td>" + "행사내용" + "</td>";
+                txt += "<td>" + "가격" + "</td>";
+                txt += "<td>" + "시작일시" + "</td>";
+                txt += "<td>" + "종료일시" + "</td></tr>";
+                if (data.length < h * 10) {
+                    k = data.length;
+                } else {
+                    k = 10 * h;
+                }
+                for (i = 10 * (h - 1); i < k; i++) {
+                    if (i % 2 == 0) {
+                        txt += "<tr onclick=goView(this) id='Table3'><td>" + data[i].store + "</t>";
+                    } else {
+                        txt += "<tr onclick=goView(this) id='Table4'><td>" + data[i].store + "</td>";
+                    }
+                    txt += "<td>" + data[i].product + "</td>";
+                    txt += "<td>" + data[i].content + "</td>";
+                    txt += "<td>" + data[i].price + "원" + "</td>";
+                    txt += "<td>" + data[i].start + "</td>";
+                    txt += "<td>" + data[i].end + "</td></tr>";
+                }
+                document.getElementById("t").innerHTML = txt;
+                txt += "</table>";
+                maxPage = parseInt(data.length / 10 + 1);
+                p = "";
+                for (var j = 1; j <= maxPage; j++) {
+                    if (j == h) {
+                        p += "<strong class='pages1' onclick=Page(this)>" + j + "</strong>" + " ";
+                    } else {
+                        p += "<strong class='pages' onclick=Page(this)>" + j + "</strong>" + " ";
+                    }
+                    document.getElementById("pg").innerHTML = p;
+                }
+            }
+            function goView(id) {
+                var a = (index - 1) * 10 + id.rowIndex - 1;
+                console.log(a);
+                var req1 = new XMLHttpRequest();
+                req1.open('POST', './json_data.txt');
+                req1.send(data[a].id)
+                req1.onreadystatechange = function() {
+                    if (req1.readyState == 4) {
+                        console.log("성공");
+                    }
+                }
+            }
+            function goUrl(url) {
+                location.href = url;
+            }
+            function check() {
+                var req2 = new XMLHttpRequest();
+                if (document.getElementById("text").value == "" || document.getElementById("text").value == null) {
                     alert("검색어를 입력하세요.");
                     document.searchForm.searchText.focus();
                     return false;
-                  }
-                  else {
+                } else {
                     req2.open('POST', './json_data.txt');
                     var encoder = new TextEncoder();
                     var value = encoder.encode(document.getElementById("searchtype").value);
                     var search_txt = encoder.encode(document.getElementById("text").value);
-                    req2.setRequestHeader('Content-Type','text/html;charset=UTF-8');
-                    req2.setRequestHeader('Value',value);
-                    req2.setRequestHeader('Text',search_txt);
+                    req2.setRequestHeader('Content-Type', 'text/html;charset=UTF-8');
+                    req2.setRequestHeader('Value', value);
+                    req2.setRequestHeader('Text', search_txt);
                     req2.send()
-                    req2.onreadystatechange = function() {  if(req2.readyState==4){console.log("성공");
-                    data=JSON.parse(data1);
-                    Page(1);}}
-                  }
+                    req2.onreadystatechange = function() {
+                        if (req2.readyState == 4) {
+                            console.log("성공");
+                            data = JSON.parse(req2.response);
+                            Page(1);
+                        }
+                    }
                 }
+            }
         </script>
         <!-- //자바스크립트 영역 -->
     </head>
     <body>
-      <div align="center" class="img1"><img src="http://cms.pknu.ac.kr/data/pknupa/UXIS_SITEBANNER/UXIS_SITEBANNER_201704190207028970"></div><br><br><br><br><br>
-
+        <div align="center" class="img1">
+            <img src="http://cms.pknu.ac.kr/data/pknupa/UXIS_SITEBANNER/UXIS_SITEBANNER_201704190207028970">
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         <!-- 검색 폼 영역 -->
         <form name="searchForm" action="boardList.html" method="GET" onsubmit="return check()">
             <table width="200" class=search>
                 <tr>
                     <td align="center" valign="bottom">
-                        <select name="searchType" id="searchtype" >
+                        <select name="searchType" id="searchtype">
                             <option value="ALL">전체검색</option>
                             <option value="STORE">상호명</option>
                             <option value="PRODUCT">상품명</option>
@@ -143,7 +184,7 @@
                         </select>
                     </td>
                     <td>
-                        <input id=text type="text" class='input_text' size="16" id="search_Text" name="searchText" />
+                        <input id=text type="text" class='input_text' size="16" id="search_Text" name="searchText"/>
                     </td>
                     <td>
                         <input type="button" class='sch_smit' value="검색" onclick="check()"/>
@@ -160,8 +201,12 @@
         <p>
             <input type="button" class='buttons' value="목록" onclick="goUrl('http://127.0.0.1:5000/boardList.html');"/>
             <input type="button" class='buttons' value="글쓰기" onclick="goUrl('http://127.0.0.1:5000/boardWriteForm.html');"/>
-        </p><br><br>
+        </p>
+        <br>
+        <br>
         <!-- //버튼 영역 -->
-        <div align="center" class="img"><img src="http://cms.pknu.ac.kr/data/pknupa/UXIS_SITEBANNER/UXIS_SITEBANNER_201704190207028970"></div>
+        <div align="center" class="img">
+            <img src="http://cms.pknu.ac.kr/data/pknupa/UXIS_SITEBANNER/UXIS_SITEBANNER_201704190207028970">
+        </div>
     </body>
 </html>
