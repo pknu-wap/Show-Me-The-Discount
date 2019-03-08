@@ -20,14 +20,15 @@
         <script language="javascript" type="text/javascript">
             var req = new XMLHttpRequest();
             var p = "";
-            var data,data1;
+            var data
+            var data1={{data1}};
             var maxPage = 0;
             var h = 1;
             var i;
             var index = 1;
             req.onreadystatechange = function() {
                 console.log(this.readyState, this.status);
-                if (this.readyState == 4) {
+                if (this.readyState == 4) 
                     data = JSON.parse(data1);
                     var txt = "";
                     txt += "<table id='Table1'>";
