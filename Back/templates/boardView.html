@@ -19,7 +19,7 @@
 	req1.open("POST","./json_data.txt")
 	req1.send(id[id.length-1]);
 	var req = new XMLHttpRequest();
-	var data;
+	var data,data1;
 	var re  = new Object();
 	var i=0;
 	var txt = "",reply="";
@@ -31,7 +31,7 @@
 	console.log(this.readyState, this.status);
 	if (this.readyState ==4 ){
 		console.log(this.response);
-		data = JSON.parse(req.response);
+		data = JSON.parse(data1);
 		txt += "<table class='Table_wr1'>"
 		txt += "<tr'><td class='Table_wr2'>"+ "상호명" +"</td>"
 		txt+=("<td class='Table_wr3'>"+ data[0].store +"</td></tr>");
@@ -87,7 +87,7 @@
 			del.setRequestHeader('reply_password',pass); // 댓글 password
 			del.send();
 			if(del.readyState==4)
-			{if(del.response==y){alert("삭제되었습니다.");//비밀번호가 맞으면 서버가 y를 리턴해줘서 삭제되고 새로고침
+			{if(del.response=='y'){alert("삭제되었습니다.");//비밀번호가 맞으면 서버가 y를 리턴해줘서 삭제되고 새로고침
 			goUrl('http://127.0.0.1:5000/boardView.html');}
 			else{alert("비밀번호가 틀립니다");goUrl('http://127.0.0.1:5000/boardView.html');}}
 		}

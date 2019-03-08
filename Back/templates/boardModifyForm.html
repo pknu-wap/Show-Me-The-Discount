@@ -18,11 +18,11 @@
 	req1.onreadystatechange = function b(){
 		if(req1.readyState==4){
 	var req = new XMLHttpRequest();
-	var data;
+	var data,data1;
 	var jsondata =  new Object();
 	req.onreadystatechange = function a(){
 	if (this.readyState ==4 ){
-		data = JSON.parse(req.response);
+		data = JSON.parse(data1);
 		document.getElementById("id").value = data[0].id;
 		document.getElementById("store").value = data[0].store;
 		document.getElementById("product").value = data[0].product;

@@ -14,7 +14,7 @@
         <script language="javascript" type="text/javascript">
             var req = new XMLHttpRequest();
             var p = "";
-            var data;
+            var data,data1;
             var maxPage = 0;
             var h = 1;
             var i;
@@ -23,7 +23,7 @@
                 console.log(this.readyState, this.status);
                 if (this.readyState == 4) {
                     console.log(this.response);
-                    data = JSON.parse(this.response);
+                    data = JSON.parse(data1);
                     var txt = "";
                     txt += "<table id='Table1'>";
                     txt += "<tr id='Table2'><td>" + "상호명" + "</td>";
@@ -120,7 +120,7 @@
                     req2.setRequestHeader('Text',search_txt);
                     req2.send()
                     req2.onreadystatechange = function() {  if(req2.readyState==4){console.log("성공");
-                    data=JSON.parse(req2.response);
+                    data=JSON.parse(data1);
                     Page(1);}}
                   }
                 }
