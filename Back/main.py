@@ -9,9 +9,11 @@ reply_id = 0
 @app.route('/boardList.html')
 def list():
 
+    data = '{"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "행사 시작", "end": "행사 종료"}'
+
     #db 데이터 읽기
 
-    return render_template('boardList.html') #json
+    return render_template('boardList.html', data1 = data) #json
 
 @app.route('/boardWriteForm.html')
 def write_form():
@@ -37,7 +39,7 @@ def register():
 
     return redirect('/boardView.html/'+str(data_id))
 
-@app.route('/boardView.html/<intd:data_id>')
+@app.route('/boardView.html/<int:data_id>')
 def view(data_id):
 
     #db 데이터 읽기
@@ -107,7 +109,7 @@ def delete2():
     #json 데이터 일치 여부 확인
         #db 데이터 삭제
 
-    return
+    return redirect('/boardView.html/'+str(data_id))
 
 if __name__ == '__main__':
     app.run(debug = True)
