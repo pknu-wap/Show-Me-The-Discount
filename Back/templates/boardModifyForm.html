@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
 <title>게시판 수정</title>
 <style type="text/css">
 	* {font-size: 12pt;}
@@ -18,11 +18,11 @@
 	req1.onreadystatechange = function b(){
 		if(req1.readyState==4){
 	var req = new XMLHttpRequest();
-	var data,data1;
+	var data;
 	var jsondata =  new Object();
 	req.onreadystatechange = function a(){
 	if (this.readyState ==4 ){
-		data = JSON.parse(data1);
+		data = JSON.parse(req.response);
 		document.getElementById("id").value = data[0].id;
 		document.getElementById("store").value = data[0].store;
 		document.getElementById("product").value = data[0].product;
