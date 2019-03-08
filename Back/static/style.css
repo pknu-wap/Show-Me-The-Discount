@@ -233,7 +233,9 @@ form {
     position : relative;
     left : 720px;
 }
-
+img{width:450px;
+    margin: auto;
+    display: block;}
 .img {
     bottom: 30px;
     margin: auto;
