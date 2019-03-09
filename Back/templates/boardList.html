@@ -28,7 +28,7 @@
             var index = 1;
             req.onreadystatechange = function() {
                 console.log(this.readyState, this.status);
-                if (this.readyState == 4) 
+                if (this.readyState == 4)
                     data = JSON.parse(data1);
                     var txt = "";
                     txt += "<table id='Table1'>";
@@ -62,14 +62,15 @@
                     document.getElementById("t").innerHTML = txt;
                     txt += "</table>";
                     maxPage = parseInt(data.length / 10 + 1);
-                    for (var j = 1; j <= maxPage; j++) {
+                    if(data.length!=0){
+                      for (var j = 1; j <= maxPage; j++) {
                         if (j == 1) {
                             p += "<strong class='pages1' onclick=Page(this)>" + j + "</strong>" + " ";
                         } else {
                             p += "<strong class='pages' onclick=Page(this)>" + j + "</strong>" + " ";
                         }
                         document.getElementById("pg").innerHTML = p;
-                    }
+                    }}
                 }
             }
             req.open("POST", "./json_data.txt", true);
