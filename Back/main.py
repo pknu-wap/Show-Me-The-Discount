@@ -11,12 +11,11 @@ reply_id = 0
 @app.route('/boardList.html')
 def list():
     #db 데이터 읽기
-    #data = {"store": "store1", "product": "product1", "content": "content1", "price": "price1", "start": "start1", "end": "end1"}
-    data = {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}
 
-    data1 = json.dumps(data, ensure_ascii=False) #한글 깨짐
-    print(data1)
-    return render_template('boardList.html', data1 = data1) #json
+    data = '{"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}'
+    data1 = json.loads(data)
+
+    return render_template('boardList.html', data1 = '['+data1+']') #json
 
 @app.route('/boardWriteForm.html')
 def write_form():
@@ -36,7 +35,7 @@ def register():
         password = request.form["password"]
 
         x = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
-        y = json.dumps(x)
+        y = json.dumps(x, ensure_ascii=False)
 
     #db 데이터 삽입
 
@@ -66,7 +65,7 @@ def modify():
         password = request.form["password"]
 
         x = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
-        y = json.dumps(x)
+        y = json.dumps(x, ensure_ascii=False)
 
     #db 데이터 읽기(id)
     #json password 일치 여부 확인
@@ -93,7 +92,7 @@ def reply():
     reply_password = request.form["password"]
 
     x = {"reply_id": reply_id, "data_id": data_id, "reply": reply, "reply_password": reply_password}
-    y = json.dumps(x)
+    y = json.dumps(x, ensure_ascii=False)
 
     #db 데이터 삽입
 
@@ -106,7 +105,7 @@ def delete2():
     reply_password = request.form["reply_password"]
 
     x = {"data_id": data_id, "reply_id": reply_id, "reply_password": reply_password}
-    y = json.dumps(x)
+    y = json.dumps(x, ensure_ascii=False)
 
     #db 데이터 읽기
     #json 데이터 일치 여부 확인
