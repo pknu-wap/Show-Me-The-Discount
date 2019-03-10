@@ -48,7 +48,7 @@ select {
     border-radius: 10px;
     border-style: solid;
     font-size: 14px;
-    border-width: medium;
+    border-width: thin;
     cursor: pointer;
     position: relative;
     right : 300px;
@@ -139,7 +139,7 @@ select {
 
 #Table3 {
     border-collapse: collapse;
-    border-color: #eaeaeab0;
+    border-color: #e4e4e4;
     padding: 10px;
     background-color: #fff;
     cursor : pointer;
@@ -148,7 +148,8 @@ select {
 #Table4 {
     border-collapse: collapse;
     border-color: #959595;
-    background-color: #eaeaeab0;
+    padding: 10px;
+    background-color: #e4e4e4;
     cursor: pointer;
 }
 
@@ -159,7 +160,7 @@ select {
 
 .Table_wr2 {
     border-width: thin;
-    background-color: #eaeaeab0;
+    background-color: #e4e4e4;
     border-radius: 7px;
     border-color: #fff;
     width: 200px;
@@ -190,7 +191,7 @@ select {
 }
 
 .id, .store, .product, .content, .price, .start, .end, .password {
-    background-color: #eaeaeab0;
+    background-color: #e4e4e4;
     border-radius: 7px;
     border-color: #fff;
     width: 200px;
@@ -224,7 +225,7 @@ textarea {
     border-width: thin;
     border-collapse: collapse;
     border-color: #d5d5d5;
-    background-color: #eaeaeab0;
+    background-color: #e4e4e4;
 }
 
 form {
