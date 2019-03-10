@@ -61,7 +61,7 @@ function b(){
 		{
 		if(xhr.readyState == 4)
 			{
-			if(xhr.status==200){goUrl(window.location.hostname+'/boardView.html'+id[id.length-1]);}
+			if(xhr.status==200){goUrl('/boardView.html/'+id[id.length-1]);}
 			else {console.log('Error!');}
 			}
 		}}}
@@ -76,8 +76,8 @@ function b(){
 			del.send();
 			if(del.readyState==4)
 			{if(del.response==y){alert("삭제되었습니다.");//비밀번호가 맞으면 서버가 y를 리턴해줘서 삭제되고 새로고침
-			goUrl(window.location.hostname+'/boardView.html/'+id[id.length-1]);}
-			else{alert("비밀번호가 틀립니다");goUrl(window.location.hostname+'/boardView.html/'+id[id.length-1]);}}
+			goUrl('/boardView.html/'+id[id.length-1]);}
+			else{alert("비밀번호가 틀립니다");goUrl('/boardView.html/'+id[id.length-1]);}}
 		}
 </script>
 <img src="{{url_for('static', filename='wap_logo.jpg')}}">
@@ -85,8 +85,8 @@ function b(){
 <body onload="b();" >
 	<p id=t></p>
 	<p>
-		<input type="button" class="buttons_v" value="목록" onclick="goUrl( window.location.hostname + '/boardList.html');" />
-		<input type="button" class="buttons_v" value="수정" onclick="goUrl( window.location.hostname +'/boardModifyForm.html/'+id[id.length-1]);" />
+		<input type="button" class="buttons_v" value="목록" onclick="goUrl('/boardList.html');" />
+		<input type="button" class="buttons_v" value="수정" onclick="goUrl('/boardModifyForm.html/'+id[id.length-1]);" />
 	</p><br>
 	<p class='p'>
 	<th>
