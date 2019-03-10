@@ -149,6 +149,7 @@ select {
     border-collapse: collapse;
     border-color: #959595;
     background-color: #eaeaeab0;
+    cursor: pointer;
 }
 
 .Table_wr1 {
