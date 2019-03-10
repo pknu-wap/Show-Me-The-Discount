@@ -11,6 +11,7 @@ def list():
     #db 데이터 읽기
 
     data = {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"} #test
+
     data1 = json.dumps(data, ensure_ascii=False)
 
     return render_template('boardList.html', data1 = data1) #json
@@ -44,7 +45,7 @@ def view(data_id):
 
     #db 데이터 읽기
 
-    return render_template('boardView.html') #json
+    return render_template('boardView.html', ) #json
 
 @app.route('/boardModifyForm.html')
 def modify_form():
