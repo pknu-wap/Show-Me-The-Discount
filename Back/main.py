@@ -1,6 +1,12 @@
 from flask import Flask, render_template, request, redirect, json
 import pymysql.cursors
 
+db = pymysql.connect(host = 'localhost',
+                     user = 'root',
+                     password = '123',
+                     db = 'wap',
+                     charest = 'utf8mb4')
+
 app = Flask(__name__)
 
 data_id = 0
@@ -18,6 +24,7 @@ def list():
 @app.route('/boardList.html?searchType=<search_type>&searchText=<search_text>')
 def search():
     #db 데이터 검색 {searchType: searchText}
+
 
     return render_template('boardList.html', ) #data_list
 
