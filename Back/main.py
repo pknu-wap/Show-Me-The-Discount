@@ -15,7 +15,7 @@ reply_id = 0
 @app.route('/')
 @app.route('/boardList.html')
 def list():
-    #db 데이터 읽기
+    #db select_all 함수
 
     data_list = [{"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}, {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}]
 
@@ -23,7 +23,7 @@ def list():
 
 @app.route('/boardList.html?searchType=<search_type>&searchText=<search_text>')
 def search():
-    #db 데이터 검색 {searchType: searchText}
+    #db 리스트에서 검색 {searchType(키): searchText(값)} 일치하면 가져오기
     try:
         with db.cursor() as cursor:
             sql = 'SELECT * FROM post WHERE Data_Id = data_id'
@@ -63,7 +63,6 @@ def register():
         x = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
         y = json.dumps(x, ensure_ascii=False)
 
-    #db 데이터 삽입
     try:
         with db.cursor() as cursor:
             sql = "INSERT INTO post (Data_id, Store, Product, Content, Price, Start, End, Password) VALUES (data_id, store, product, content, price, start, end, password)"
@@ -83,7 +82,7 @@ def register():
 @app.route('/boardView.html/<int:data_id>')
 def view(data_id):
 
-    #db 데이터 읽기
+    #db {"data_id"(키): data_id(값)} 일치하면 가져오기
     try:
         with db.cursor() as cursor:
             sql = 'SELECT * FROM post WHERE Data_Id = data_id'
@@ -103,9 +102,9 @@ def view(data_id):
 
     return render_template('boardView.html', ) #json
 
-@app.route('/boardModifyForm.html')
+@app.route('/boardModifyForm.html/<data_id>')
 def modify_form():
-    #db 데이터 읽기
+    #db {data_id(키): data_id} 일치하면 가져오기
     try:
         with db.cursor() as cursor:
             sql = 'SELECT * FROM post WHERE Data_Id = data_id'
@@ -140,24 +139,7 @@ def modify():
         x = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
         y = json.dumps(x, ensure_ascii=False)
 
-    #db 데이터 읽기(id)
-    try:
-        with db.cursor() as cursor:
-            sql = 'SELECT * FROM post WHERE Data_Id = data_id'
-            cursor.execute(sql)
-            datas = cursor.fetchall()
-            for data in datas:
-                print(data)
-
-        with db.cursor() as cursor:
-            sql = 'SELECT * FROM replies WHERE Reply_Id = data_id'
-            cursor.execute(sql)
-            datas = cursor.fetchall()
-            for data in datas:
-                print(data)
-    finally:
-        db.close()
-    #json password 일치 여부 확인
+        #db 글 비밀번호 일치 여부 확인
 
         #db 데이터 수정(id, password 그대로)
         try:
@@ -173,11 +155,11 @@ def modify():
 
 @app.route('/delete1', methods=['POST']) # 글 삭제
 def delete1():
+    data_id = request.form["id"]
+    password = request.form["password"]
 
-    #db 데이터 읽기
-    #json password 일치 여부 확인
-
-        #db 데이터 삭제
+    #db {"data_id": data_id, "password": password} 일치하는지 확인
+    #일치하면 실행
     try:
         with db.cursor() as cursor:
             sql = 'DELETE FROM post WHERE Data_id = data_id'
@@ -200,7 +182,7 @@ def reply():
     x = {"reply_id": reply_id, "data_id": data_id, "reply": reply, "reply_password": reply_password}
     y = json.dumps(x, ensure_ascii=False)
 
-    #db 데이터 삽입
+    #db 데이터 읽기(보류)
 
     return redirect('/boardView.html/'+str(data_id))
 
@@ -213,7 +195,7 @@ def delete2():
     x = {"data_id": data_id, "reply_id": reply_id, "reply_password": reply_password}
     y = json.dumps(x, ensure_ascii=False)
 
-    #db 데이터 읽기
+    #db 데이터 읽기(보류)
     #json 데이터 일치 여부 확인
         #db 데이터 삭제
 
