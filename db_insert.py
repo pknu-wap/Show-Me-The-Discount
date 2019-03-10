@@ -29,19 +29,19 @@ def func(value):
             sql = 'SELECT * FROM post WHERE Data_Id = data_id'
             cursor.execute(sql)
             datas = cursor.fetchall()
-                for data in datas:
-                    print(data)
+            for data in datas:
+                print(data)
 
         with db.cursor() as cursor:
             sql = 'SELECT * FROM replies WHERE Reply_Id = data_id'
             cursor.execute(sql)
             datas = cursor.fetchall()
-                for data in datas:
-                    print(data)
+            for data in datas:
+                print(data)
 
     elif value == 'update':
         with db.cursor() as cursor:
-            sql = 'UPDATE post set Data_Id = data_id WHERE data_id = %d' %
+            sql = 'UPDATE post set Data_Id = data_id WHERE Data_id = data_id'
             cursor.execute(sql)
         db.commit()
         print(cursor.rowcount)
