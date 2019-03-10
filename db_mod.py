@@ -6,21 +6,21 @@ try:
     with db.cursor() as cursor:
         sql = '''
                    CREATE TABLE post(
-                        PRIMARY KEY(data_id) NOT NULL,
-                        store VARCHAR(10) NOT NULL,
-                        product VARCHAR(10) NOT NULL,
-                        content VARCHAR(20) NOT NULL,
-                        price INT NOT NULL,
-                        startdate NULL,
-                        enddate INT NOT NULL,
-                        password INT NOT NULL
+                        PRIMARY KEY(Data_Id) NOT NULL,
+                        Store VARCHAR(10) NOT NULL,
+                        Product VARCHAR(10) NOT NULL,
+                        Content VARCHAR(20) NOT NULL,
+                        Price INT NOT NULL,
+                        Start_Date NULL,
+                        End_Date VARCHAR(10) NOT NULL,
+                        Password INT NOT NULL
                         
                 );
 
                     CREATE TABLE replies(
-                        PRIMARY KEY(reply_id) NOT NULL, #댓글 키값
-                        content VARCHAR(20) NOT NULL.
-                        num INT NOT NULL
+                        PRIMARY KEY(Reply_Id) NOT NULL,
+                        Reply VARCHAR(20) NOT NULL.
+                        Num INT NOT NULL
                 );
               '''
 
