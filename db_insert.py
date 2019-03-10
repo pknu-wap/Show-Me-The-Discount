@@ -14,8 +14,7 @@ def func(value):
     if value == 'INSERT':
         try:
             with db.cursor() as cursor:
-                sql = """INSERT INTO post (Data_id, Store, Product, Content, Price, Start, End, Password)
-                         VALUES (data_id, store, product, content, price, start, end, password)"""
+                sql = "INSERT INTO post (Data_id, Store, Product, Content, Price, Start, End, Password) VALUES (data_id, store, product, content, price, start, end, password)"
                 cursor.execute(sql)
                 db.commit()
 
