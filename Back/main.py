@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, json
-import pymysql.cursors
+import pymysql
 
 db = pymysql.connect(host = 'localhost',
                      user = 'wap',
@@ -24,7 +24,22 @@ def list():
 @app.route('/boardList.html?searchType=<search_type>&searchText=<search_text>')
 def search():
     #db 데이터 검색 {searchType: searchText}
+    try:
+        with db.cursor() as cursor:
+            sql = 'SELECT * FROM post WHERE Data_Id = data_id'
+            cursor.execute(sql)
+            datas = cursor.fetchall()
+                for data in datas:
+                    print(data)
 
+        with db.cursor() as cursor:
+            sql = 'SELECT * FROM replies WHERE Reply_Id = data_id'
+            cursor.execute(sql)
+            datas = cursor.fetchall()
+                for data in datas:
+                    print(data)
+    finally:
+        db.close()
 
     return render_template('boardList.html', ) #data_list
 
@@ -49,6 +64,19 @@ def register():
         y = json.dumps(x, ensure_ascii=False)
 
     #db 데이터 삽입
+    try:
+        with db.cursor() as cursor:
+            sql = "INSERT INTO post (Data_id, Store, Product, Content, Price, Start, End, Password) VALUES (data_id, store, product, content, price, start, end, password)"
+            cursor.execute(sql)
+            db.commit()
+
+        with db.cursor() as cursor:
+            sql = 'INSERT INTO replies (Reply_id, Num, Reply) VALUES (reply_id, num, reply)'
+            cursor.execute(sql)
+            db.commit()
+            print(cursor.lastrowid)
+    finally:
+        db.close()
 
     return redirect('/boardView.html/'+str(data_id))
 
@@ -56,12 +84,45 @@ def register():
 def view(data_id):
 
     #db 데이터 읽기
+    try:
+        with db.cursor() as cursor:
+            sql = 'SELECT * FROM post WHERE Data_Id = data_id'
+            cursor.execute(sql)
+            datas = cursor.fetchall()
+                for data in datas:
+                    print(data)
+
+        with db.cursor() as cursor:
+            sql = 'SELECT * FROM replies WHERE Reply_Id = data_id'
+            cursor.execute(sql)
+            datas = cursor.fetchall()
+                for data in datas:
+                    print(data)
+    finally:
+        db.close()
 
     return render_template('boardView.html', ) #json
 
 @app.route('/boardModifyForm.html')
 def modify_form():
     #db 데이터 읽기
+    try:
+        with db.cursor() as cursor:
+            sql = 'SELECT * FROM post WHERE Data_Id = data_id'
+            cursor.execute(sql)
+            datas = cursor.fetchall()
+                for data in datas:
+                    print(data)
+
+        with db.cursor() as cursor:
+            sql = 'SELECT * FROM replies WHERE Reply_Id = data_id'
+            cursor.execute(sql)
+            datas = cursor.fetchall()
+                for data in datas:
+                    print(data)
+    finally:
+        db.close()
+
     return render_template('boardModifyForm.html')
 
 @app.route('/modify')
@@ -80,8 +141,33 @@ def modify():
         y = json.dumps(x, ensure_ascii=False)
 
     #db 데이터 읽기(id)
+    try:
+        with db.cursor() as cursor:
+            sql = 'SELECT * FROM post WHERE Data_Id = data_id'
+            cursor.execute(sql)
+            datas = cursor.fetchall()
+                for data in datas:
+                    print(data)
+
+        with db.cursor() as cursor:
+            sql = 'SELECT * FROM replies WHERE Reply_Id = data_id'
+            cursor.execute(sql)
+            datas = cursor.fetchall()
+                for data in datas:
+                    print(data)
+    finally:
+        db.close()
     #json password 일치 여부 확인
+
         #db 데이터 수정(id, password 그대로)
+        try:
+            with db.cursor() as cursor:
+                sql = 'UPDATE post set Data_Id = data_id WHERE data_id = %d' %
+                cursor.execute(sql)
+            db.commit()
+            print(cursor.rowcount)
+        finally:
+            db.close()
 
     return redirect('/boardView.html/'+str(data_id))
 
@@ -92,6 +178,14 @@ def delete1():
     #json password 일치 여부 확인
 
         #db 데이터 삭제
+        try:
+            with db.cursor() as cursor:
+                sql = 'DELETE FROM post WHERE Data_id = data_id'
+                cursor.execute(sql)
+            db.commit()
+            print(cursor.rowcount)
+        finally:
+            db.close()
 
     return render_template('boardList.html')
 
