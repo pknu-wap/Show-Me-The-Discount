@@ -178,14 +178,14 @@ def delete1():
     #json password 일치 여부 확인
 
         #db 데이터 삭제
-        try:
-            with db.cursor() as cursor:
-                sql = 'DELETE FROM post WHERE Data_id = data_id'
-                cursor.execute(sql)
-            db.commit()
-            print(cursor.rowcount)
-        finally:
-            db.close()
+    try:
+        with db.cursor() as cursor:
+            sql = 'DELETE FROM post WHERE Data_id = data_id'
+            cursor.execute(sql)
+        db.commit()
+        print(cursor.rowcount)
+    finally:
+        db.close()
 
     return render_template('boardList.html')
 
