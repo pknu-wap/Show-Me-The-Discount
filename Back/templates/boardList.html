@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+``<!DOCTYPE html>
 <html lang="ko">
     <head>
         <meta charset="utf-8">
@@ -21,14 +21,14 @@
             var req = new XMLHttpRequest();
             var p = "";
             var data
-            var data1={{data1}};
+            var data1 = {{data1|safe}};
             var maxPage = 0;
             var h = 1;
             var i;
             var index = 1;
             req.onreadystatechange = function() {
                 console.log(this.readyState, this.status);
-                if (this.readyState == 4)
+                if (req.readyState == 4){
                     data = JSON.parse(data1);
                     var txt = "";
                     txt += "<table id='Table1'>";
@@ -71,8 +71,7 @@
                         }
                         document.getElementById("pg").innerHTML = p;
                     }}
-                }
-            }
+                }}
             req.open("POST", "./json_data.txt", true);
             req.send();
             function Page(a) {
