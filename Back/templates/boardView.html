@@ -2,7 +2,7 @@
 <html lang ="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 <title>게시판 상세보기</title>
 <style type="text/css">
 	* {font-size: 12pt;}
@@ -92,9 +92,9 @@
 			else{alert("비밀번호가 틀립니다");goUrl('http://127.0.0.1:5000/boardView.html');}}
 		}
 </script>
+<img src="{{url_for('static', filename='wap_logo.jpg')}}">
 </head>
 <body>
-	<div align="center" class="img1"><img src="http://cms.pknu.ac.kr/data/pknupa/UXIS_SITEBANNER/UXIS_SITEBANNER_201704190207028970"></div><br><br><br><br><br>
 	<p id=t></p>
 	<p>
 		<input type="button" class="buttons_v" value="목록" onclick="goUrl('http://127.0.0.1:5000/boardList.html');" />

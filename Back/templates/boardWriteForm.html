@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 <title>게시판 등록</title>
 <style type="text/css">
 	* {font-size: 12pt;}
@@ -41,9 +41,9 @@
 	else {document.f.submit();}
 	}
 </script>
+<img src="{{url_for('static', filename='wap_logo.jpg')}}">
 </head>
 <body>
-	<div align="center" class="img1"><img src="http://cms.pknu.ac.kr/data/pknupa/UXIS_SITEBANNER/UXIS_SITEBANNER_201704190207028970"></div><br><br><br><br><br>
 <form name=f method = post action='write'>
 <table summary="게시판 등록">
 		<colgroup>
