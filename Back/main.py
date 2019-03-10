@@ -7,7 +7,7 @@ db = pymysql.connect(host = 'localhost',
                      user = 'root',
                      password = '123',
                      db = 'wap',
-                     charest = 'utf8mb4')
+                     charest = 'utf8')
 
 data_id = 0
 reply_id = 0
