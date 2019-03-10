@@ -162,7 +162,7 @@ def modify():
         #db 데이터 수정(id, password 그대로)
         try:
             with db.cursor() as cursor:
-                sql = 'UPDATE post set Data_Id = data_id WHERE Data_id = data_id' %
+                sql = 'UPDATE post set Data_Id = data_id WHERE Data_id = data_id'
                 cursor.execute(sql)
             db.commit()
             print(cursor.rowcount)
