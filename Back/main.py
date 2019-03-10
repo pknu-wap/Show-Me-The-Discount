@@ -3,6 +3,13 @@ import pymysql.cursors
 
 app = Flask(__name__)
 
+db = pymysql.connect(host = 'localhost',
+                     user = 'root',
+                     password = '123',
+                     db = 'wap',
+                     charest = 'utf8mb4',
+                     cursorclass = pymysql.cursors.DictCursor)
+
 data_id = 0
 reply_id = 0
 
@@ -10,6 +17,21 @@ reply_id = 0
 @app.route('/boardList.html')
 def list():
     #db 데이터 읽기
+
+    try:
+        with db.cursor() as cursor:
+            sql = """INSERT INTO post (Data_id, store, product, content, price, startdate, enddate, password)
+                    VALUES (%d, %s, %s, %s, %d, %s, %s, %d)"""
+            cursor.execute(sql)
+            db.commit()
+
+        with db.cursor() as cursor:
+            sql = 'INSERT INTO replies (reply_id, num, reply) VALUES (%d, %d, %s)'
+            cursor.execute(sql)
+            db.commit()
+            print(cursor.lastrowid)
+    finally:
+        db.close()
 
     data_list = [{"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}, {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}]
 
