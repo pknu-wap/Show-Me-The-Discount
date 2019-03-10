@@ -94,18 +94,19 @@ select {
     position: relative;
     left : 480px;
 }
-
-.pages {
+.pages, .pages1{
     cursor: pointer;
+    letter-spacing: 10px;
+    position: relative;
+    left: 50%;
+}
+.pages {
     font-size: 15px;
     font-weight: normal;
-    letter-spacing: 10px;
 }
 
 .pages1 {
-    cursor: pointer;
     font-size: 18px;
-    letter-spacing: 10px;
 }
 
 #Table1 {
@@ -233,7 +234,7 @@ form {
     position : relative;
     left : 720px;
 }
-img{width:450px;
+img{width:300px;
     margin: auto;
     display: block;}
 .img {
