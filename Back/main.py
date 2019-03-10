@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, json
 import pymysql.cursors
 
 db = pymysql.connect(host = 'localhost',
-                     user = 'root',
+                     user = 'wap',
                      password = '123',
                      db = 'wap',
                      charset = 'utf8mb4')
