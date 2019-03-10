@@ -5,19 +5,7 @@ db = pymysql.connect(host = 'localhost',
                      user = 'root',
                      password = '123',
                      db = 'wap',
-                     charest = 'utf8mb4',
-                     cursorclass = pymysql.cursors.DictCursor)
-app = Flask(__name__)
-
-@app.route("/get-reg")
-def login():
-    return render_template('reg.html')
-
-@app.route('/save-post', methods = ['POST', 'GET'])
-def signUp():
-    if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
+                     charest = 'utf8mb4')
 
 print("INSERT, SELECT, UPDATE, DELETE")
 value = input("select option : ")
@@ -26,8 +14,7 @@ def func(value):
     if value == 'INSERT':
         try:
             with db.cursor() as cursor:
-                sql = """INSERT INTO post (Data_id, Store, Product, Content, Price, Start, End, Password)
-                         VALUES (data_id, store, product, content, price, start, end, password)"""
+                sql = "INSERT INTO post (Data_id, Store, Product, Content, Price, Start, End, Password) VALUES (data_id, store, product, content, price, start, end, password)"
                 cursor.execute(sql)
                 db.commit()
 
@@ -68,7 +55,3 @@ def func(value):
 
         finally:
             db.close()
-
-if __name__ == "__main__":
-    app.run()
-
