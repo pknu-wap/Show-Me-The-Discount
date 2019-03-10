@@ -5,7 +5,7 @@ db = pymysql.connect(host = 'localhost',
                      user = 'root',
                      password = '123',
                      db = 'wap',
-                     charest = 'utf8mb4')
+                     charset = 'utf8mb4')
 
 app = Flask(__name__)
 
