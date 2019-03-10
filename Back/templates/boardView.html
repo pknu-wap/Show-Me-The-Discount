@@ -15,42 +15,29 @@
 		location.href=url;
 	}
 	var id = document.location.href.split("/");
-	var req1 = new XMLHttpRequest();
-	req1.open("POST","/view")
-	req1.send(id[id.length-1]);
-	var req = new XMLHttpRequest();
-	var data;
-	var re  = new Object();
-	var i=0;
+	var data ={{data1}};
+	var re  = {{reply1}};
 	var txt = "",reply="";
-	req1.onreadystatechange = function b(){console.log(req1.readyState);
-		if(req1.readyState==4){
-			data={{data1|safe}};
-	req.open("POST","./json_data.txt")
-	req.send();
-	req.onreadystatechange = function a(){
-	console.log(this.readyState, this.status);
-	if (this.readyState ==4 ){
-		console.log(this.response);
-		data = JSON.parse(req.response);
+function b(){
+	data={{data1|safe}};
 		txt += "<table class='Table_wr1'>"
 		txt += "<tr'><td class='Table_wr2'>"+ "상호명" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data[0].store +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data.store +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "상품명" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data[0].product +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data.product +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "행사내용" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data[0].content +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data.content +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "가격" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data[0].price  +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data.price  +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "시작일시" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data[0].start +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data.start +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "종료일시" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data[0].end +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data.end +"</td></tr>");
 		document.getElementById("t").innerHTML = txt;
 		txt += "</table>"
 		reply="<table id='replys1' border='0'>"
-		for(;i<data[0].reply.length;i++)
-		{ reply+="<tr onclick='reply_delete(this)'><td id='replys2'>"+data[0].reply[i].string+"</td>";
+		for(var i=0;i<reply.length;i++)
+		{ reply+="<tr onclick='reply_delete(this)'><td id='replys2'>"+reply[i].string+"</td>";
 		reply+="<td><input type=button value=삭제 id = i onclick=></td></tr>"}
 		reply+="</table>"
 		 document.getElementById("r").innerHTML = reply;  }}}}
@@ -64,9 +51,9 @@
 		else{var xhr = new XMLHttpRequest();
 		var encoder = new TextEncoder();
 		var reply_string = encoder.encode(document.getElementById("reply").value);
-		xhr.open("POST","./reply");
+		xhr.open("POST","/reply");
 		xhr.setRequestHeader('Content-Type','text/html;charset=UTF-8');
-		xhr.setRequestHeader('data_id',data[0].id); // 글 id
+		xhr.setRequestHeader('data_id',data.data_id); // 글 id
 		xhr.setRequestHeader('reply',reply_string); // 댓글 string
 		xhr.setRequestHeader('password',document.getElementById("password").value); // 댓글 password
 		xhr.send();
@@ -89,8 +76,8 @@
 			del.send();
 			if(del.readyState==4)
 			{if(del.response==y){alert("삭제되었습니다.");//비밀번호가 맞으면 서버가 y를 리턴해줘서 삭제되고 새로고침
-			goUrl('http://127.0.0.1:5000/boardView.html');}
-			else{alert("비밀번호가 틀립니다");goUrl('http://127.0.0.1:5000/boardView.html');}}
+			goUrl('http://127.0.0.1:5000/boardView.html/'+id[id.length-1]);}
+			else{alert("비밀번호가 틀립니다");goUrl('http://127.0.0.1:5000/boardView.html/'id[id.length-1]);}}
 		}
 </script>
 <img src="{{url_for('static', filename='wap_logo.jpg')}}">
@@ -99,7 +86,7 @@
 	<p id=t></p>
 	<p>
 		<input type="button" class="buttons_v" value="목록" onclick="goUrl('http://127.0.0.1:5000/boardList.html');" />
-		<input type="button" class="buttons_v" value="수정" onclick="goUrl('http://127.0.0.1:5000/boardModifyForm.html');" />
+		<input type="button" class="buttons_v" value="수정" onclick="goUrl('http://127.0.0.1:5000/boardModifyForm.html/'+id[id.length-1]);" />
 	</p><br>
 	<p class='p'>
 	<th>

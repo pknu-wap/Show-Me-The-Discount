@@ -12,17 +12,9 @@
 		location.href=url;
 	}
 	var id = document.location.href.split("/");
-	var req1 = new XMLHttpRequest();
-	req1.open("POST","./json_data.txt");
-	req1.send(id[id.length-1]);
-	req1.onreadystatechange = function b(){
-		if(req1.readyState==4){
-	var req = new XMLHttpRequest();
-	var data;
+	var data ={{data1}};
 	var jsondata =  new Object();
-	req.onreadystatechange = function a(){
-	if (this.readyState ==4 ){
-		data = JSON.parse(req.response);
+	function a(){
 		document.getElementById("id").value = data[0].id;
 		document.getElementById("store").value = data[0].store;
 		document.getElementById("product").value = data[0].product;
@@ -30,9 +22,7 @@
 		document.getElementById("price").value = data[0].price;
 		document.getElementById("start").value = data[0].start;
 		document.getElementById("end").value = data[0].end;
-	}}
-	req.open("POST","./json_data.txt");
-	req.send();}}
+	}
 	function check() {
 	if (document.f.store.value == "" || document.f.store.value == null) {
 	alert("상호을 입력하세요.");
@@ -72,7 +62,7 @@
 </script>
 <img src="{{url_for('static', filename='wap_logo.jpg')}}">
 </head>
-<body>
+<body onload="a();">
 <form name=f method = post action='modify'>
 <table summary="게시판 수정" id='table_wr'>
 		<colgroup>
@@ -114,7 +104,7 @@
 		</tbody>
 	</table>
 	<p>
-		<input type="button" class='buttons' value="목록" onclick="goUrl('boardList.html');"/>
+		<input type="button" class='buttons' value="목록" onclick="goUrl('http://127.0.0.1:5000/boardModifyForm.html/'+id[id.length-1]');"/>
 		<input type="button" class='buttons' value="수정" onclick="check();"/>
 		<input type="button" class='buttons' value="삭제" onclick="check1();"/><br>
 	</p>
