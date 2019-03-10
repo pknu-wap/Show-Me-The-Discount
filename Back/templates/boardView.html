@@ -82,7 +82,7 @@ function b(){
 </script>
 <img src="{{url_for('static', filename='wap_logo.jpg')}}">
 </head>
-<body>
+<body onload="b();" >
 	<p id=t></p>
 	<p>
 		<input type="button" class="buttons_v" value="목록" onclick="goUrl('http://127.0.0.1:5000/boardList.html');" />
