@@ -20,8 +20,8 @@
         <script language="javascript" type="text/javascript">
             var req = new XMLHttpRequest();
             var p = "";
-            var data
-            var data1 = {{data1|safe}};
+            var data= {{data1|safe}};
+            var data1
             var maxPage = 0;
             var h = 1;
             var i;
@@ -29,7 +29,8 @@
             req.onreadystatechange = function() {
                 console.log(this.readyState, this.status);
                 if (req.readyState == 4){
-                    data = JSON.parse(data1);
+                  console.log(data1);
+                    //data = JSON.parse(data1);
                     var txt = "";
                     txt += "<table id='Table1'>";
                     txt += "<tr id='Table2'><td>" + "상호명" + "</td>";
