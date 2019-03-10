@@ -10,11 +10,10 @@ reply_id = 0
 def list():
     #db 데이터 읽기
 
-    data = {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"} #test
-
+    data_list = [{"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}, {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}]
     data1 = json.dumps(data, ensure_ascii=False)
 
-    return render_template('boardList.html', data1 = data1) #json
+    return render_template('boardList.html', data1 = data_list) #json
 
 @app.route('/boardWriteForm.html')
 def write_form():
