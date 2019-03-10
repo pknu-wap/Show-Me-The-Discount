@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, json
+import pymysql.cursors
 
 app = Flask(__name__)
 
@@ -12,7 +13,13 @@ def list():
 
     data_list = [{"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}, {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}]
 
-    return render_template('boardList.html', data1 = data_list) #json
+    return render_template('boardList.html', data1 = data_list)
+
+@app.route('/boardList.html?searchType=<search_type>&searchText=<search_text>')
+def search():
+    #db 데이터 검색 {searchType: searchText}
+
+    return render_template('boardList.html', ) #data_list
 
 @app.route('/boardWriteForm.html')
 def write_form():
@@ -47,6 +54,7 @@ def view(data_id):
 
 @app.route('/boardModifyForm.html')
 def modify_form():
+    #db 데이터 읽기
     return render_template('boardModifyForm.html')
 
 @app.route('/modify')
@@ -111,4 +119,4 @@ def delete2():
     return redirect('/boardView.html/'+str(data_id))
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = True, host='0.0.0.0', port=80)
