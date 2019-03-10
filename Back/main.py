@@ -29,15 +29,15 @@ def search():
             sql = 'SELECT * FROM post WHERE Data_Id = data_id'
             cursor.execute(sql)
             datas = cursor.fetchall()
-                for data in datas:
-                    print(data)
+            for data in datas:
+                print(data)
 
         with db.cursor() as cursor:
             sql = 'SELECT * FROM replies WHERE Reply_Id = data_id'
             cursor.execute(sql)
             datas = cursor.fetchall()
-                for data in datas:
-                    print(data)
+            for data in datas:
+                print(data)
     finally:
         db.close()
 
@@ -89,15 +89,15 @@ def view(data_id):
             sql = 'SELECT * FROM post WHERE Data_Id = data_id'
             cursor.execute(sql)
             datas = cursor.fetchall()
-                for data in datas:
-                    print(data)
+            for data in datas:
+                print(data)
 
         with db.cursor() as cursor:
             sql = 'SELECT * FROM replies WHERE Reply_Id = data_id'
             cursor.execute(sql)
             datas = cursor.fetchall()
-                for data in datas:
-                    print(data)
+            for data in datas:
+                print(data)
     finally:
         db.close()
 
@@ -111,15 +111,15 @@ def modify_form():
             sql = 'SELECT * FROM post WHERE Data_Id = data_id'
             cursor.execute(sql)
             datas = cursor.fetchall()
-                for data in datas:
-                    print(data)
+            for data in datas:
+                print(data)
 
         with db.cursor() as cursor:
             sql = 'SELECT * FROM replies WHERE Reply_Id = data_id'
             cursor.execute(sql)
             datas = cursor.fetchall()
-                for data in datas:
-                    print(data)
+            for data in datas:
+                print(data)
     finally:
         db.close()
 
@@ -146,15 +146,15 @@ def modify():
             sql = 'SELECT * FROM post WHERE Data_Id = data_id'
             cursor.execute(sql)
             datas = cursor.fetchall()
-                for data in datas:
-                    print(data)
+            for data in datas:
+                print(data)
 
         with db.cursor() as cursor:
             sql = 'SELECT * FROM replies WHERE Reply_Id = data_id'
             cursor.execute(sql)
             datas = cursor.fetchall()
-                for data in datas:
-                    print(data)
+            for data in datas:
+                print(data)
     finally:
         db.close()
     #json password 일치 여부 확인
