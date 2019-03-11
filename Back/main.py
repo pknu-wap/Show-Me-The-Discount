@@ -75,7 +75,11 @@ def search():
             for data in datas:
                 print(data)
 
-        return render_template('boardList.html') #data_list
+    finally:
+        db.close()
+
+    return render_template('boardList.html') #data_list
+
 
 @app.route('/boardWriteForm.html')
 def write_form():
