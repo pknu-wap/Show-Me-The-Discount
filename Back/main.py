@@ -26,14 +26,14 @@ def list():
                 Start_Date IS NULL,
                 End_Date VARCHAR(10) IS NOT NULL,
                 Password INT IS NOT NULL
-                );
+                );'''
+    
+            #CREATE TABLE replies(
+             #   Reply_Id INT PRIMARY KEY,
+              #  Reply VARCHAR(20) IS NOT NULL.
+               # Num INT IS NOT NULL
+                #);
 
-            CREATE TABLE replies(
-                Reply_Id INT PRIMARY KEY,
-                Reply VARCHAR(20) IS NOT NULL.
-                Num INT IS NOT NULL
-                );
-              '''
 
         cursor.execute(sql)  # 실행하기
     db.commit()  # DB에 Complete
