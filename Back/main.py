@@ -78,6 +78,7 @@ def search():
 
         return render_template('boardList.html') #data_list
 
+
 @app.route('/boardWriteForm.html')
 def write_form():
     return render_template('boardWriteForm.html')
