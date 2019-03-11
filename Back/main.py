@@ -18,12 +18,12 @@ def list():
     #db select_all 함수
 
     data_list = [{"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}, {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}]
--
+
     return render_template('boardList.html', data1 = data_list)
 
 @app.route('/boardList.html?searchType=<search_type>&searchText=<search_text>')
 def search():
-    #db 리스트에서 검색 {searchType(키): searchText(값)} 일치하면 가져오기
+    #db 리스트에서 검색 {search_type(키): search_text(값)} 일치하면 가져오기
     try:
         with db.cursor() as cursor:
             sql = 'SELECT * FROM post WHERE Data_Id = data_id'
