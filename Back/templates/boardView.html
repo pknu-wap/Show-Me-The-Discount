@@ -35,8 +35,8 @@ function b(){
 		document.getElementById("t").innerHTML = txt;
 		txt += "</table>"
 		reply="<table id='replys1' border='0'>"
-		for(var i=0;i<reply.length;i++)
-		{ reply+="<tr onclick='reply_delete(this)'><td id='replys2'>"+reply[i].string+"</td>";
+		for(var i=0;i<re.length;i++)
+		{ reply+="<tr onclick='reply_delete(this)'><td id='replys2'>"+re[i].string+"</td>";
 		reply+="<td><input type=button value=삭제 id = i onclick=></td></tr>"}
 		reply+="</table>"
 		 document.getElementById("r").innerHTML = reply;  }
