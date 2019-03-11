@@ -23,7 +23,7 @@ def list():
                 Product VARCHAR(10) IS NOT NULL,
                 Content VARCHAR(20) IS NOT NULL,
                 Price INT IS NOT NULL,
-                Start_Date NULL,
+                Start_Date IS NULL,
                 End_Date VARCHAR(10) IS NOT NULL,
                 Password INT IS NOT NULL
                 );
@@ -33,7 +33,7 @@ def list():
                 Reply VARCHAR(20) IS NOT NULL.
                 Num INT IS NOT NULL
                 );
-                '''
+              '''
 
         cursor.execute(sql)  # 실행하기
     db.commit()  # DB에 Complete
