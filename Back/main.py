@@ -15,8 +15,7 @@ reply_id = 0
 @app.route('/')
 @app.route('/boardList.html')
 def list():
-    try:
-        with db.cursor() as cursor:
+    with db.cursor() as cursor:
             sql = '''
                        CREATE TABLE post(
                             PRIMARY KEY(Data_Id) NOT NULL,
