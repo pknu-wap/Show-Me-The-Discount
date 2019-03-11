@@ -29,14 +29,14 @@ def list():
 
 
     data_list = [{"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}, {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}]
-    return render_template('boardList.html', data1 = data_list)
+    return render_template('boardList.html')
 
 @app.route('/boardList.html?searchType=<search_type>&searchText=<search_text>')
 def search():
-    #db 리스트에서 검색 {searchType(키): searchText(값)} 일치하면 가져오기
+    #db 리스트에서 검색 {search_Type(키): search_Text(값)} 일치하면 가져오기
     try:
         with db.cursor() as cursor:
-            sql = 'SELECT * FROM post WHERE Data_Id = data_id'
+            sql = 'SELECT * FROM post WHERE Product == product OR Store == store'  #보류
             cursor.execute(sql)
             datas = cursor.fetchall()
             for data in datas:
@@ -92,7 +92,6 @@ def register():
 @app.route('/boardView.html/<int:data_id>')
 def view(data_id):
 
-    #db {"data_id"(키): data_id(값)} 일치하면 가져오기
     try:
         with db.cursor() as cursor:
             sql = 'SELECT * FROM post WHERE Data_Id = data_id'
@@ -114,7 +113,6 @@ def view(data_id):
 
 @app.route('/boardModifyForm.html/<data_id>')
 def modify_form():
-    #db {data_id(키): data_id} 일치하면 가져오기
     try:
         with db.cursor() as cursor:
             sql = 'SELECT * FROM post WHERE Data_Id = data_id ORDER BY End LIMIT 20'
@@ -149,8 +147,6 @@ def modify():
         x = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
         y = json.dumps(x, ensure_ascii=False)
 
-        #db 글 비밀번호 일치 여부 확인
-
         #db 데이터 수정(id, password 그대로)
         try:
             with db.cursor() as cursor:
@@ -168,8 +164,6 @@ def delete1():
     data_id = request.form["id"]
     password = request.form["password"]
 
-    #db {"data_id": data_id, "password": password} 일치하는지 확인
-    #일치하면 실행
     try:
         with db.cursor() as cursor:
             sql = 'DELETE FROM post WHERE Data_id = data_id AND password = password(password)'
