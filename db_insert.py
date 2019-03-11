@@ -55,3 +55,13 @@ def func(value):
 
         finally:
             db.close()
+
+
+        try:
+            with db.cursor() as cursor:
+                sql = 'SHOW CREATE TABLE post
+                cursor.execute(sql)
+            db.commit()
+            print(cursor.rowcount)
+        finally:
+            db.close()

@@ -18,7 +18,6 @@ def list():
     #db select_all 함수
 
     data_list = [{"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}, {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}]
--
     return render_template('boardList.html', data1 = data_list)
 
 @app.route('/boardList.html?searchType=<search_type>&searchText=<search_text>')
@@ -203,3 +202,13 @@ def delete2():
 
 if __name__ == '__main__':
     app.run(debug = True, host='0.0.0.0', port=80)
+
+        try:
+            with db.cursor() as cursor:
+                sql = 'SHOW CREATE TABLE post
+                cursor.execute(sql)
+            db.commit()
+            print(cursor.rowcount)
+        finally:
+            db.close()
+
