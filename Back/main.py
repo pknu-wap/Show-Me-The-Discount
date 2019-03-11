@@ -18,7 +18,7 @@ def list():
     #db select_all 함수
 
     data_list = [{"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}, {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}]
-    return render_template('boardList.html')
+    return render_template('boardList.html', data1 = data_list)
 
 @app.route('/boardList.html?searchType=<search_type>&searchText=<search_text>')
 def search():
