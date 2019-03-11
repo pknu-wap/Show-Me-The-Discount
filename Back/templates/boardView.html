@@ -21,17 +21,17 @@
 function b(){
 		txt += "<table class='Table_wr1'>"
 		txt += "<tr'><td class='Table_wr2'>"+ "상호명" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data.store +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data[0].store +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "상품명" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data.product +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data[0].product +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "행사내용" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data.content +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data[0].content +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "가격" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data.price  +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data[0].price  +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "시작일시" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data.start +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data[0].start +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "종료일시" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data.end +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data[0].end +"</td></tr>");
 		document.getElementById("t").innerHTML = txt;
 		txt += "</table>"
 		reply="<table id='replys1' border='0'>"
@@ -70,7 +70,7 @@ function b(){
 			var del = new XMLHttpRequest();
 			del.open('POST','./delete2');
 			del.setRequestHeader('data_id',data[0].id); //글 id 번호
-			del.setRequestHeader('reply_id',data[0].reply[a].id); // 댓글 id 번호
+			del.setRequestHeader('reply_id',re[a].id); // 댓글 id 번호
 			del.setRequestHeader('reply_password',pass); // 댓글 password
 			del.send();
 			if(del.readyState==4)
