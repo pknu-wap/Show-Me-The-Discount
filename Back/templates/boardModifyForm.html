@@ -12,6 +12,7 @@
 		location.href=url;
 	}
 	var id = document.location.href.split("/");
+	var c=id[id.length-1];
 	var data ={{data1|safe}};
 	var jsondata =  new Object();
 	function a(){
@@ -48,7 +49,7 @@
 	document.f.password.focus();
 	return;}
 	else {
-		f.action="modify"; //수정시 action 경로 재설정 해야됨
+		f.action="modify/"+c; //수정시 action 경로 재설정 해야됨
 	 f.submit();}}
 	function check1()
 	{
@@ -57,7 +58,7 @@
 		document.f.password.focus();
 		return;}
 		else {
-			f.action="delete1"; // 삭제시 action 경로 재설정 해야됨
+			f.action="delete1/"+c; // 삭제시 action 경로 재설정 해야됨
 		f.submit();}
 	}
 </script>
