@@ -15,7 +15,6 @@
 	var data ={{data1|safe}};
 	var jsondata =  new Object();
 	function a(){
-		document.getElementById("id").value = data[0].data_id;
 		document.getElementById("store").value = data[0].store;
 		document.getElementById("product").value = data[0].product;
 		document.getElementById("content").value = data[0].content;
@@ -48,31 +47,29 @@
 	alert("비밀번호를 입력하세요.");
 	document.f.password.focus();
 	return;}
-	else {f.action=modify; //수정시 action 경로 재설정 해야됨
-		document.f.submit();}}
+	else {
+		f.action="modify"; //수정시 action 경로 재설정 해야됨
+	 f.submit();}}
 	function check1()
 	{
 		if (document.f.password.value =="" || document.f.password.value == null) {
 		alert("비밀번호를 입력하세요.");
 		document.f.password.focus();
 		return;}
-		else {f.action=delete1; // 삭제시 action 경로 재설정 해야됨
-		document.f.submit();}
+		else {
+			f.action="delete1"; // 삭제시 action 경로 재설정 해야됨
+		f.submit();}
 	}
 </script>
 <img src="{{url_for('static', filename='wap_logo.jpg')}}">
 </head>
 <body onload="a();">
-<form name=f method = post action='modify'>
+<form name=f method = post action=>
 <table summary="게시판 수정" id='table_wr'>
 		<colgroup>
 			<col width="150" />
 		</colgroup>
 		<tbody>
-		<tr>
-			<th align="center" class='id'>글번호</th>
-			<td><input type=text name=id id=id size=30 disabled value= ></td>
-		</tr>
 			<tr>
 				<th align="center" class='store'>상호명</th>
 				<td><input type=text name=store id=store size=30/></td>
