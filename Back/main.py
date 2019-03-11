@@ -18,7 +18,7 @@ def list():
     with db.cursor() as cursor:
         sql = '''
             CREATE TABLE post(
-                Data_Id INT PRIMARY KEY,
+                PRIMARY KEY(Data_id),
                 Store VARCHAR(10) IS NOT NULL,
                 Product VARCHAR(10) IS NOT NULL,
                 Content VARCHAR(20) IS NOT NULL,
