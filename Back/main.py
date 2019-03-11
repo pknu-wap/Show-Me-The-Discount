@@ -18,7 +18,7 @@ def list():
     #db select_all 함수
 
     data_list = [{"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}, {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}]
-
+-
     return render_template('boardList.html', data1 = data_list)
 
 @app.route('/boardList.html?searchType=<search_type>&searchText=<search_text>')
@@ -107,14 +107,14 @@ def modify_form():
     #db {data_id(키): data_id} 일치하면 가져오기
     try:
         with db.cursor() as cursor:
-            sql = 'SELECT * FROM post WHERE Data_Id = data_id'
+            sql = 'SELECT * FROM post WHERE Data_Id = data_id ORDER BY End LIMIT 20'
             cursor.execute(sql)
             datas = cursor.fetchall()
             for data in datas:
                 print(data)
 
         with db.cursor() as cursor:
-            sql = 'SELECT * FROM replies WHERE Reply_Id = data_id'
+            sql = 'SELECT * FROM replies WHERE Reply_Id = data_id ORDER BY End LIMIT 20'
             cursor.execute(sql)
             datas = cursor.fetchall()
             for data in datas:
@@ -144,7 +144,7 @@ def modify():
         #db 데이터 수정(id, password 그대로)
         try:
             with db.cursor() as cursor:
-                sql = 'UPDATE post set Data_Id = data_id WHERE Data_id = data_id'
+                sql = 'UPDATE post set Data_Id = data_id WHERE Data_id = data_id AND password = password(password)'
                 cursor.execute(sql)
             db.commit()
             print(cursor.rowcount)
@@ -162,7 +162,7 @@ def delete1():
     #일치하면 실행
     try:
         with db.cursor() as cursor:
-            sql = 'DELETE FROM post WHERE Data_id = data_id'
+            sql = 'DELETE FROM post WHERE Data_id = data_id AND password = password(password)'
             cursor.execute(sql)
         db.commit()
         print(cursor.rowcount)
