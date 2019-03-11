@@ -23,7 +23,7 @@ def list():
                 Product VARCHAR(10) NOT NULL,
                 Content VARCHAR(20) NOT NULL,
                 Price INT NOT NULL,
-                Start_Date NULL,
+                Start_Date VARCHAR(10) NULL,
                 End_Date VARCHAR(10) NOT NULL,
                 Password INT NOT NULL,
                 PRIMARY KEY(Data_id),
