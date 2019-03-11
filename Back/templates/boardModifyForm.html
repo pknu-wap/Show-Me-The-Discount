@@ -12,7 +12,7 @@
 		location.href=url;
 	}
 	var id = document.location.href.split("/");
-	var data ={{data1}};
+	var data ={{data1|safe}};
 	var jsondata =  new Object();
 	function a(){
 		document.getElementById("id").value = data[0].id;
