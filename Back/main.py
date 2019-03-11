@@ -35,7 +35,6 @@ def list():
                # Num INT IS NOT NULL
                 #);
 
-
         cursor.execute(sql)  # 실행하기
     db.commit()  # DB에 Complete
     #finally:
@@ -62,7 +61,8 @@ def search():
     #db 리스트에서 검색 {search_type(키): search_text(값)} 일치하면 가져오기
     try:
         with db.cursor() as cursor:
-            sql = 'SELECT * FROM post WHERE Product == product OR Store == store'  #보류
+            #sql = f'SELECT * FROM post WHERE Product == {post['product']} OR Store == {post['store']}'  #보류
+            sql = 'SELECT * FROM post WHERE Product == product OR Store == store'
             cursor.execute(sql)
             datas = cursor.fetchall()
             for data in datas:
@@ -100,20 +100,19 @@ def register():
 
         x = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
         y = json.dumps(x, ensure_ascii=False)
+        try:
+            with db.cursor() as cursor:
+                sql = "INSERT INTO post (Data_id, Store, Product, Content, Price, Start_Date, End_Date, Password) VALUES (data_id, store, product, content, price, start, end, password)"
+                cursor.execute(sql)
+                db.commit()
 
-    try:
-        with db.cursor() as cursor:
-            sql = "INSERT INTO post (Data_id, Store, Product, Content, Price, Start_Date, End_Date, Password) VALUES (data_id, store, product, content, price, start, end, password)"
-            cursor.execute(sql)
-            db.commit()
-
-        with db.cursor() as cursor:
-            sql = 'INSERT INTO replies (Reply_id, Num, Reply) VALUES (reply_id, num, reply)'
-            cursor.execute(sql)
-            db.commit()
-            print(cursor.lastrowid)
-    finally:
-        db.close()
+            with db.cursor() as cursor:
+                sql = 'INSERT INTO replies (Reply_id, Num, Reply) VALUES (reply_id, num, reply)'
+                cursor.execute(sql)
+                db.commit()
+                print(cursor.lastrowid)
+        finally:
+            db.close()
 
     return redirect('/boardView.html/'+str(data_id))
 
