@@ -102,7 +102,7 @@ def register():
         y = json.dumps(x, ensure_ascii=False)
         try:
             with db.cursor() as cursor:
-                sql = f"INSERT INTO post (Data_id, Store, Product, Content, Price, Start_Date, End_Date, Password) VALUES ({data_id}, store, product, content, price, start, end, password)"
+                sql = "INSERT INTO post (Data_id, Store, Product, Content, Price, Start_Date, End_Date, Password) VALUES (data_id, store, product, content, price, start, end, password)"
                 cursor.execute(sql)
                 db.commit()
 
