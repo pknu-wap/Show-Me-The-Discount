@@ -17,22 +17,22 @@ reply_id = 0
 def list():
     with db.cursor() as cursor:
             sql = '''
-                       CREATE TABLE post(
-                            PRIMARY KEY(Data_Id) NOT NULL,
-                            Store VARCHAR(10) NOT NULL,
-                            Product VARCHAR(10) NOT NULL,
-                            Content VARCHAR(20) NOT NULL,
-                            Price INT NOT NULL,
-                            Start_Date NULL,
-                            End_Date VARCHAR(10) NOT NULL,
-                            Password INT NOT NULL
-                    );
+                CREATE TABLE post(
+                    PRIMARY KEY(Data_Id) NOT NULL,
+                    Store VARCHAR(10) NOT NULL,
+                    Product VARCHAR(10) NOT NULL,
+                    Content VARCHAR(20) NOT NULL,
+                    Price INT NOT NULL,
+                    Start_Date NULL,
+                    End_Date VARCHAR(10) NOT NULL,
+                    Password INT NOT NULL
+                );
 
-                        CREATE TABLE replies(
-                            PRIMARY KEY(Reply_Id) NOT NULL,
-                            Reply VARCHAR(20) NOT NULL.
-                            Num INT NOT NULL
-                    );
+                CREATE TABLE replies(
+                    PRIMARY KEY(Reply_Id) NOT NULL,
+                    Reply VARCHAR(20) NOT NULL.
+                    Num INT NOT NULL
+                );
                   '''
 
             cursor.execute(sql)  # 실행하기
