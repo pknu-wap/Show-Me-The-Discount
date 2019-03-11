@@ -74,8 +74,7 @@ def search():
             datas = cursor.fetchall()
             for data in datas:
                 print(data)
-    finally:
-        db.close()
+
 
     return render_template('boardList.html', ) #data_list
 
