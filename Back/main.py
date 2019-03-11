@@ -19,15 +19,15 @@ def list():
         sql = '''
             CREATE TABLE post(
                 PRIMARY KEY(Data_id),
-                Store VARCHAR(10) IS NOT NULL,
-                Product VARCHAR(10) IS NOT NULL,
-                Content VARCHAR(20) IS NOT NULL,
-                Price INT IS NOT NULL,
-                Start_Date IS NULL,
-                End_Date VARCHAR(10) IS NOT NULL,
-                Password INT IS NOT NULL
+                Store VARCHAR(10) NOT NULL,
+                Product VARCHAR(10) NOT NULL,
+                Content VARCHAR(20) NOT NULL,
+                Price INT NOT NULL,
+                Start_Date NULL,
+                End_Date VARCHAR(10) NOT NULL,
+                Password INT NOT NULL
                 );'''
-    
+
             #CREATE TABLE replies(
              #   Reply_Id INT PRIMARY KEY,
               #  Reply VARCHAR(20) IS NOT NULL.
