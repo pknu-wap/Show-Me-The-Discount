@@ -35,8 +35,8 @@ def list():
                 );
                 '''
 
-    cursor.execute(sql)  # 실행하기
-db.commit()  # DB에 Complete
+        cursor.execute(sql)  # 실행하기
+    db.commit()  # DB에 Complete
     #finally:
         #db.close()  # DB 연결 닫기
     #db show 함수
