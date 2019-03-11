@@ -15,7 +15,44 @@ reply_id = 0
 @app.route('/')
 @app.route('/boardList.html')
 def list():
-    #db select_all 함수
+    try:
+        with db.cursor() as cursor:
+            sql = '''
+                       CREATE TABLE post(
+                            PRIMARY KEY(Data_Id) NOT NULL,
+                            Store VARCHAR(10) NOT NULL,
+                            Product VARCHAR(10) NOT NULL,
+                            Content VARCHAR(20) NOT NULL,
+                            Price INT NOT NULL,
+                            Start_Date NULL,
+                            End_Date VARCHAR(10) NOT NULL,
+                            Password INT NOT NULL
+
+                    );
+
+                        CREATE TABLE replies(
+                            PRIMARY KEY(Reply_Id) NOT NULL,
+                            Reply VARCHAR(20) NOT NULL.
+                            Num INT NOT NULL
+                    );
+                  '''
+
+            cursor.execute(sql)  # 실행하기
+        db.commit()  # DB에 Complete
+    finally:
+        db.close()  # DB 연결 닫기
+    #db show 함수
+
+    '''try:
+        with db.cursor() as cursor:
+            sql = 'SHOW CREATE TABLE post
+            cursor.execute(sql)
+        db.commit()
+        print(cursor.rowcount)
+    finally:
+        db.close()'''
+
+
 
     data_list = [{"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}, {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}]
 
@@ -26,7 +63,7 @@ def search():
     #db 리스트에서 검색 {search_type(키): search_text(값)} 일치하면 가져오기
     try:
         with db.cursor() as cursor:
-            sql = 'SELECT * FROM post WHERE Data_Id = data_id'
+            sql = 'SELECT * FROM post WHERE Product == product OR Store == store'  #보류
             cursor.execute(sql)
             datas = cursor.fetchall()
             for data in datas:
@@ -38,10 +75,9 @@ def search():
             datas = cursor.fetchall()
             for data in datas:
                 print(data)
-    finally:
-        db.close()
 
-    return render_template('boardList.html', ) #data_list
+
+    return render_template('boardList.html') #data_list
 
 @app.route('/boardWriteForm.html')
 def write_form():
@@ -82,7 +118,6 @@ def register():
 @app.route('/boardView.html/<int:data_id>')
 def view(data_id):
 
-    #db {"data_id"(키): data_id(값)} 일치하면 가져오기
     try:
         with db.cursor() as cursor:
             sql = 'SELECT * FROM post WHERE Data_Id = data_id'
@@ -104,7 +139,6 @@ def view(data_id):
 
 @app.route('/boardModifyForm.html/<data_id>')
 def modify_form():
-    #db {data_id(키): data_id} 일치하면 가져오기
     try:
         with db.cursor() as cursor:
             sql = 'SELECT * FROM post WHERE Data_Id = data_id ORDER BY End LIMIT 20'
@@ -139,8 +173,6 @@ def modify():
         x = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
         y = json.dumps(x, ensure_ascii=False)
 
-        #db 글 비밀번호 일치 여부 확인
-
         #db 데이터 수정(id, password 그대로)
         try:
             with db.cursor() as cursor:
@@ -158,8 +190,6 @@ def delete1():
     data_id = request.form["id"]
     password = request.form["password"]
 
-    #db {"data_id": data_id, "password": password} 일치하는지 확인
-    #일치하면 실행
     try:
         with db.cursor() as cursor:
             sql = 'DELETE FROM post WHERE Data_id = data_id AND password = password(password)'
