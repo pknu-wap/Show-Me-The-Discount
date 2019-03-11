@@ -23,7 +23,7 @@ def list():
                 Product VARCHAR(10) IS NOT NULL,
                 Content VARCHAR(20) IS NOT NULL,
                 Price INT IS NOT NULL,
-                Start_Date IS NULL,
+                Start_Date NULL,
                 End_Date VARCHAR(10) IS NOT NULL,
                 Password INT IS NOT NULL
                 );
