@@ -27,7 +27,6 @@ def list():
                             Start_Date NULL,
                             End_Date VARCHAR(10) NOT NULL,
                             Password INT NOT NULL
-
                     );
 
                         CREATE TABLE replies(
@@ -39,18 +38,18 @@ def list():
 
             cursor.execute(sql)  # 실행하기
         db.commit()  # DB에 Complete
-    finally:
-        db.close()  # DB 연결 닫기
+    #finally:
+        #db.close()  # DB 연결 닫기
     #db show 함수
 
-    '''try:
-        with db.cursor() as cursor:
-            sql = 'SHOW CREATE TABLE post
-            cursor.execute(sql)
-        db.commit()
-        print(cursor.rowcount)
-    finally:
-        db.close()'''
+    #'''try:
+     #   with db.cursor() as cursor:
+      #      sql = 'SHOW CREATE TABLE post
+       #     cursor.execute(sql)
+        #db.commit()
+        #print(cursor.rowcount)
+    #finally:
+     #   db.close()'''
 
 
 
