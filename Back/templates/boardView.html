@@ -15,32 +15,32 @@
 		location.href=url;
 	}
 	var id = document.location.href.split("/");
-	var data ={{data1}};
-	var re  = {{reply1}};
+	var c=id[id.length-1];
+	var data ={{data1|safe}};
+	var re  = {{reply1|safe}};
 	var txt = "",reply="";
 function b(){
-	data={{data1|safe}};
 		txt += "<table class='Table_wr1'>"
 		txt += "<tr'><td class='Table_wr2'>"+ "상호명" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data.store +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data[0].store +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "상품명" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data.product +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data[0].product +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "행사내용" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data.content +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data[0].content +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "가격" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data.price  +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data[0].price  +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "시작일시" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data.start +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data[0].start +"</td></tr>");
 		txt += "<tr><td class='Table_wr2'>"+ "종료일시" +"</td>"
-		txt+=("<td class='Table_wr3'>"+ data.end +"</td></tr>");
+		txt+=("<td class='Table_wr3'>"+ data[0].end +"</td></tr>");
 		document.getElementById("t").innerHTML = txt;
 		txt += "</table>"
 		reply="<table id='replys1' border='0'>"
-		for(var i=0;i<reply.length;i++)
-		{ reply+="<tr onclick='reply_delete(this)'><td id='replys2'>"+reply[i].string+"</td>";
+		for(var i=0;i<re.length;i++)
+		{ reply+="<tr onclick='reply_delete(this)'><td id='replys2'>"+re[i].string+"</td>";
 		reply+="<td><input type=button value=삭제 id = i onclick=></td></tr>"}
 		reply+="</table>"
-		 document.getElementById("r").innerHTML = reply;  }}}}
+		 document.getElementById("r").innerHTML = reply;  }
 	function check(){
 		if (document.getElementById("reply").value == "" || document.getElementById("reply").value== null) {
 		alert("댓글을 입력하세요.");
@@ -53,7 +53,7 @@ function b(){
 		var reply_string = encoder.encode(document.getElementById("reply").value);
 		xhr.open("POST","/reply");
 		xhr.setRequestHeader('Content-Type','text/html;charset=UTF-8');
-		xhr.setRequestHeader('data_id',data.data_id); // 글 id
+		xhr.setRequestHeader('data_id',data[0].data_id); // 글 id
 		xhr.setRequestHeader('reply',reply_string); // 댓글 string
 		xhr.setRequestHeader('password',document.getElementById("password").value); // 댓글 password
 		xhr.send();
@@ -61,7 +61,7 @@ function b(){
 		{
 		if(xhr.readyState == 4)
 			{
-			if(xhr.status==200){goUrl('/boardView.html/'+id[id.length-1]);}
+			if(xhr.status==200){goUrl('/boardView.html/'+c);}
 			else {console.log('Error!');}
 			}
 		}}}
@@ -70,14 +70,14 @@ function b(){
 			var pass=prompt('비밀번호를 입력하세요.');
 			var del = new XMLHttpRequest();
 			del.open('POST','./delete2');
-			del.setRequestHeader('data_id',data[0].id); //글 id 번호
-			del.setRequestHeader('reply_id',data[0].reply[a].id); // 댓글 id 번호
+			del.setRequestHeader('data_id',data[0].data_id); //글 id 번호
+			del.setRequestHeader('reply_id',re[a].id); // 댓글 id 번호
 			del.setRequestHeader('reply_password',pass); // 댓글 password
 			del.send();
 			if(del.readyState==4)
 			{if(del.response==y){alert("삭제되었습니다.");//비밀번호가 맞으면 서버가 y를 리턴해줘서 삭제되고 새로고침
-			goUrl('/boardView.html/'+id[id.length-1]);}
-			else{alert("비밀번호가 틀립니다");goUrl('/boardView.html/'+id[id.length-1]);}}
+			goUrl('/boardView.html/'+c);}
+			else{alert("비밀번호가 틀립니다");goUrl('/boardView.html/'+c);}}
 		}
 </script>
 <img src="{{url_for('static', filename='wap_logo.jpg')}}">
@@ -86,7 +86,7 @@ function b(){
 	<p id=t></p>
 	<p>
 		<input type="button" class="buttons_v" value="목록" onclick="goUrl('/boardList.html');" />
-		<input type="button" class="buttons_v" value="수정" onclick="goUrl('/boardModifyForm.html/'+id[id.length-1]);" />
+		<input type="button" class="buttons_v" value="수정" onclick="goUrl('/boardModifyForm.html/'+ c);" />
 	</p><br>
 	<p class='p'>
 	<th>

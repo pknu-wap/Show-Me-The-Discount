@@ -12,10 +12,10 @@
 		location.href=url;
 	}
 	var id = document.location.href.split("/");
-	var data ={{data1}};
+	var data ={{data1|safe}};
 	var jsondata =  new Object();
 	function a(){
-		document.getElementById("id").value = data[0].id;
+		document.getElementById("id").value = data[0].data_id;
 		document.getElementById("store").value = data[0].store;
 		document.getElementById("product").value = data[0].product;
 		document.getElementById("content").value = data[0].content;
@@ -104,7 +104,7 @@
 		</tbody>
 	</table>
 	<p>
-		<input type="button" class='buttons' value="목록" onclick="goUrl('/boardModifyForm.html/'+id[id.length-1]);"/>
+		<input type="button" class='buttons' value="목록" onclick="goUrl('/boardList.html');"/>
 		<input type="button" class='buttons' value="수정" onclick="check();"/>
 		<input type="button" class='buttons' value="삭제" onclick="check1();"/><br>
 	</p>
