@@ -15,7 +15,7 @@ def dbInit():
         cursor.execute("CREATE TABLE IF NOT EXISTS post(data_id INT PRIMARY KEY AUTO_INCREMENT,store VARCHAR(10) NOT NULL,product VARCHAR(10) NOT NULL,content VARCHAR(400) NOT NULL,price INT NOT NULL,start_date VARCHAR(10) NULL,end_date VARCHAR(10) NOT NULL,password VARCHAR(32) NOT NULL);")
     db.commit()
     with db.cursor() as cursor:
-        cursor.execute("CREATE TABLE IF NOT EXISTS replies(reply_Id INT PRIMARY KEY AUTO_INCREMENT,data_Id INT,reply VARCHAR(400) NOT NULL,addTime DATETIME NOT NULL,password VARCHAR(32) NOT NULL);")
+        cursor.execute("CREATE TABLE IF NOT EXISTS replies(reply_id INT PRIMARY KEY AUTO_INCREMENT,data_id INT,reply VARCHAR(400) NOT NULL,addTime DATETIME NOT NULL,password VARCHAR(32) NOT NULL);")
     db.commit()
 
 def dbClose():
@@ -36,7 +36,7 @@ def dbSearch(query):
 def dbNewPost(Store,Product,Content,Price,Start_Date,End_date,Password):
     with db.cursor() as cursor:
         sql = "INSERT INTO post (store, product, content, price, start_date, end_date, password) VALUES (%s,%s,%s,%s,%s,%s,password(%s))"
-        cursor.excute(sql,[Store,Product,Content,Price,Start_Date,End_date,Password])
+        cursor.execute(sql,[Store,Product,Content,Price,Start_Date,End_date,Password])
     db.commit()
     with db.cursor() as cursor:
         sql="SELECT LAST_INSERT_ID();"
@@ -63,7 +63,7 @@ def dbGetPost(post_id):
         cursor.execute(sql,post_id)
         post=cursor.fetchall()
     with db.cursor() as cursor:
-        sql="SELECT * FROM replies where data_id=%s ORDER BY addTime"
+        sql="SELECT * FROM replies where data_id=%s ORDER BY add_time"
         cursor.execute(sql,[post_id])
         replies=cursor.fetchall()
     data["post"]=post
@@ -72,8 +72,8 @@ def dbGetPost(post_id):
 
 def dbNewReply(Data_id,reply,addTime,Password):
     with db.cursor() as cursor:
-        sql = "INSERT INTO replies (Data_Id,Reply,addTime, pssword) VALUES (%s,%s,%s,password(%s))"
-        cursor.excute(sql,[Data_id,reply,addTime,Password])
+        sql = "INSERT INTO replies (data_id,Reply,add_time, password) VALUES (%s,%s,%s,password(%s))"
+        cursor.execute(sql,[Data_id,reply,addTime,Password])
     db.commit()
     with db.cursor() as cursor:
         sql="SELECT LAST_INSERT_ID();"
@@ -82,7 +82,7 @@ def dbNewReply(Data_id,reply,addTime,Password):
 
 def dbRemoveReply(replyId,Password):
     with db.cursor() as cursor:
-        sql = "DELETE FROM replies WHERE replyId = %s AND password=password(%s)"
+        sql = "DELETE FROM replies WHERE reply_id = %s AND password=password(%s)"
         cursor.execute(sql,[replyId,Password])
     db.commit()
     return True
