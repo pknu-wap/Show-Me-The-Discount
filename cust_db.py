@@ -1,5 +1,7 @@
 import pymysql
-
+import sys
+reload(sys)
+sys.setdefaultencoding('UTF8')
 db = pymysql.connect(host = 'localhost',
                      user = 'wap',
                      password = '123',
@@ -15,7 +17,7 @@ def dbInit():
         cursor.execute("CREATE TABLE IF NOT EXISTS post(post_id INT PRIMARY KEY AUTO_INCREMENT,store VARCHAR(10) NOT NULL,product VARCHAR(10) NOT NULL,content VARCHAR(400) NOT NULL,price INT NOT NULL,start_date VARCHAR(10) NULL,end_date VARCHAR(10) NOT NULL,password VARCHAR(32) NOT NULL);")
     db.commit()
     with db.cursor() as cursor:
-        cursor.execute("CREATE TABLE IF NOT EXISTS replies(reply_id INT PRIMARY KEY AUTO_INCREMENT,post_id INT,reply VARCHAR(400) NOT NULL,addTime DATETIME NOT NULL,password VARCHAR(32) NOT NULL);")
+        cursor.execute("CREATE TABLE IF NOT EXISTS replies(reply_id INT PRIMARY KEY AUTO_INCREMENT,post_id INT,reply VARCHAR(400) NOT NULL,add_time DATETIME NOT NULL,password VARCHAR(32) NOT NULL);")
     db.commit()
 
 def dbClose():
@@ -70,10 +72,10 @@ def dbGetPost(post_id):
     data["replies"]=replies
     return data
 
-def dbNewReply(post_id,reply,addTime,Password):
+def dbNewReply(post_id,reply,add_time,Password):
     with db.cursor() as cursor:
         sql = "INSERT INTO replies (post_id,Reply,add_time, password) VALUES (%s,%s,%s,password(%s))"
-        cursor.execute(sql,[post_id,reply,addTime,Password])
+        cursor.execute(sql,[post_id,reply,add_time,Password])
     db.commit()
     with db.cursor() as cursor:
         sql="SELECT LAST_INSERT_ID();"
@@ -91,7 +93,7 @@ def dbRemoveReply(replyId,Password):
 
 if __name__=="__main__":
     dbInit()
-    print(dbSearch(""))
+    print(dbSearch("").encode('utf-8'))
     postId=dbNewPost("GS25", "딸기우유","2+1","1300원","2019-01-01","2019-02-01","1234")
     print(postId)
     print(dbUpdatePost(postId,"GS25", "딸기우유","2+1","1300원","2019-01-01","2019-02-01","1234"))
