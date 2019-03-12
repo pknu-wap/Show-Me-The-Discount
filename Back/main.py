@@ -14,7 +14,7 @@ def list():
 
     data=cust_db.dbSearch()
     data_list = []
-    for temp in data
+    for temp in data :
         data_id = temp[0]
         store = temp[1]
         product = temp[2]
@@ -32,7 +32,7 @@ def search():
 
     data = cust_db.dbSearch(search_text)
     data_list=[]
-    for temp in data
+    for temp in data :
         data_id = temp[0]
         store = temp[1]
         product = temp[2]
