@@ -1,4 +1,5 @@
 import pymysql
+from datetime import datetime
 db = pymysql.connect(host = 'localhost',
                      user = 'wap',
                      password = '123',
@@ -70,10 +71,10 @@ def dbGetPost(post_id):
     data["replies"]=replies
     return data
 
-def dbNewReply(post_id,reply,add_time,Password):
+def dbNewReply(post_id,reply,Password):
     with db.cursor() as cursor:
         sql = "INSERT INTO replies (post_id,Reply,add_time, password) VALUES (%s,%s,%s,password(%s))"
-        cursor.execute(sql,[post_id,reply,add_time,Password])
+        cursor.execute(sql,[post_id,reply,datetime.now(),Password])
     db.commit()
     with db.cursor() as cursor:
         sql="SELECT LAST_INSERT_ID();"
@@ -97,6 +98,6 @@ if __name__=="__main__":
     print(dbUpdatePost(postId,"GS25", "딸기우유","2+1","1300원","2019-01-01","2019-02-01","1234"))
     print(dbRemovePost(postId,"1234"))
     dbGetPost(postId)
-    replyId=dbNewReply(postId,"댓글","2019-03-12 16:43:20","1234")
+    replyId=dbNewReply(postId,"댓글","1234")
     dbRemoveReply(replyId,"1234")
     dbClose()
