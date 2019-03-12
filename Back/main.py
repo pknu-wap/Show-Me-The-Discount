@@ -13,7 +13,7 @@ dbInit()
 def list():
 
     data=cust_db.dbSearch()
-    data_list = list()
+    data_list = []
     for temp in data
         data_id = temp[0]
         store = temp[1]
@@ -30,7 +30,8 @@ def list():
 @app.route('/boardList.html?searchType=<search_type>&searchText=<search_text>')
 def search():
 
-    data_list = cust_db.dbSearch(search_text)
+    data = cust_db.dbSearch(search_text)
+    data_list=[]
     for temp in data
         data_id = temp[0]
         store = temp[1]
