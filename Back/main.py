@@ -61,7 +61,7 @@ def register():
         start = request.form["start"]
         end = request.form["end"]
         password = request.form["password"]
-    data_id = cust_db.NewPost(store,product,content,price,start,end,password)
+    data_id = cust_db.dbNewPost(store,product,content,price,start,end,password)
 
     return redirect('/boardView.html/'+str(data_id))
 
