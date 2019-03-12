@@ -57,6 +57,7 @@ def dbRemovePost(post_id,Password):
     return True
 
 def dbGetPost(post_id):
+    data=dict()
     with db.cursor() as cursor:
         sql="SELECT * FROM post WHERE post_id=%s"
         cursor.execute(sql,post_id)
@@ -90,7 +91,7 @@ def dbRemoveReply(replyId,Password):
 
 if __name__=="__main__":
     dbInit()
-    print(dbSearch("").encode('utf-8'))
+    print(dbSearch(""))
     postId=dbNewPost("GS25", "딸기우유","2+1","1300원","2019-01-01","2019-02-01","1234")
     print(postId)
     print(dbUpdatePost(postId,"GS25", "딸기우유","2+1","1300원","2019-01-01","2019-02-01","1234"))
