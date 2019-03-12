@@ -1,11 +1,10 @@
 import pymysql
 
 db = pymysql.connect(host = 'localhost',
-                     user = 'root',
+                     user = 'wap',
                      password = '123',
                      db = 'wap',
-                     charest = 'utf8mb4'
-                     cursorclass=pymysql.cursors.DictCursor
+                     charset = 'utf8'
                      )
                      
 def dbInit():
@@ -13,7 +12,7 @@ def dbInit():
         cursor.execute("CREATE DATABASE IF NOT EXISTS wap;")
     db.commit();
     with db.cursor() as cursor:
-        cursor.execute("CREATE TABLE IF NOT EXISTS post(Data_id INT UNSIGNED NOT NULL AUTO_INCREMENT,Store VARCHAR(10) NOT NULL,Product VARCHAR(10) NOT NULL,Content VARCHAR(400) NOT NULL,Price INT NOT NULL,Start_Date VARCHAR(10) NULL,End_Date VARCHAR(10) NOT NULL,Password VARCHAR(32) NOT NULL,PRIMARY KEY(Data_id),);")
+        cursor.execute("CREATE TABLE IF NOT EXISTS post(Data_id INT UNSIGNED NOT NULL AUTO_INCREMENT,Store VARCHAR(10) NOT NULL,Product VARCHAR(10) NOT NULL,Content VARCHAR(400) NOT NULL,Price INT NOT NULL,Start_Date VARCHAR(10) NULL,End_Date VARCHAR(10) NOT NULL,Password VARCHAR(32) NOT NULL,PRIMARY KEY(Data_id));")
     db.commit()
     with db.cursor() as cursor:
         cursor.execute("CREATE TABLE IF NOT EXISTS replies(Reply_Id INT PRIMARY KEY,Data_Id INT,Reply VARCHAR(20) IS NOT NULL,addTime DATETIME IS NOT NULL,password VARCHAR(32) NOT NULL);")
