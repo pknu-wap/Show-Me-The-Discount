@@ -1,7 +1,4 @@
 import pymysql
-import sys
-reload(sys)
-sys.setdefaultencoding('UTF8')
 db = pymysql.connect(host = 'localhost',
                      user = 'wap',
                      password = '123',
