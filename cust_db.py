@@ -12,10 +12,10 @@ def dbInit():
         cursor.execute("CREATE DATABASE IF NOT EXISTS wap;")
     db.commit();
     with db.cursor() as cursor:
-        cursor.execute("CREATE TABLE IF NOT EXISTS post(Data_id INT UNSIGNED NOT NULL AUTO_INCREMENT,Store VARCHAR(10) NOT NULL,Product VARCHAR(10) NOT NULL,Content VARCHAR(400) NOT NULL,Price INT NOT NULL,Start_Date VARCHAR(10) NULL,End_Date VARCHAR(10) NOT NULL,Password VARCHAR(32) NOT NULL,PRIMARY KEY(Data_id));")
+        cursor.execute("CREATE TABLE IF NOT EXISTS post(data_id INT PRIMARY KEY AUTO_INCREMENT,store VARCHAR(10) NOT NULL,product VARCHAR(10) NOT NULL,content VARCHAR(400) NOT NULL,price INT NOT NULL,start_date VARCHAR(10) NULL,end_date VARCHAR(10) NOT NULL,password VARCHAR(32) NOT NULL);")
     db.commit()
     with db.cursor() as cursor:
-        cursor.execute("CREATE TABLE IF NOT EXISTS replies(Reply_Id INT PRIMARY KEY,Data_Id INT,Reply VARCHAR(20) NOT NULL,addTime DATETIME NOT NULL,password VARCHAR(32) NOT NULL);")
+        cursor.execute("CREATE TABLE IF NOT EXISTS replies(reply_Id INT PRIMARY KEY AUTO_INCREMENT,data_Id INT,reply VARCHAR(400) NOT NULL,addTime DATETIME NOT NULL,password VARCHAR(32) NOT NULL);")
     db.commit()
 
 def dbClose():
@@ -24,18 +24,18 @@ def dbClose():
 def dbSearch(query):
     if len(query)==0 :
         with db.cursor() as cursor:
-            sql = 'SELECT * FROM post ORDER BY End LIMIT 20'
+            sql = 'SELECT * FROM post ORDER BY end_date LIMIT 20'
             cursor.execute(sql)
         return cursor.fetchall()
     else :
         with db.cursor() as cursor:
-            sql = 'SELECT * FROM post WHERE Product == %s OR Store == %s'
+            sql = 'SELECT * FROM post WHERE product == %s OR store == %s'
             cursor.execute(sql,[query,query])
         return cursor.fetchall()
         
 def dbNewPost(Store,Product,Content,Price,Start_Date,End_date,Password):
     with db.cursor() as cursor:
-        sql = "INSERT INTO post (Store, Product, Content, Price, Start_Date, End_Date, Password) VALUES (%s,%s,%s,%s,%s,%s,password(%s))"
+        sql = "INSERT INTO post (store, product, content, price, start_date, end_date, password) VALUES (%s,%s,%s,%s,%s,%s,password(%s))"
         cursor.excute(sql,[Store,Product,Content,Price,Start_Date,End_date,Password])
     db.commit()
     with db.cursor() as cursor:
@@ -45,25 +45,25 @@ def dbNewPost(Store,Product,Content,Price,Start_Date,End_date,Password):
 
 def dbUpdatePost(post_id,Store,Product,Content,Price,Start_Date,End_date,Password):
     with db.cursor() as cursor:
-        sql="UPDATE post SET Store=%s,Product=%s,Content=%s,Price=%s,Start_Date=%s,End_Date=%s WHERE Post_id=%s AND password(%s)"
+        sql="UPDATE post SET store=%s,product=%s,content=%s,price=%s,start_date=%s,end_date=%s WHERE post_id=%s AND password(%s)"
         cursor.execute(sql,[Store,Product,Content,Price,Start_Date,End_date,post_id,Password])
     db.commit()
     return True
 
 def dbRemovePost(post_id,Password):
     with db.cursor() as cursor:
-        sql="DELETE FROM post WHERE Data_id = %s AND password = password(%s)"
+        sql="DELETE FROM post WHERE data_id = %s AND password = password(%s)"
         cursor.execute(sql,[post_id,Password])
     db.commit()
     return True
 
 def dbGetPost(post_id):
     with db.cursor() as cursor:
-        sql="SELECT * FROM post WHERE Data_Id=%s"
+        sql="SELECT * FROM post WHERE data_id=%s"
         cursor.execute(sql,post_id)
         post=cursor.fetchall()
     with db.cursor() as cursor:
-        sql="SELECT * FROM replies where Data_Id=%s ORDER BY NUM"
+        sql="SELECT * FROM replies where data_id=%s ORDER BY addTime"
         cursor.execute(sql,[post_id])
         replies=cursor.fetchall()
     data["post"]=post
