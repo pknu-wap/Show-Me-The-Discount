@@ -15,7 +15,7 @@ def dbInit():
         cursor.execute("CREATE TABLE IF NOT EXISTS post(Data_id INT UNSIGNED NOT NULL AUTO_INCREMENT,Store VARCHAR(10) NOT NULL,Product VARCHAR(10) NOT NULL,Content VARCHAR(400) NOT NULL,Price INT NOT NULL,Start_Date VARCHAR(10) NULL,End_Date VARCHAR(10) NOT NULL,Password VARCHAR(32) NOT NULL,PRIMARY KEY(Data_id));")
     db.commit()
     with db.cursor() as cursor:
-        cursor.execute("CREATE TABLE IF NOT EXISTS replies(Reply_Id INT PRIMARY KEY,Data_Id INT,Reply VARCHAR(20) IS NOT NULL,addTime DATETIME IS NOT NULL,password VARCHAR(32) NOT NULL);")
+        cursor.execute("CREATE TABLE IF NOT EXISTS replies(Reply_Id INT PRIMARY KEY,Data_Id INT,Reply VARCHAR(20) NOT NULL,addTime DATETIME NOT NULL,password VARCHAR(32) NOT NULL);")
     db.commit()
 
 def dbClose():
