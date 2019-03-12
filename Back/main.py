@@ -6,7 +6,7 @@ app = Flask(__name__)
 data_id = 0
 reply_id = 0
 
-dbInit()
+cust_db.dbInit()
 
 @app.route('/')
 @app.route('/boardList.html')
