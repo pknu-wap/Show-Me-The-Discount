@@ -1,84 +1,48 @@
 from flask import Flask, render_template, request, redirect, json
-import pymysql
-
-db = pymysql.connect(host = 'localhost',
-                     user = 'wap',
-                     password = '123',
-                     db = 'wap',
-                     charset = 'utf8mb4')
+import pymysql, cust_db
 
 app = Flask(__name__)
 
 data_id = 0
 reply_id = 0
 
+dbInit()
+
 @app.route('/')
 @app.route('/boardList.html')
 def list():
-    with db.cursor() as cursor:
-        sql = '''
-            CREATE TABLE post(
-                Data_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-                Store VARCHAR(10) NOT NULL,
-                Product VARCHAR(10) NOT NULL,
-                Content VARCHAR(20) NOT NULL,
-                Price INT NOT NULL,
-                Start_Date VARCHAR(10) NULL,
-                End_Date VARCHAR(10) NOT NULL,
-                Password INT NOT NULL,
-                PRIMARY KEY(Data_id),
-                );'''
 
-            #CREATE TABLE replies(
-             #   Reply_Id INT PRIMARY KEY,
-              #  Reply VARCHAR(20) IS NOT NULL.
-               # Num INT IS NOT NULL
-                #);
+    data=cust_db.dbSearch()
+    data_list = list()
+    for temp in data
+        data_id = temp[0]
+        store = temp[1]
+        product = temp[2]
+        content = temp[3]
+        price = temp[4]
+        start = temp[5]
+        end = temp[6]
+        password = temp[7]
+        data_list.append({"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "start": start, "end": end})
 
-        cursor.execute(sql)  # 실행하기
-    db.commit()  # DB에 Complete
-    #finally:
-        #db.close()  # DB 연결 닫기
-    #db show 함수
-
-    #'''try:
-     #   with db.cursor() as cursor:
-      #      sql = 'SHOW CREATE TABLE post
-       #     cursor.execute(sql)
-        #db.commit()
-        #print(cursor.rowcount)
-    #finally:
-     #   db.close()'''
-
-
-
-    #data_list = [{"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}, {"store": "상호명", "product": "상품", "content": "내용", "price": "가격", "start": "시작", "end": "종료"}]
-
-    return render_template('boardList.html')
+    return render_template('boardList.html', data1 = data_list)
 
 @app.route('/boardList.html?searchType=<search_type>&searchText=<search_text>')
 def search():
-    #db 리스트에서 검색 {search_type(키): search_text(값)} 일치하면 가져오기
-    try:
-        with db.cursor() as cursor:
-            #sql = f'SELECT * FROM post WHERE Product == {post['product']} OR Store == {post['store']}'  #보류
-            sql = 'SELECT * FROM post WHERE Product == product OR Store == store'
-            cursor.execute(sql)
-            datas = cursor.fetchall()
-            for data in datas:
-                print(data)
 
-        with db.cursor() as cursor:
-            sql = 'SELECT * FROM replies WHERE Reply_Id = data_id'
-            cursor.execute(sql)
-            datas = cursor.fetchall()
-            for data in datas:
-                print(data)
+    data_list = cust_db.dbSearch(search_text)
+    for temp in data
+        data_id = temp[0]
+        store = temp[1]
+        product = temp[2]
+        content = temp[3]
+        price = temp[4]
+        start = temp[5]
+        end = temp[6]
+        password = temp[7]
+        data_list.append({"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "start": start, "end": end})
 
-    finally:
-        db.close()
-
-    return render_template('boardList.html') #data_list
+    return render_template('boardList.html', data1 = data_list) #data_list
 
 
 @app.route('/boardWriteForm.html')
@@ -88,101 +52,66 @@ def write_form():
 @app.route('/write', methods=['POST'])
 def register():
     if request.method == 'POST':
-        global data_id
-        data_id += 1
+
         store = request.form["store"]
         product = request.form["product"]
         content = request.form["content"]
         price = request.form["price"]
-        startdate = request.form["start"]
-        enddate = request.form["end"]
+        start = request.form["start"]
+        end = request.form["end"]
         password = request.form["password"]
-
-        x = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
-        y = json.dumps(x, ensure_ascii=False)
-        try:
-            with db.cursor() as cursor:
-                sql = "INSERT INTO post (Data_id, Store, Product, Content, Price, Start_Date, End_Date, Password) VALUES (data_id, store, product, content, price, start, end, password)"
-                cursor.execute(sql)
-                db.commit()
-
-            with db.cursor() as cursor:
-                sql = 'INSERT INTO replies (Reply_id, Num, Reply) VALUES (reply_id, num, reply)'
-                cursor.execute(sql)
-                db.commit()
-                print(cursor.lastrowid)
-        finally:
-            db.close()
+    data_id = cust_db.NewPost(store,product,content,price,start,end,password)
 
     return redirect('/boardView.html/'+str(data_id))
 
 @app.route('/boardView.html/<int:data_id>')
 def view(data_id):
 
-    try:
-        with db.cursor() as cursor:
-            sql = 'SELECT * FROM post WHERE Data_Id = data_id'
-            cursor.execute(sql)
-            datas = cursor.fetchall()
-            for data in datas:
-                print(data)
+    data = cust_db.dbGetPost(post_id)
+    data_id = data["post"][0][0]
+    store = data["post"][0][1]
+    product = data["post"][0][2]
+    content = data["post"][0][3]
+    price = data["post"][0][4]
+    start = data["post"][0][5]
+    end = data["post"][0][6]
+    password = data["post"][0][7]
 
-        with db.cursor() as cursor:
-            sql = 'SELECT * FROM replies WHERE Reply_Id = data_id'
-            cursor.execute(sql)
-            datas = cursor.fetchall()
-            for data in datas:
-                print(data)
-    finally:
-        db.close()
+    data1 = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "start": start, "end": end}
 
-    return render_template('boardView.html', ) #json
+    return render_template('boardView.html', data1 = data1) #json
 
 @app.route('/boardModifyForm.html/<data_id>')
 def modify_form():
-    try:
-        with db.cursor() as cursor:
-            sql = 'SELECT * FROM post WHERE Data_Id = data_id ORDER BY End LIMIT 20'
-            cursor.execute(sql)
-            datas = cursor.fetchall()
-            for data in datas:
-                print(data)
 
-        with db.cursor() as cursor:
-            sql = 'SELECT * FROM replies WHERE Reply_Id = data_id ORDER BY End LIMIT 20'
-            cursor.execute(sql)
-            datas = cursor.fetchall()
-            for data in datas:
-                print(data)
-    finally:
-        db.close()
+    data = cust_db.dbGetPost(post_id) #view랑 똑같이
+    data_id = data["post"][0][0]
+    store = data["post"][0][1]
+    product = data["post"][0][2]
+    content = data["post"][0][3]
+    price = data["post"][0][4]
+    start = data["post"][0][5]
+    end = data["post"][0][6]
+    password = data["post"][0][7]
 
-    return render_template('boardModifyForm.html')
+    data1 = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "start": start, "end": end}
+
+    return render_template('boardModifyForm.html', data1 = data1) #redirect id
 
 @app.route('/modify')
 def modify():
-    if request.method == 'POST':
-        data_id = request.form["id"]
-        store = request.form["store"]
-        product = request.form["product"]
-        content = request.form["content"]
-        price = request.form["price"]
-        startdate = request.form["start"]
-        enddate = request.form["end"]
-        password = request.form["password"]
 
-        x = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "startdate": startdate, "enddate": enddate, "password": password}
-        y = json.dumps(x, ensure_ascii=False)
+    data = cust_db.UpdatePost(post_id,Store,Product,Content,Price,Start_Date,End_date,Password)
+    data_id = data["post"][0][0]
+    store = data["post"][0][1]
+    product = data["post"][0][2]
+    content = data["post"][0][3]
+    price = data["post"][0][4]
+    start = data["post"][0][5]
+    end = data["post"][0][6]
+    password = data["post"][0][7]
 
-        #db 데이터 수정(id, password 그대로)
-        try:
-            with db.cursor() as cursor:
-                sql = 'UPDATE post set Data_Id = data_id WHERE Data_id = data_id AND password = password(password)'
-                cursor.execute(sql)
-            db.commit()
-            print(cursor.rowcount)
-        finally:
-            db.close()
+    data1 = {"data_id": data_id, "store": store, "product": product, "content": content, "price": price, "start": start, "end": end}
 
     return redirect('/boardView.html/'+str(data_id))
 
@@ -191,29 +120,17 @@ def delete1():
     data_id = request.form["id"]
     password = request.form["password"]
 
-    try:
-        with db.cursor() as cursor:
-            sql = 'DELETE FROM post WHERE Data_id = data_id AND password = password(password)'
-            cursor.execute(sql)
-        db.commit()
-        print(cursor.rowcount)
-    finally:
-        db.close()
+    data = cust_db.RemovePost(data_id,password)
 
     return render_template('boardList.html')
 
 @app.route('/reply', methods=['POST'])
 def reply():
-    global reply_id
-    reply_id += 1
     data_id = request.form["data_id"]
     reply = request.form["reply"]
     reply_password = request.form["password"]
 
-    x = {"reply_id": reply_id, "data_id": data_id, "reply": reply, "reply_password": reply_password}
-    y = json.dumps(x, ensure_ascii=False)
-
-    #db 데이터 읽기(보류)
+    data = cust_db.NewReply(data_id,reply,reply_password)
 
     return redirect('/boardView.html/'+str(data_id))
 
@@ -223,12 +140,7 @@ def delete2():
     reply_id = request.form["reply_id"]
     reply_password = request.form["reply_password"]
 
-    x = {"data_id": data_id, "reply_id": reply_id, "reply_password": reply_password}
-    y = json.dumps(x, ensure_ascii=False)
-
-    #db 데이터 읽기(보류)
-    #json 데이터 일치 여부 확인
-        #db 데이터 삭제
+    data = cust_db.RemoveReply(reply_id,reply_password)
 
     return redirect('/boardView.html/'+str(data_id))
 
