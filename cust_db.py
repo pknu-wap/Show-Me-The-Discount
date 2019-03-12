@@ -98,5 +98,6 @@ if __name__=="__main__":
     print(dbRemovePost(postId,"1234"))
     dbGetPost(postId)
     replyId=dbNewReply(postId,"댓글","2019-03-12 16:43:20","1234")
+    print(dbGetPost(postId))
     dbRemoveReply(replyId,"1234")
     dbClose()
