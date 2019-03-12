@@ -12,7 +12,7 @@ cust_db.dbInit()
 @app.route('/boardList.html')
 def list():
 
-    data=cust_db.dbSearch()
+    data=cust_db.dbSearch("")
     data_list = []
     for temp in data :
         data_id = temp[0]
