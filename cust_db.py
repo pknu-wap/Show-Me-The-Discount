@@ -91,7 +91,7 @@ def dbRemoveReply(replyId,Password):
 
 if __name__=="__main__":
     dbInit()
-    print(dbSearch())
+    print(dbSearch(""))
     postId=dbNewPost("GS25", "딸기우유","2+1","1300원","2019-01-01","2019-02-01","1234")
     print(postId)
     print(dbUpdatePost(postId,"GS25", "딸기우유","2+1","1300원","2019-01-01","2019-02-01","1234"))
