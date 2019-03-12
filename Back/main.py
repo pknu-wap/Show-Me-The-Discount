@@ -68,7 +68,7 @@ def register():
 @app.route('/boardView.html/<int:data_id>')
 def view(data_id):
 
-    data = cust_db.dbGetPost(post_id)
+    data = cust_db.dbGetPost(data_id)
     data_id = data["post"][0][0]
     store = data["post"][0][1]
     product = data["post"][0][2]
