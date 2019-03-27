@@ -1,2 +1,2 @@
-# 2019-winter-project
-First project in year 2019
+# Show Me The Discount!
+할인 공유 게시판
